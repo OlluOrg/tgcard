@@ -4,11 +4,11 @@ services:
     ports:
       - "3002:3000"
     environment:
-      - NODE_ENV: production
+      - NODE_ENV=production
   bot:
     build: ./bot
     ports:
       - "3003:3000"
     environment:
-      - BOT_TOKEN: ${BOT_TOKEN}
-      - NODE_ENV: production
+      - BOT_TOKEN=${BOT_TOKEN}
+      - NODE_ENV=production
