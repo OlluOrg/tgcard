@@ -30,5 +30,6 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         script: |
           cd /root/tgcard
+          echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" > .env
           docker compose down
           docker compose up --build -d
