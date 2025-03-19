@@ -1,14 +1,51 @@
 services:
   miniapp:
-    build: ./miniapp
+    build: ./react-mini-app
     ports:
       - "3002:3000"
     environment:
       - NODE_ENV=production
   bot:
-    build: ./bot
+    build: ./tg-bot
     ports:
       - "3003:3000"
     environment:
-      - BOT_TOKEN=${BOT_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - WEB_URL=${WEB_URL}
       - NODE_ENV=production
+  web:
+    image: nginx:latest
+    ports:
+      - '80:80'
+    volumes:
+      - ./server/app:/var/www/html
+      - ./server/config/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - nodejs
+
+  nodejs:
+    build: ./server
+    volumes:
+      - ./server/app:/var/www/html
+      - /var/www/html/node_modules
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: secret
+      DB_HOST: mongodb
+    ports:
+      - '3001:3000'
+    restart: always
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: "mongo:4.4"
+    volumes:
+      - ./server/data:/data/db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: businessCards
+    ports:
+      - "27018:27017"

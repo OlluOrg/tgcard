@@ -1,0 +1,24 @@
+.leftBorder {
+  position: relative;
+  width: 24px;
+  height: 100%;
+  margin-right: 12px;
+}
+
+.selectionIndicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--tgui--link_color);
+  border-radius: 2px;
+}
+
+.dragHandle {
+  margin-right: 16px;
+  width: 4px;
+  border-radius: 2px;
+  background-color: var(--tgui--button_color);
+  flex-shrink: 0;
+}
