@@ -1,0 +1,68 @@
+.card {
+  padding-top: 20px;
+  padding-bottom: 56px;
+}
+
+.sectionWrapper {
+  //transition: all 0.2s ease;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: stretch;
+  border: 2px solid transparent;
+}
+
+//.dragHandle {
+//  width: 23.5px;
+//  display: flex;
+//  align-items: center;
+//  transition: all 0.2s ease;
+//  flex-shrink: 0;
+//
+//  &:active {
+//    cursor: grabbing;
+//  }
+//}
+
+.modalAddBtns {
+  margin-bottom: 30px;
+  padding: 10px 22px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  button {
+    margin: 0;
+  }
+}
+
+.mdx {
+  color: var(--tgui--text_color);
+
+  span, em, strong {
+    color: var(--tgui--text_color);
+  }
+
+  p {
+    padding-left: 10px;
+  }
+
+  ul, ol {
+    padding-left: 30px;
+  }
+
+  li::marker, ol::marker {
+    color: var(--tgui--button_color);
+  }
+}
+
+.errorMessage {
+  color: var(--tgui--destructive_text_color);
+  font-size: 12px;
+  margin-top: 4px;
+  padding: 0 16px;
+}
+
+.inputGroup {
+  margin-bottom: 16px;
+}

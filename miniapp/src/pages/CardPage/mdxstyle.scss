@@ -1,0 +1,29 @@
+.mdxeditor-toolbar {
+  background-color: var(--tgui--bg_color);
+  border-radius: 0;
+}
+
+.mdxeditor-toolbar button {
+  background-color: transparent;
+}
+
+.mdxeditor-toolbar button:hover {
+  background-color: var(--tgui--bg_color) !important;
+}
+
+.mdxeditor-toolbar button[aria-checked="true"] {
+  background-color: var(--tgui--text_color) !important;
+}
+
+.mdxeditor-toolbar svg {
+  color: var(--tgui--button_color);
+}
+
+.mdxeditor-popup-container {
+  z-index: 3;
+}
+
+.mdxeditor-select-content {
+  background-color: var(--tg_bg_color) !important;
+  color: var(--tgui--text_color);
+}
