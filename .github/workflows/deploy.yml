@@ -37,7 +37,7 @@ jobs:
             docker compose down
             docker compose up --build -d
 
-      - name: Healthcheck - Verify site is up
+      - name: Healthcheck - Verify WEB_URL is accessible
         uses: appleboy/ssh-action@master
         with:
           host: ${{ vars.SERVER_HOST }}
@@ -46,13 +46,13 @@ jobs:
           port: ${{ vars.SERVER_PORT }}
           script: |
             retries=5
-            until curl -sf -o /dev/null http://localhost:8080; do
+            until curl -sf -o /dev/null "${{ secrets.WEB_URL }}"; do
               retries=$((retries - 1))
               if [ $retries -eq 0 ]; then
-                echo "Healthcheck failed: Site is not responding after 5 attempts"
+                echo "Healthcheck failed: WEB_URL is not accessible after 5 attempts"
                 exit 1
               fi
               echo "Healthcheck attempt failed. Retrying in 10 seconds..."
               sleep 10
             done
-            echo "Healthcheck passed: Site is up and running!"
+            echo "Healthcheck passed: WEB_URL is accessible!"
