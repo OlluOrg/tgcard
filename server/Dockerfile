@@ -4,11 +4,11 @@ FROM node:18
 # Устанавливаем рабочую директорию
 WORKDIR /var/www/html
 
-# Копируем package.json и package-lock.json
-COPY app/package.json app/package-lock.json ./
-
 # Устанавливаем зависимости
 RUN npm install
+
+# Копируем package.json и package-lock.json
+COPY app/package.json app/package-lock.json ./
 
 # Копируем исходный код приложения
 COPY app/ .
