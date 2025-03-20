@@ -37,6 +37,34 @@ jobs:
             docker compose down
             docker compose up --build -d
 
+      - name: Verify mongodb is up
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SERVER_PORT }}
+          script: |
+            until docker-compose exec mongodb mongo --eval "db.adminCommand('ping')"; do
+              echo "Waiting for mongodb to start..."
+              sleep 10
+            done
+            echo "mongodb is up and running!"
+
+      - name: Verify nodejs is up
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.SERVER_HOST }}
+          username: ${{ vars.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SERVER_PORT }}
+          script: |
+            until curl -sf -o /dev/null http://localhost:3001; do
+              echo "Waiting for nodejs to start..."
+              sleep 10
+            done
+            echo "nodejs is up and running!"
+
       - name: Healthcheck - Verify WEB_URL is accessible
         uses: appleboy/ssh-action@master
         with:
