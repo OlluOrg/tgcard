@@ -14,7 +14,7 @@ bot.on('message', async (msg) => {
         await bot.sendMessage(chatId, 'Ниже появится кнопка заполнения формы', {
             reply_markup: {
                 keyboard: [
-                    [{text: 'Сделать заказ йоу', web_app: {url: webUrl}}]
+                    [{text: 'Сделать заказ', web_app: {url: webUrl}}]
                 ]
             }
         });

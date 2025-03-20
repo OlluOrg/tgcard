@@ -3,7 +3,7 @@
 В папку tg-bot добавить файл `.env`, в нем указать токен бота и url
 на реакт приложение. 
 ```
-TELEGRAM_BOT_TOKEN=ТОКЕН
+BOT_TOKEN=ТОКЕН
 WEB_URL=URL
 ```
 

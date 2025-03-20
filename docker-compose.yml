@@ -1,16 +1,16 @@
 services:
   miniapp:
-    build: ./react-mini-app
+    build: ./miniapp
     ports:
       - "3002:3000"
     environment:
       - NODE_ENV=production
   bot:
-    build: ./tg-bot
+    build: ./bot
     ports:
       - "3003:3000"
     environment:
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - BOT_TOKEN=${BOT_TOKEN}
       - WEB_URL=${WEB_URL}
       - NODE_ENV=production
   web:
@@ -18,7 +18,7 @@ services:
     ports:
       - '80:80'
     volumes:
-      - ./server/app:/var/www/html
+      - ./server/app:/usr/src/app
       - ./server/config/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - nodejs
@@ -26,8 +26,8 @@ services:
   nodejs:
     build: ./server
     volumes:
-      - ./server/app:/var/www/html
-      - /var/www/html/node_modules
+      - ./server/app:/usr/src/app
+      - /usr/src/app/node_modules
     environment:
       DB_USERNAME: root
       DB_PASSWORD: secret

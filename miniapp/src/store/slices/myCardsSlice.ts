@@ -173,7 +173,7 @@ const myCardsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(readBusinessCards.rejected, (state) => {
-                alert('ЛЕХА ВЫЗЫВАЙ МУСОРОВ КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
+                alert('Warning КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
             })
             .addCase(readBusinessCards.fulfilled, (state, action: PayloadAction<TCard[]>) => {
                 state.cards = action.payload;
