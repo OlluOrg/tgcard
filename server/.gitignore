@@ -1,0 +1,7 @@
+.DS_Store
+data/
+!data/README.md
+backups/
+app/vendor/
+app/composer.lock
+node_modules/

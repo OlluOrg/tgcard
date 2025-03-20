@@ -1,0 +1,57 @@
+.cardList {
+    padding-bottom: 82px;
+  }
+  
+  .modalAddBtns {
+    margin-bottom: 30px;
+    padding: 10px 22px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  
+    button {
+      margin: 0;
+    }
+  }
+  
+  .modalDelete {
+    display: flex;
+    align-items: center;
+    flex-direction: column;  
+  }
+  
+  .modalDeleteBtns {
+    margin-bottom: 30px;
+    margin-top: 20px;
+    padding: 10px 60px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  
+    button {
+      margin: 0;
+    }
+  }
+  
+  .inputContainer {
+    margin-bottom: 16px;
+  }
+  
+  .errorText {
+    color: var(--tgui--destructive_text_color);
+    font-size: 12px;
+    margin-top: 4px;
+    padding: 0 16px;
+  }
+  
+  .inputGroup {
+    margin-bottom: 16px;
+    position: relative;
+  }
+  
+  .errorMessage {
+    color: var(--tgui--destructive_text_color);
+    font-size: 12px;
+    margin-top: 4px;
+    padding: 0 16px;
+  }

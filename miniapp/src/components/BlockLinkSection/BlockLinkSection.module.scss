@@ -1,0 +1,29 @@
+.sectionContainer {
+  width: 100%;
+  background-color: rgba(97, 97, 97, 0.1);
+  height: 50px;
+  display: flex;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.texts {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sectionText {
+  text-align: center;
+  font-size: 16px;
+}
+
+.iconWrapper {
+  width: 60px;
+  background-color: var(--tgui--button_color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 6px 6px 0;
+}
