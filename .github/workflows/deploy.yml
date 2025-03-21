@@ -35,4 +35,4 @@ jobs:
             echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" > .env
             echo "WEB_URL=${{ secrets.WEB_URL }}" >> .env
             docker compose down
-            docker-compose --env-file example.env up --build -d
+            docker compose --env-file example.env up --build -d
