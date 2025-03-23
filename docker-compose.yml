@@ -41,7 +41,7 @@ services:
     restart: always
 
   mongodb:
-    image: "mongo:6.0"
+    image: mongodb/mongodb-community-server:4.4.3-ubuntu2004
     volumes:
       - ./server/data:/data/db
     restart: always
