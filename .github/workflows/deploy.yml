@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ vars.SERVER_PORT }}
           source: "."
-          target: "/root/tgcard"
+          target: "/home/sergey/tgcard"
 
       - name: Deploy using Docker Compose
         uses: appleboy/ssh-action@master
@@ -32,7 +32,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ vars.SERVER_PORT }}
           script: |
-            cd /sergey/tgcard
+            cd /home/sergey/tgcard
             echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" > .env
             echo "WEB_URL=${{ secrets.WEB_URL }}" >> .env
             docker compose down
