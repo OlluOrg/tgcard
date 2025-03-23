@@ -4,7 +4,7 @@ services:
   miniapp:
     build: ./miniapp
     ports:
-      - "3002:3000"
+      - "80:3000"
     environment:
       - NODE_ENV=production
 
@@ -17,15 +17,15 @@ services:
       - WEB_URL=${WEB_URL}
       - NODE_ENV=production
 
-  web:
-    image: nginx:latest
-    ports:
-      - '8080:80'
-    volumes:
-      - ./server/app:/usr/src/app
-      - ./server/config/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - nodejs
+  # web:
+  #   image: nginx:latest
+  #   ports:
+  #     - '80:80'
+  #   volumes:
+  #     - ./server/app:/usr/src/app
+  #     - ./server/config/default.conf:/etc/nginx/conf.d/default.conf
+  #   depends_on:
+  #     - nodejs
 
   nodejs:
     build: ./server
@@ -41,7 +41,7 @@ services:
     restart: always
 
   mongodb:
-    image: "mongo:6.0"
+    image: "mongo:4.4"
     volumes:
       - ./server/data:/data/db
     restart: always

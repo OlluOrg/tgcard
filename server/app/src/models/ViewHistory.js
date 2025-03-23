@@ -35,26 +35,50 @@ viewHistorySchema.statics.addOrUpdateView =  function(userId, cardId) {
 
 // Метод для получения истории просмотров по userId
 viewHistorySchema.statics.getViewsByUser = function(userId) {
-    // Используем агрегацию для объединения коллекций и фильтрации данных
     return BusinessCard.aggregate([
-      {
-        $lookup: {
-          from: constants.COLLECTION_VIEW_HISTORY, // Имя коллекции viewHistory
-          localField: '_id',       // Поле в businessCardSchema для соединения
-          foreignField: 'cardId',   // Поле в viewHistorySchema для соединения
-          as: "viewHistory"          // Имя поля, содержащего массив viewHistory
+        {
+            $lookup: {
+                from: constants.COLLECTION_VIEW_HISTORY, // Имя коллекции viewHistory
+                localField: '_id',       // Поле в businessCardSchema для соединения
+                foreignField: 'cardId',   // Поле в viewHistorySchema для соединения
+                as: "viewHistory"          // Имя поля, содержащего массив viewHistory
+            }
+        },
+        {
+            $unwind: "$viewHistory" // Разворачиваем массив viewHistory
+        },
+        {
+            $match: {
+                'viewHistory.userId': userId // Фильтруем по userId в viewHistory
+            }
+        },
+        {
+            $sort: {
+                'viewHistory.lastViewedAt': -1 // Сортировка по полю lastViewedAt (по убыванию)
+            }
+        },
+        {
+            $group: {
+                _id: "$_id", // Группируем обратно по _id бизнес-карты
+                businessCardData: { $first: "$$ROOT" }, // Сохраняем данные бизнес-карты
+                lastViewedAt: { $first: "$viewHistory.lastViewedAt" } // Сохраняем только lastViewedAt
+            }
+        },
+        {
+            $replaceRoot: {
+                newRoot: {
+                    $mergeObjects: [
+                        "$businessCardData", // Все поля из businessCardSchema
+                        { lastViewedAt: "$lastViewedAt" } // Добавляем lastViewedAt
+                    ]
+                }
+            }
+        },
+        {
+            $project: {
+                viewHistory: 0 // Убираем поле viewHistory из результата
+            }
         }
-      },
-      {
-        $match: {
-          'viewHistory.userId': userId // Фильтруем по userId в viewHistory
-        }
-      },
-      {
-        $project: {
-          viewHistory: 0 // Исключаем поле viewHistory из результата (необязательно)
-        }
-      }
     ]).exec();
 };
 
