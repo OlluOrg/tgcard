@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.tgcard.sknyazev.ru:3001";
+const BASE_URL = "https://api.tgcard.sknyazev.ru";
 
 const apiService = {
     post: async <T>(action: string, data: object={}): Promise<T> => {
