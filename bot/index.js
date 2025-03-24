@@ -1,22 +1,20 @@
 require('dotenv').config();
-const token = process.env.BOT_TOKEN;
-
-const TelegramBot = require('node-telegram-bot-api');
-const bot = new TelegramBot(token, {polling: true});
-
-const webUrl = process.env.WEB_URL;
-
-bot.on('message', async (msg) => {
-    const chatId = msg.chat.id;
-    const text = msg.text;
-
-    if (text === '/start') {
-        await bot.sendMessage(chatId, 'Ниже появится кнопка заполнения формы', {
-            reply_markup: {
-                keyboard: [
-                    [{text: 'Сделать заказ', web_app: {url: webUrl}}]
-                ]
-            }
-        });
-    }
-});
+ 
+ const TelegramBot = require('node-telegram-bot-api');
+ 
+ const { BOT_TOKEN, WEB_URL } = process.env;
+ const token = BOT_TOKEN;
+ const webUrl = WEB_URL;
+ 
+ const bot = new TelegramBot(token, { polling: true });
+ 
+ bot.onText(/\/start/, (msg) => {
+   const chatId = msg.chat.id;
+   bot.sendMessage(chatId, "Привет! Нажми на кнопку чтобы создать визитку", {
+     "reply_markup": {
+       "keyboard": [[{ text: "Создать визитку", web_app: {url: webUrl} }]]
+     }
+   });
+ });
+ 
+ console.log('Бот успешно запущен...');
