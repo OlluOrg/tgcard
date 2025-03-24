@@ -40,17 +40,17 @@ services:
       - '3001:3000'
     restart: always
 
-  #mongodb:
-  #  image: mongodb/mongodb-community-server:4.4.3-ubuntu2004
-  #  volumes:
-  #    - ./server/data:/data/db
-  #  restart: always
-  #  environment:
-  #    MONGO_INITDB_ROOT_USERNAME: root
-  #    MONGO_INITDB_ROOT_PASSWORD: secret
-  #    MONGO_INITDB_DATABASE: businessCards
-  #  ports:
-  #    - "27018:27017"
+  mongodb:
+    image: mongodb/mongodb-community-server:4.4.3-ubuntu2004
+    volumes:
+      - ./server/data:/data/db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_DATABASE: businessCards
+    ports:
+      - "27018:27017"
 
 volumes:
   node_modules:
