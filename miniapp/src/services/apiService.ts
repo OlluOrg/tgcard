@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost";
+const BASE_URL = "http://localhost:3001";
 
 const apiService = {
     post: async <T>(action: string, data: object={}): Promise<T> => {
