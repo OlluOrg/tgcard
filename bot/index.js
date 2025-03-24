@@ -8,7 +8,7 @@ require('dotenv').config();
  
  const bot = new TelegramBot(token, { polling: true });
  
- bot.onText(/\/start/, (msg) => {
+ bot.onText(/\/start/, async (msg) => {
    const appUrl = 'https://tgcard.sknyazev.ru/' + `?userId=${msg.from.id}`;
    const chatId = msg.chat.id;
 
