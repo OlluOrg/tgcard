@@ -164,7 +164,7 @@ const myCardsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(readBusinessCards.rejected, (state) => {
-                alert('ЛЕХА ВЫЗЫВАЙ МУСОРОВ КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
+                console.log('КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
             })
             .addCase(readBusinessCards.fulfilled, (state, action: PayloadAction<TCard[]>) => {
                 state.cards = action.payload;
@@ -179,11 +179,9 @@ const myCardsSlice = createSlice({
                 console.log(`Удалено ${action.payload} карточек`);
             })
             .addCase(readOneBusinessCard.fulfilled, (state, action: PayloadAction<TCard>) => {
-                state.cards.push(action.payload);
-                state.selectedCardId = action.payload.businessCardId!
             })
             .addCase(getHistory.rejected, (state) => {
-                alert('ЛЕХА ВЫЗЫВАЙ МУСОРОВ ИСТОРИЯ НЕ ПРОЧИТАЛАСЬ С БЕКА')
+                console.log("Истории не прочитались с бэка");
             })
             .addCase(getHistory.fulfilled, (state, action: PayloadAction<TCardHistory[]>) => {
                 state.viewHistory = action.payload;
