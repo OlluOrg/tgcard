@@ -1,18 +1,19 @@
-﻿import {TCard, TSection, TypeSectionEnum} from "../../types/types";
+import {TCard, TCardHistory, TCardWithUserId, TSection, TypeSectionEnum} from "../../types/types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
     createBusinessCard,
     deleteBusinessCard,
-    readBusinessCards,
+    readBusinessCards, readOneBusinessCard,
     updateBusinessCards
 } from "../apiThunks/businessCardThunks";
 import {setDescriptionNewCard} from "./cardSlice";
+import {addHistory, getHistory} from "../apiThunks/historyThunks";
 
 interface MyCardsState {
     cards: TCard[],
     selectedCardId: string | null,
     selectedSectionId: number | null,
-    viewHistory: TCard[],
+    viewHistory: TCardHistory[],
 }
 
 const initialState: MyCardsState = {
@@ -29,7 +30,7 @@ const myCardsSlice = createSlice({
         addCard: (state, action: PayloadAction<{title: string, description: string}>) => {
             const newCard: TCard = {
                 id: state.cards.length + 1,
-                date: new Date().toLocaleDateString(),
+                date: new Date(),
                 title: action.payload.title,
                 description: action.payload.description,
                 sections: [],
@@ -46,16 +47,6 @@ const myCardsSlice = createSlice({
         },
         selectCard: (state, action: PayloadAction<{selectedCardId: string | null }>) => {
             state.selectedCardId = action.payload.selectedCardId;
-                    
-            if (action.payload.selectedCardId !== null) {
-                const selectedCard = state.cards.find(card => card.businessCardId === action.payload.selectedCardId);
-                if (selectedCard) {
-                    myCardsSlice.caseReducers.addToViewHistory(state, {
-                        type: 'myCards/addToViewHistory',
-                        payload: selectedCard,
-                    });
-                }
-            }
         },
         deleteCard: (state) => {
             state.cards = state.cards.filter(card => card.businessCardId !== state.selectedCardId);
@@ -158,7 +149,7 @@ const myCardsSlice = createSlice({
             const cardToUpdate: TCard = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             cardToUpdate.sections = action.payload.newSections;
         },
-        addToViewHistory: (state, action: PayloadAction<TCard>) => {
+        addToViewHistory: (state, action: PayloadAction<TCardHistory>) => {
             const card = action.payload;
 
             const cardIndex = state.viewHistory.findIndex(c => c.id === card.id);
@@ -173,7 +164,7 @@ const myCardsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(readBusinessCards.rejected, (state) => {
-                alert('Warning КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
+                alert('ЛЕХА ВЫЗЫВАЙ МУСОРОВ КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
             })
             .addCase(readBusinessCards.fulfilled, (state, action: PayloadAction<TCard[]>) => {
                 state.cards = action.payload;
@@ -186,6 +177,19 @@ const myCardsSlice = createSlice({
             })
             .addCase(deleteBusinessCard.fulfilled, (state, action: PayloadAction<number>) => {
                 console.log(`Удалено ${action.payload} карточек`);
+            })
+            .addCase(readOneBusinessCard.fulfilled, (state, action: PayloadAction<TCard>) => {
+                state.cards.push(action.payload);
+                state.selectedCardId = action.payload.businessCardId!
+            })
+            .addCase(getHistory.rejected, (state) => {
+                alert('ЛЕХА ВЫЗЫВАЙ МУСОРОВ ИСТОРИЯ НЕ ПРОЧИТАЛАСЬ С БЕКА')
+            })
+            .addCase(getHistory.fulfilled, (state, action: PayloadAction<TCardHistory[]>) => {
+                state.viewHistory = action.payload;
+            })
+            .addCase(addHistory.fulfilled, (state, action: PayloadAction<string>) => {
+                console.log(action.payload);
             })
     }
 })

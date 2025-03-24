@@ -1,7 +1,6 @@
 import apiService from "./apiService";
 import {BusinessCardCreate, BusinessCardDelete, BusinessCardRead, BusinessCardUpdate} from "./apiTypes";
 import {API_ACTIONS} from "./constants";
-import {TCard} from "../types/types";
 
 const businessCardService = {
     create: async (data: any): Promise<BusinessCardCreate> => {
@@ -12,10 +11,17 @@ const businessCardService = {
         return response;
     },
 
-    read: async (userId?: string, businessCardId?: string): Promise<BusinessCardRead[]> => {
+    read: async (userId: string): Promise<BusinessCardRead[]> => {
         const response = await apiService.post<BusinessCardRead[]>(API_ACTIONS.BUSINESS_CARD.READ, {
-            userId: userId,
-            businessCardId: businessCardId,
+            userId: userId
+        });
+
+        return response;
+    },
+
+    readOne: async (businessCardId?: string): Promise<BusinessCardRead> => {
+        const response = await apiService.post<BusinessCardRead>(API_ACTIONS.BUSINESS_CARD.READ, {
+            id: businessCardId,
         });
 
         return response;

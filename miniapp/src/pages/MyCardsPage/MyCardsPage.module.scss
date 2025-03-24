@@ -2,6 +2,27 @@
   padding-bottom: 82px;
 }
 
+.cardList {
+    width: 100%;
+}
+
+.emptyState {
+    text-align: center;
+    margin-top: 180px;
+}
+
+.emptyStateTitle {
+    font-size: 40px; /* Большой текст */
+    font-weight: bold;
+    color: #ffffffa8; /* Цвет текста */
+    margin-bottom: 8px; /* Отступ между заголовком и подзаголовком */
+}
+
+.emptyStateSubtitle {
+    font-size: 16px; /* Меньший текст */
+    color: #dddddd7e; /* Более светлый цвет */
+}
+
 .modalAddBtns {
   margin-bottom: 30px;
   padding: 10px 22px;

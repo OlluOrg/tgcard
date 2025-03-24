@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import {setAspectRatio, setImageData} from "../store/slices/imageSlice";
 
-// const token = process.env.BOT_TOKEN;
+// const token = process.env.TELEGRAM_BOT_TOKEN;
 const token = '7807600538:AAFn3lhc239Gq86RwH04gOjEumhWfIQt4aw';
 
 export async function imageUpload(event: React.ChangeEvent<HTMLInputElement>) {

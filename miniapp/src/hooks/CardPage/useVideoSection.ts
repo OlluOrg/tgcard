@@ -8,7 +8,6 @@ import {
 import {addVideoSection, editVideoSection} from "../../store/slices/myCardsSlice";
 import {setLinkVideoInput, setVideoError} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {USER_ID} from "../../services/constants";
 
 const useVideoSection = () => {
     const dispatch = useAppDispatch();
@@ -19,14 +18,14 @@ const useVideoSection = () => {
         dispatch(editVideoSection({link: linkVideoInput}));
         dispatch(setIsModalEditVideoSectionOpen(false));
 
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const handleAddVideo = () => {
         dispatch(addVideoSection({link: linkVideoInput}));
         dispatch(setIsModalEditVideoSectionOpen(false));
 
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const closeModalEditVideo = () => {

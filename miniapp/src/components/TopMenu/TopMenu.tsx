@@ -9,11 +9,11 @@ const TopMenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Синхронизация состояния с URL
     useEffect(() => {
         const currentTab = location.pathname === ROUTES.HISTORY ? 'history' : 'myCard';
         setCurrentTopTab(currentTab);
     }, [location]);
+
     const selectTopTab = (idTab: string) => {
         const route = idTab === 'myCard' ? ROUTES.MY_CARDS : ROUTES.HISTORY;
         setCurrentTopTab(idTab);

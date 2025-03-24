@@ -40,7 +40,7 @@ const Section = (props: SectionProps) => {
     
     return (
         <div
-            className={styles.section}
+            className={`${styles.section} ${props.isSelected ? styles.selected : ''}`}
         >
             {renderSection(props.section.typeSectionEnum)}
         </div>

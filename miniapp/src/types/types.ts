@@ -7,11 +7,27 @@ type TSection = {
 
 type TCard = {
     id: number,
+    businessCardId?: string,
+    userId?: string,
+    title: string,
+    description: string,
+    date: Date,
+    sections: TSection[],
+}
+
+type TCardWithUserId = {
+    card: TCard,
+    userId: string,
+}
+
+type TCardHistory  = {
+    id: number,
     businessCardId?: string
     title: string,
     description: string,
-    date: string,
+    date: Date,
     sections: TSection[],
+    lastViewedAt: Date,
 }
 
 export enum TypeSectionEnum {
@@ -52,4 +68,6 @@ export {
     type TVideoSection,
     type TDivider,
     type TImageSection,
+    type TCardHistory,
+    type TCardWithUserId
 }

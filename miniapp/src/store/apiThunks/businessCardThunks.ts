@@ -10,9 +10,9 @@ import {
     TypeSectionEnum
 } from "../../types/types";
 import {RootState} from "../store";
-import {USER_ID} from "../../services/constants";
+import {getUserId} from "../../utils/getUserId";
 
-export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolean = true) => {
+export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolean = true, userId: string = '') => {
     const transformedSections = frontendData.sections.length === 0 ? [] : frontendData.sections.map((section) => {
         switch (section.typeSectionEnum) {
             case TypeSectionEnum.text:
@@ -57,7 +57,7 @@ export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolea
 
     if (isCreate) {
         return {
-            userId: USER_ID,
+            userId: userId,
             data: {
                 id: frontendData.id.toString(),
                 title: frontendData.title,
@@ -79,12 +79,12 @@ export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolea
 
 export const createBusinessCard = createAsyncThunk(
     'businessCards/create',
-    async (payload: TCard, {rejectWithValue}) => {
+    async (payload: { card: TCard }, {rejectWithValue}) => {
         try {
-            const response = await businessCardService.create(transformFrontendToBackend(payload));
-            console.log(response);
+            const userId = getUserId();
+            const response = await businessCardService.create(transformFrontendToBackend(payload.card, true, userId));
 
-            const card: TCard = payload;
+            const card: TCard = payload.card;
             card.businessCardId = response.id;
 
             return card;
@@ -96,15 +96,16 @@ export const createBusinessCard = createAsyncThunk(
 
 export const readBusinessCards = createAsyncThunk(
     'businessCards/read',
-    async (payload: {userId?: string, businessCardId?: string}, {rejectWithValue}) => {
+    async (payload: {}, {rejectWithValue}) => {
         try {
-            const response = await businessCardService.read(payload.userId, payload.businessCardId);
+            const userId = getUserId();
+            const response = await businessCardService.read(userId);
 
-            console.log(response)
             const cards: TCard[] = response.map(businessCard => {
                 return {
                     ...businessCard.data as TCard,
                     businessCardId: businessCard._id,
+                    userId: businessCard.userId
                 }
             })
 
@@ -115,15 +116,36 @@ export const readBusinessCards = createAsyncThunk(
     }
 );
 
+export const readOneBusinessCard = createAsyncThunk(
+    'businessCards/readOne',
+    async (payload: { businessCardId?: string }, {rejectWithValue}) => {
+        try {
+            const response = await businessCardService.readOne(payload.businessCardId);
+
+            const card = {
+                ...response.data as TCard,
+                businessCardId: response._id,
+                userId: response.userId
+            } as TCard
+
+            //alert(JSON.stringify(card, null, 2));
+
+            return card;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
 export const updateBusinessCards = createAsyncThunk(
     'businessCards/update',
-    async (payload: {userId?: string}, {getState, rejectWithValue}) => {
+    async (payload: {}, {getState, rejectWithValue}) => {
         try {
             const state = getState() as RootState;
             const updatedCard: TCard = state.myCards.cards.find(card => card.businessCardId === state.myCards.selectedCardId)!;
-            console.log('newCard', updatedCard);
+
             const businessCard = transformFrontendToBackend(updatedCard, false);
-            console.log('updateBusinessCards.businessCard', businessCard);
+
             const response = await businessCardService.update(updatedCard.businessCardId!, businessCard);
 
             return response.modifiedCount;

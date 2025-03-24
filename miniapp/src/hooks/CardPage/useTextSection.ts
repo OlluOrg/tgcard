@@ -1,11 +1,10 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {setIsEditBlock, setIsModalChooseSectionOpen, setIsModalEditTextOpen} from "../../store/slices/modalsCardPageSlice";
 import {addTextSection, editTextSection} from "../../store/slices/myCardsSlice";
 import {setMarkdown, setMarkdownError} from "../../store/slices/textSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {TCard, TSection, TSectionText} from "../../types/types";
-import {USER_ID} from "../../services/constants";
+import {TCard} from "../../types/types";
 
 const useTextSection = () => {
     const dispatch = useAppDispatch();
@@ -39,7 +38,7 @@ const useTextSection = () => {
         dispatch(editTextSection({text: markdown}));
         dispatch(setMarkdown(''));
 
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const handleAddText = () => {
@@ -47,7 +46,7 @@ const useTextSection = () => {
         dispatch(addTextSection({text: markdown}));
         dispatch(setMarkdown(''));
 
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const handleChooseTextSection = () => {

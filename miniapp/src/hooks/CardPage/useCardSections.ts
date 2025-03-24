@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {
-    deleteSection,
+    deleteSection, selectCard,
     selectSection,
 } from "../../store/slices/myCardsSlice";
 import {generatePath, useNavigate} from "react-router-dom";
@@ -16,7 +16,6 @@ import {setNameBlockLinkInput} from "../../store/slices/linkSlice";
 import {setMarkdown} from "../../store/slices/textSlice";
 import {setLinkVideoInput} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {USER_ID} from "../../services/constants";
 
 
 export const useCardSections = () => {
@@ -64,14 +63,14 @@ export const useCardSections = () => {
 
     const handleDelete = () => {
         dispatch(deleteSection());
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const handleDone = () => {
         dispatch(selectSection({selectedSectionId: null}));
+        dispatch(selectCard({selectedCardId: null}))
         const url = generatePath(ROUTES.MY_CARDS);
         navigate(url);
-
     };
 
     return {
