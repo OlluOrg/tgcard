@@ -12,7 +12,7 @@ require('dotenv').config();
    const chatId = msg.chat.id;
    bot.sendMessage(chatId, "Привет! Нажми на кнопку чтобы создать визитку", {
      "reply_markup": {
-       "keyboard": [[{ text: "Создать визитку", web_app: {url: webUrl} }]]
+       "keyboard": [[{ text: "Создать визитку", web_app: {url: 'https://tgcard.sknyazev.ru/'} }]]
      }
    });
  });
