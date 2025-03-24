@@ -1,3 +1,15 @@
+html, body {
+  overflow-x: hidden; // Убираем горизонтальный скролл
+  max-width: 100vw;
+  touch-action: manipulation;
+  word-wrap: break-word;
+}
+
+div {
+  box-sizing: border-box;
+  max-width: 100%; // Ограничиваем ширину всех div
+}
+
 .card {
   padding-top: 20px;
   padding-bottom: 56px;
@@ -10,6 +22,7 @@
   display: flex;
   align-items: stretch;
   border: 2px solid transparent;
+  overflow-y: hidden;
 }
 
 //.dragHandle {
@@ -30,14 +43,35 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  max-width: 100vw;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+}
 
-  button {
-    margin: 0;
-  }
+.SectionList * {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.SectionList div {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.SectionList p {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .mdx {
   color: var(--tgui--text_color);
+  width: 100%;
+  max-width: 100%;
 
   span, em, strong {
     color: var(--tgui--text_color);
@@ -45,24 +79,18 @@
 
   p {
     padding-left: 10px;
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
   }
 
   ul, ol {
     padding-left: 30px;
+    max-width: 100%;
   }
 
   li::marker, ol::marker {
     color: var(--tgui--button_color);
   }
-}
-
-.errorMessage {
-  color: var(--tgui--destructive_text_color);
-  font-size: 12px;
-  margin-top: 4px;
-  padding: 0 16px;
-}
-
-.inputGroup {
-  margin-bottom: 16px;
 }

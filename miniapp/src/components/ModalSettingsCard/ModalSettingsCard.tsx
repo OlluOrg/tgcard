@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { setIsModalSettingsOpen } from "../../store/slices/modalsMyCardsSlice";
 import { setDescriptionNewCard, setNameNewCard } from "../../store/slices/cardSlice";
 import useCard from "../../hooks/MyCards/useCard";
+import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 
 const ModalSettingsCard = () => {
     const dispatch = useAppDispatch();

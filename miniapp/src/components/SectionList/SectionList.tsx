@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import {
     closestCenter,
     DndContext,
@@ -11,14 +11,17 @@ import {restrictToWindowEdges} from "@dnd-kit/modifiers";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import styles from "../../pages/CardPage/CardPage.module.scss";
 import SortableSection from "../SortableSection/SortableSection";
-import {updateCards, updateCardSections} from "../../store/slices/myCardsSlice";
+import {updateCardSections} from "../../store/slices/myCardsSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCardSections from "../../hooks/CardPage/useCardSections";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 
-const SectionList = () => {
-    const dispatch = useAppDispatch();
+interface SectionListProps {
+    isGuest: boolean;
+}
 
+const SectionList = (props: SectionListProps) => {
+    const dispatch = useAppDispatch();
     const {handleSectionClick} = useCardSections();
     const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards);
     let card = cards.find(card => card.businessCardId === selectedCardId)!;
@@ -40,6 +43,9 @@ const SectionList = () => {
 
     const sensors = useSensors(
         ...useMemo(() => {
+            if (props.isGuest) {
+                return [];
+            }
             const sensorsArray = [];
 
             if (!isTouchDevice) {
@@ -55,6 +61,9 @@ const SectionList = () => {
     );
 
     const handleDragEnd = (event: DragEndEvent) => {
+        if (props.isGuest) {
+            return;
+        }
         const { active, over } = event;
         if (!over || active.id === over.id) return;
 
@@ -73,6 +82,10 @@ const SectionList = () => {
         dispatch(updateCardSections({newSections: updatedSections}));
         dispatch(updateBusinessCards({}))
     };
+
+    if (!card) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <DndContext

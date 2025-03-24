@@ -1,0 +1,21 @@
+.cardList {
+    width: 100%;
+    padding: 20px;
+}
+
+.emptyState {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.emptyStateTitle {
+    font-size: 48px; /* Большой текст */
+    font-weight: bold;
+    color: #333; /* Цвет текста */
+    margin-bottom: 8px; /* Отступ между заголовком и подзаголовком */
+}
+
+.emptyStateSubtitle {
+    font-size: 16px; /* Меньший текст */
+    color: #666; /* Более светлый цвет */
+}

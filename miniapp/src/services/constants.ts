@@ -5,6 +5,10 @@ export const API_ACTIONS = {
         UPDATE: 'businessCard.update',
         DELETE: 'businessCard.delete',
     },
+    HISTORY: {
+        ADD: 'viewHistory.addView',
+        GET: 'viewHistory.getViews',
+    }
 }
 
-export const USER_ID = 'BalbesKirill'
+//export const USER_ID = 'BalbesKirill'

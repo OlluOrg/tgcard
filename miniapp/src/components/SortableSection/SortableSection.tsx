@@ -39,7 +39,7 @@ const SortableSection = ({ section, onClick, isSelected }: {
             style={style}
             {...attributes}
             {...listeners}
-            className={`${cardStyles.sectionWrapper} ${isSelected ? cardStyles.selected : ''}`}
+            className={`${cardStyles.sectionWrapper} ${isSelected ? styles.selected : ''}`}
             onClick={onClick}
         >
             {isSelected && (

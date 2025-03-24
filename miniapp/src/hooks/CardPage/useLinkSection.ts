@@ -4,7 +4,6 @@ import {useAppDispatch, useAppSelector} from "../hooks";
 import {addLinkSection, editLinkSection} from "../../store/slices/myCardsSlice";
 import {setLinkBlockLinkInput, setLinkError, setNameBlockLinkInput, setNameError} from "../../store/slices/linkSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {USER_ID} from "../../services/constants";
 
 const useLinkSection = () => {
     const dispatch = useAppDispatch();
@@ -41,14 +40,14 @@ const useLinkSection = () => {
         dispatch(setIsModalEditBlockLinkOpen(false));
         dispatch(addLinkSection({link: linkBlockLinkInput, title: nameBlockLinkInput}));
 
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const handleEditBlockLink = () => {
         dispatch(editLinkSection({link: linkBlockLinkInput, title: nameBlockLinkInput}));
         dispatch(setIsModalEditBlockLinkOpen(false));
 
-        dispatch(updateBusinessCards({userId: USER_ID}))
+        dispatch(updateBusinessCards({}))
     };
 
     const closeModalEditBlockLink = () => {

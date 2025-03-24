@@ -9,10 +9,12 @@ require('dotenv').config();
  const bot = new TelegramBot(token, { polling: true });
  
  bot.onText(/\/start/, (msg) => {
+   const appUrl = 'https://tgcard.sknyazev.ru/' + `?userId=${msg.from.id}`;
    const chatId = msg.chat.id;
-   bot.sendMessage(chatId, "Привет! Нажми на кнопку чтобы создать визитку", {
+
+   await bot.sendMessage(chatId, "Привет! Нажми на кнопку чтобы создать визитку", {
      "reply_markup": {
-       "keyboard": [[{ text: "Создать визитку", web_app: {url: 'https://tgcard.sknyazev.ru/'} }]]
+       "keyboard": [[{ text: "Создать визитку", web_app: {url: appUrl} }]]
      }
    });
  });

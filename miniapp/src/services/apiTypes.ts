@@ -31,3 +31,14 @@ export interface ApiResponse {
     status: "success" | "error";
     message?: string;
 }
+
+export interface HistoryRead {
+    _id: string;
+    userId: string;
+    lastViewedAt: Date;
+    data: Record<string, any>;
+}
+
+export interface HistoryAdd {
+    status: "success" | "error";
+}
