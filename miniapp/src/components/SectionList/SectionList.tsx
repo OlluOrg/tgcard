@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import {
     closestCenter,
     DndContext,
-    DragEndEvent, PointerSensor,
+    DragEndEvent, PointerSensor, rectIntersection,
     TouchSensor,
     useSensor,
     useSensors
 } from "@dnd-kit/core";
-import {restrictToWindowEdges} from "@dnd-kit/modifiers";
+import {restrictToVerticalAxis, restrictToWindowEdges} from "@dnd-kit/modifiers";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import styles from "../../pages/CardPage/CardPage.module.scss";
 import SortableSection from "../SortableSection/SortableSection";
@@ -90,23 +90,29 @@ const SectionList = (props: SectionListProps) => {
     return (
         <DndContext
             sensors={sensors}
-            collisionDetection={closestCenter}
+            collisionDetection={rectIntersection}
             onDragEnd={handleDragEnd}
-            modifiers={[restrictToWindowEdges]}
+            modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
         >
             <SortableContext
                 items={card.sections}
                 strategy={verticalListSortingStrategy}
             >
                 <div className={styles.card}>
-                    {card.sections.map((section) => (
-                        <SortableSection
-                            key={section.id}
-                            section={section}
-                            onClick={() => handleSectionClick(section.id)}
-                            isSelected={section.id === selectedSectionId}
-                        />
-                    ))}
+                    {card.sections.length === 0 ? (
+                        <div className={styles.emptyState}>
+                            <p className={styles.emptyStateTitle}>Тут пока пусто...</p>
+                            <p className={styles.emptyStateSubtitle}>но вы можете добавить секцию</p>
+                        </div>
+                    ) : (card.sections.map((section) => (
+                            <SortableSection
+                                key={section.id}
+                                section={section}
+                                onClick={() => handleSectionClick(section.id)}
+                                isSelected={section.id === selectedSectionId}
+                            />
+                        ))
+                    )}
                 </div>
             </SortableContext>
         </DndContext>

@@ -7,16 +7,16 @@ type ImageSectionProps = {
 }
 
 const ImageSection = (props: ImageSectionProps) => {
-    const [imageWidth, setImageWidth] = useState(window.innerWidth - 40);
-    const [imageHeight, setImageHeight] = useState((window.innerWidth - 40) / props.img.aspectRatio);
+    const [imageWidth, setImageWidth] = useState(window.innerWidth - 44);
+    const [imageHeight, setImageHeight] = useState((window.innerWidth - 44) / props.img.aspectRatio);
     const [imageLink, setImageLink] = useState<string>('');
 
     useEffect(() => {
         getFileLink(props.img.src).then((link) => setImageLink(link))
 
         const handleResize = () => {
-            setImageWidth(window.innerWidth - 80);
-            setImageHeight((window.innerWidth - 80) / props.img.aspectRatio);
+            setImageWidth(window.innerWidth - 44);
+            setImageHeight((window.innerWidth - 44) / props.img.aspectRatio);
         };
 
         window.addEventListener('resize', handleResize);
