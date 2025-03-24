@@ -1,10 +1,10 @@
-const BASE_URL = "https://0.0.0.0:3001";
+// const BASE_URL = "https://0.0.0.0:3001";
 
 const apiService = {
     post: async <T>(action: string, data: object={}): Promise<T> => {
         try {
             console.log('api', JSON.stringify({action, ...data}));
-            const response = await fetch(BASE_URL, {
+            const response = await fetch('https://tgcard.sknyazev.ru:3001', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
