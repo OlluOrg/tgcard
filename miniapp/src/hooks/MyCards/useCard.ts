@@ -93,7 +93,7 @@ const useCards = () => {
     if (selectedCardId) {
       const link = generatePath(ROUTES.CARD, { cardId: selectedCardId });
       navigator.clipboard
-        .writeText(`https://t.me/card_bot?startapp=cardId_${selectedCardId}`)
+        .writeText(`https://t.me/tgcardi_bot?startapp=cardId_${selectedCardId}`)
         .then(() => {
           console.log(
             "Link copied to clipboard:",
