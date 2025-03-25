@@ -13,6 +13,7 @@ import {readOneBusinessCard} from "../../store/apiThunks/businessCardThunks";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
+import { useNavigate } from 'react-router-dom';
 import Loader from "../../components/Loader/Loader";
 import {closeAllModals} from "../../store/slices/modalsCardPageSlice";
 import {clearLinkSlice} from "../../store/slices/linkSlice";
@@ -21,6 +22,7 @@ import {clearVideoSlice} from "../../store/slices/videoSlice";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const {cardId} = useParams();
     const {cards, isLoading} = useAppSelector(state => state.myCards);
@@ -54,10 +56,6 @@ const CardPage = () => {
     if (isLoading || !currentCard) {
         return <Loader />
     }
-
-    const topTabs = [
-        { id: 'title', text: currentCard.title },
-    ];
 
     return (
         <div>
