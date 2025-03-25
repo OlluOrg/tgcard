@@ -8,7 +8,7 @@ import {
 import {
   setIsModalAddOpen,
   setIsModalDeleteOpen,
-  setIsModalSettingsOpen,
+  setIsModalSettingsOpen, setIsSnackbarCopyLinkOpen,
 } from "../../store/slices/modalsMyCardsSlice";
 import {
   addCard,
@@ -108,6 +108,7 @@ const useCards = () => {
       navigator.clipboard
         .writeText(`https://t.me/tgcardi_bot?startapp=cardId_${selectedCardId}`)
         .then(() => {
+          dispatch(setIsSnackbarCopyLinkOpen(true))
           console.log(
             "Link copied to clipboard:",
             `${window.location.origin}${link}`

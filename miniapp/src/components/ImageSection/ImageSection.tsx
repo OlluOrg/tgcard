@@ -28,7 +28,7 @@ const ImageSection = (props: ImageSectionProps) => {
 
     return (
         <>
-            <img src={imageLink} alt={''} width={imageWidth} height={imageHeight} style={{pointerEvents: "fill",borderRadius:10}}/>
+            <img src={imageLink} alt={''} width={imageWidth} height={imageHeight} style={{pointerEvents: "none",borderRadius:10}}/>
         </>
     );
 }
