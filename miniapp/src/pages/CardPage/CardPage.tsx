@@ -16,6 +16,7 @@ import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGu
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
+
     const {cardId} = useParams();
     const {cards} = useAppSelector(state => state.myCards);
     const userId: string = getUserId();
@@ -45,20 +46,26 @@ const CardPage = () => {
         return <div>LOADING...</div>
     }
 
+    const topTabs = [
+        { id: 'title', text: currentCard.title },
+    ];
+
     return (
         <div>
             <SectionList isGuest={userId !== userIdFromCard} />
-            {/*<div style={{ maxWidth: "100vw", overflowX: "hidden" }}>*/}
-                {userId === userIdFromCard ? <CardPageBottomMenu /> : <CardPageBottomMenuForGuest />}
 
-                <LinkModal />
+            {userId === userIdFromCard
+                ? <CardPageBottomMenu />
+                : <CardPageBottomMenuForGuest />
+            }
 
-                <ChooseSectionModal />
+            <LinkModal />
 
-                <TextModal />
+            <ChooseSectionModal />
 
-                <VideoModal />
-            {/*</div>*/}
+            <TextModal />
+
+            <VideoModal />
         </div>
     );
 };
