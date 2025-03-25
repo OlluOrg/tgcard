@@ -95,6 +95,13 @@ div {
   }
 }
 
+.errorMessage {
+  color: var(--tgui--destructive_text_color);
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 0 16px;
+}
+
 .emptyState {
   text-align: center;
   margin-top: 180px;
