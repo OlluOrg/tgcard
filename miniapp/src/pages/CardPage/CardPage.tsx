@@ -60,6 +60,10 @@ const CardPage = () => {
         return <Loader />
     }
 
+    const topTabs = [
+        { id: 'title', text: currentCard.title },
+    ];
+
     return (
         <div>
             <SectionList isGuest={userId !== userIdFromCard} />
