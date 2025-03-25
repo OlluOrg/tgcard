@@ -14,7 +14,6 @@ import {updateCardSections} from "../../store/slices/myCardsSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCardSections from "../../hooks/CardPage/useCardSections";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {Spinner} from "@telegram-apps/telegram-ui";
 import Loader from "../Loader/Loader";
 
 interface SectionListProps {
