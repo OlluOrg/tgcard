@@ -12,7 +12,7 @@ import {
     setIsModalEditVideoSectionOpen
 } from "../../store/slices/modalsCardPageSlice";
 import {TSection, TSectionBlockLink, TSectionText, TVideoSection, TypeSectionEnum} from "../../types/types";
-import {setNameBlockLinkInput} from "../../store/slices/linkSlice";
+import {setLinkBlockLinkInput, setNameBlockLinkInput} from "../../store/slices/linkSlice";
 import {setMarkdown} from "../../store/slices/textSlice";
 import {setLinkVideoInput} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
@@ -47,7 +47,7 @@ export const useCardSections = () => {
         if (selectSection.typeSectionEnum === TypeSectionEnum.blockLink) {
             const blockLink = selectSection.value as TSectionBlockLink;
             dispatch(setNameBlockLinkInput(blockLink.name));
-            dispatch(setNameBlockLinkInput(blockLink.name));
+            dispatch(setLinkBlockLinkInput(blockLink.link));
             dispatch(setIsModalEditBlockLinkOpen(true));
         }
         if (selectSection.typeSectionEnum === TypeSectionEnum.video) {

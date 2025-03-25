@@ -34,7 +34,6 @@ const ChooseSectionModal = () => {
     return (
         <>
             <Modal
-                header={<ModalHeader>Only iOS header</ModalHeader>}
                 open={isModalChooseSectionOpen}
                 onOpenChange={(open) => dispatch(setIsModalChooseSectionOpen(open))}
             >

@@ -1,7 +1,4 @@
 import React, {useRef} from 'react';
-import {
-    ModalHeader
-} from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import {setIsModalEditTextOpen} from "../../store/slices/modalsCardPageSlice";
 import {
     BlockTypeSelect,
@@ -29,17 +26,22 @@ const TextModal = () => {
 
     return (
         <Modal
-            header={<ModalHeader>Only iOS header</ModalHeader>}
             open={isModalEditTextOpen}
-            onOpenChange={(open) => dispatch(setIsModalEditTextOpen(open))}
+            onOpenChange={(open) => {
+                dispatch(setIsModalEditTextOpen(open));
+                if (!open) {
+                    dispatch(setMarkdown(''));
+                }
+            }}
         >
             <MDXEditor
                 className="dark-theme"
                 ref={editorRef}
                 markdown={markdown}
+                autoFocus={{defaultSelection: 'rootEnd'}}
                 onChange={(newMarkdown: string) => dispatch(setMarkdown(newMarkdown))}
                 contentEditableClassName={styles.mdx}
-                plugins={[listsPlugin(), headingsPlugin(), toolbarPlugin({
+                plugins={[listsPlugin(), headingsPlugin() ,toolbarPlugin({
                     toolbarContents: () =>
                         <>
                             <BoldItalicUnderlineToggles/>

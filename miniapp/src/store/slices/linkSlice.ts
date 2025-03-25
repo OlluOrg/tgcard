@@ -32,6 +32,13 @@ const linkSlice = createSlice({
         },
         setLinkError: (state, action: PayloadAction<string>) => {
             state.linkError = action.payload;
+        },
+        clearLinkSlice: (state) => {
+            state.nameBlockLinkInput = '';
+            state.linkBlockLinkInput = '';
+
+            state.nameError = '';
+            state.linkError = '';
         }
     }
 });
@@ -41,6 +48,7 @@ export const {
     setLinkBlockLinkInput,
     setNameError,
     setLinkError,
+    clearLinkSlice
 } = linkSlice.actions
 
 export const linkReducer = linkSlice.reducer;

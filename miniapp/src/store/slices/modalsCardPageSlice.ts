@@ -39,6 +39,14 @@ const modalsCardPageSlice = createSlice({
         },
         setIsModalEditImageOpen:(state, action: PayloadAction<boolean>) => {
             state.isModalEditImageOpen = action.payload;
+        },
+        closeAllModals: (state) => {
+            state.isEditBlock = false;
+            state.isModalEditBlockLinkOpen = false;
+            state.isModalChooseSectionOpen = false;
+            state.isModalEditVideoSectionOpen = false;
+            state.isModalEditTextOpen = false;
+            state.isModalEditImageOpen = false;
         }
     }
 });
@@ -50,6 +58,7 @@ export const {
     setIsModalEditVideoSectionOpen,
     setIsModalEditTextOpen,
     setIsModalEditImageOpen,
+    closeAllModals
 } = modalsCardPageSlice.actions;
 
 export const modalsCardPageReducer = modalsCardPageSlice.reducer;

@@ -21,9 +21,14 @@ const videoSlice = createSlice({
         },
         setVideoError: (state, action: PayloadAction<string>) => {
             state.videoError = action.payload;
+        },
+        clearVideoSlice: (state) => {
+            state.linkVideoInput = '';
+
+            state.videoError = '';
         }
     }
 });
 
-export const {setVideoError, setLinkVideoInput} = videoSlice.actions;
+export const {setVideoError, setLinkVideoInput, clearVideoSlice} = videoSlice.actions;
 export const videoReducer = videoSlice.reducer

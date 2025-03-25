@@ -14,6 +14,10 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
 import Loader from "../../components/Loader/Loader";
+import {closeAllModals} from "../../store/slices/modalsCardPageSlice";
+import {clearLinkSlice} from "../../store/slices/linkSlice";
+import {clearTextSlice} from "../../store/slices/textSlice";
+import {clearVideoSlice} from "../../store/slices/videoSlice";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
@@ -34,6 +38,10 @@ const CardPage = () => {
         Telegram.WebApp.BackButton.show();
 
         Telegram.WebApp.BackButton.onClick(() => {
+            dispatch(closeAllModals());
+            dispatch(clearLinkSlice());
+            dispatch(clearTextSlice());
+            dispatch(clearVideoSlice())
             window.history.back();
         });
 
