@@ -26,10 +26,13 @@ import {
 } from "../../store/apiThunks/businessCardThunks";
 import { TCard, TSection, TypeSectionEnum } from "../../types/types";
 import {addHistory} from "../../store/apiThunks/historyThunks";
+import {getUserId} from "../../utils/getUserId";
 
 const useCards = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const userId = getUserId();
 
   const { cards, selectedCardId } = useAppSelector((state) => state.myCards);
   const { nameNewCard, descriptionNewCard } = useAppSelector(
@@ -126,7 +129,7 @@ const useCards = () => {
     if (selectedCardId) {
       navigate(generatePath(ROUTES.CARD, { cardId: selectedCardId }));
 
-      dispatch(addHistory({userId: "BalbesKirill", businessCardId: selectedCardId}));
+      dispatch(addHistory({userId: userId, businessCardId: selectedCardId}));
     }
   };
 

@@ -5,16 +5,11 @@ import {Cell} from "@telegram-apps/telegram-ui";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCard from "../../hooks/MyCards/useCard";
 import {addHistory, getHistory} from "../../store/apiThunks/historyThunks";
+import {getUserId} from "../../utils/getUserId";
 
 const CardsHistoryList = () => {
-    const dispatch = useAppDispatch();
-
     const { viewHistory } = useAppSelector(state => state.myCards);
     const { selectedCardId } = useAppSelector(state => state.myCards);
-
-    useEffect(() => {
-        dispatch(getHistory({userId: "BalbesKirill"}))
-    }, []);
 
     const { handleCardClick } = useCard();
 

@@ -28,7 +28,7 @@ const CardPage = () => {
 
     useEffect(() => {
         dispatch(readOneBusinessCard({ businessCardId: cardId }));
-    }, [dispatch, cardId]);
+    }, [cardId]);
 
     const currentCard = useMemo(() => {
         return cards.find(card => card.businessCardId === cardId)

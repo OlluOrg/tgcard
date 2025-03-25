@@ -19,7 +19,7 @@ const MyCardsPage = () => {
 
     useEffect(() => {
         dispatch(readBusinessCards({}));
-    }, [dispatch]);
+    }, []);
 
     if (isLoading) {
         return <Loader />;
