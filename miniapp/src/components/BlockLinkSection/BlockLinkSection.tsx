@@ -10,9 +10,9 @@ type BlockLinkSectionProps = {
 const BlockLinkSection = (props: BlockLinkSectionProps) => {    
     const handleLinkClick = () => {
         if (props.blockLink.link) {
-            window.location.href = props.blockLink.link;
+            Telegram.WebApp.openLink(props.blockLink.link);
         } else {
-            console.warn('No URL provided for this link.');
+            console.log('No URL provided for this link.');
         }
     };
 
