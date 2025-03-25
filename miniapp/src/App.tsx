@@ -8,8 +8,11 @@ import {AppRoot} from "@telegram-apps/telegram-ui";
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import CardsHistory from './pages/CardsHistory/CardsHistory';
 import {getUserId} from "./utils/getUserId";
+import {useAppDispatch} from "./hooks/hooks";
+import {addHistory} from "./store/apiThunks/historyThunks";
 
 function App() {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const userId = getUserId();
 
@@ -22,6 +25,7 @@ function App() {
         if (match) {
             sessionStorage.setItem('cardId', match[1]);
             navigate(generatePath(ROUTES.CARD, { cardId: match[1] }));
+            dispatch(addHistory({userId: userId, businessCardId: match[1]}))
         }
     }, [])
 
