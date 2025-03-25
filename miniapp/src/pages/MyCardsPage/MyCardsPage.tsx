@@ -9,15 +9,20 @@ import ModalSettingsCard from "../../components/ModalSettingsCard/ModalSettingsC
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {readBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {useLocation} from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const MyCardsPage = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
-    const {cards} = useAppSelector(state => state.myCards);
+    const {cards, isLoading} = useAppSelector(state => state.myCards);
 
     useEffect(() => {
         dispatch(readBusinessCards({}));
     }, [dispatch]);
+
+    if (isLoading) {
+        return <Loader />;
+    }
 
     return (
         <div key={location.key}>

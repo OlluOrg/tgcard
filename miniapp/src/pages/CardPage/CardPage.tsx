@@ -13,11 +13,14 @@ import {readOneBusinessCard} from "../../store/apiThunks/businessCardThunks";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
+import {Spinner} from "@telegram-apps/telegram-ui";
+import styles from '../../pages/CardPage/CardPage.module.scss';
+import Loader from "../../components/Loader/Loader";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
     const {cardId} = useParams();
-    const {cards} = useAppSelector(state => state.myCards);
+    const {cards, isLoading} = useAppSelector(state => state.myCards);
     const userId: string = getUserId();
 
     useEffect(() => {
@@ -41,8 +44,8 @@ const CardPage = () => {
         };
     }, []);
 
-    if (!currentCard) {
-        return <div>LOADING...</div>
+    if (isLoading || !currentCard) {
+        return <Loader />
     }
 
     return (
