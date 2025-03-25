@@ -7,13 +7,16 @@ import Icon24CircleAdd from "../../icons/Icon24CircleAdd/Icon24CircleAdd";
 import {setIsModalChooseSectionOpen} from "../../store/slices/modalsCardPageSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCardSections from "../../hooks/CardPage/useCardSections";
+import {TypeSectionEnum} from "../../types/types";
 
 const CardPageBottomMenu = () => {
     const dispatch = useAppDispatch();
-    const {selectedSectionId} = useAppSelector(state => state.myCards);
+    const {selectedSectionId, selectedCardId, cards} = useAppSelector(state => state.myCards);
 
     const {handleDone, handleEdit, handleDelete} = useCardSections();
     const [currentBottomTab, setCurrentBottomTab] = useState<string>('');
+
+    const card = cards.find(card => card.businessCardId === selectedCardId)!;
 
     const selectBottomTab = (idTab: string) => {
         setCurrentBottomTab(idTab);
@@ -41,10 +44,17 @@ const CardPageBottomMenu = () => {
         {id: 'create', text: 'Создать', Icon: Icon24CircleAdd,},
     ];
 
-    const filteredTabs = selectedSectionId
-        ? bottomTabs // Show all tabs if a section is selected
+    let filteredTabs = selectedSectionId
+        ? bottomTabs
         : bottomTabs.filter(tab => tab.id === 'done' || tab.id === 'create'); 
-    
+
+    if (selectedSectionId) {
+        const section = card.sections.find(section => section.id === selectedSectionId)!;
+        if (section.typeSectionEnum === TypeSectionEnum.image) {
+            filteredTabs = filteredTabs.filter(tab => tab.id !== 'edit');
+        }
+    }
+
     return (
         <Tabbar>
             {filteredTabs.map(({id, text, Icon}) => (
