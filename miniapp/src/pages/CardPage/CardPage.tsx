@@ -25,6 +25,7 @@ import {selectSection} from "../../store/slices/myCardsSlice";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const {cardId} = useParams();
     const {cards, isLoading} = useAppSelector(state => state.myCards);
@@ -59,10 +60,6 @@ const CardPage = () => {
     if (isLoading || !currentCard) {
         return <Loader />
     }
-
-    const topTabs = [
-        { id: 'title', text: currentCard.title },
-    ];
 
     return (
         <div>
