@@ -13,9 +13,12 @@ import {readOneBusinessCard} from "../../store/apiThunks/businessCardThunks";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
+import { useNavigate } from 'react-router-dom';
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     const {cardId} = useParams();
     const {cards} = useAppSelector(state => state.myCards);
     const userId: string = getUserId();
@@ -33,7 +36,7 @@ const CardPage = () => {
         Telegram.WebApp.BackButton.show();
 
         Telegram.WebApp.BackButton.onClick(() => {
-            window.history.back();
+            navigate(-1);
         });
 
         return () => {
@@ -48,17 +51,19 @@ const CardPage = () => {
     return (
         <div>
             <SectionList isGuest={userId !== userIdFromCard} />
-            {/*<div style={{ maxWidth: "100vw", overflowX: "hidden" }}>*/}
-                {userId === userIdFromCard ? <CardPageBottomMenu /> : <CardPageBottomMenuForGuest />}
 
-                <LinkModal />
+            {userId === userIdFromCard
+                ? <CardPageBottomMenu />
+                : <CardPageBottomMenuForGuest />
+            }
 
-                <ChooseSectionModal />
+            <LinkModal />
 
-                <TextModal />
+            <ChooseSectionModal />
 
-                <VideoModal />
-            {/*</div>*/}
+            <TextModal />
+
+            <VideoModal />
         </div>
     );
 };

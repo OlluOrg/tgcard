@@ -12,7 +12,7 @@ import {addHistory, getHistory} from "../apiThunks/historyThunks";
 interface MyCardsState {
     cards: TCard[],
     selectedCardId: string | null,
-    selectedSectionId: number | null,
+    selectedSectionId: string | null,
     viewHistory: TCardHistory[],
 }
 
@@ -52,7 +52,7 @@ const myCardsSlice = createSlice({
             state.cards = state.cards.filter(card => card.businessCardId !== state.selectedCardId);
             state.selectedCardId = null;
         },
-        selectSection: (state, action: PayloadAction<{selectedSectionId: number | null }>) => {
+        selectSection: (state, action: PayloadAction<{selectedSectionId: string | null }>) => {
             state.selectedSectionId = action.payload.selectedSectionId;
         },
         editTextSection: (state, action: PayloadAction<{text: string}>) => {
@@ -63,7 +63,7 @@ const myCardsSlice = createSlice({
         addTextSection: (state, action: PayloadAction<{text: string}>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             const newSection: TSection = {
-                id: cardToUpdate.sections.length + 1,
+                id: crypto.randomUUID(),
                 typeSectionEnum: TypeSectionEnum.text,
                 order: cardToUpdate.sections.length + 1,
                 value: {value: action.payload.text},
@@ -75,7 +75,7 @@ const myCardsSlice = createSlice({
         addLinkSection: (state, action: PayloadAction<{title: string, link: string}>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             const newSection: TSection = {
-                id: cardToUpdate.sections.length + 1,
+                id: crypto.randomUUID(),
                 typeSectionEnum: TypeSectionEnum.blockLink,
                 value: {name: action.payload.title, link: action.payload.link},
                 order: cardToUpdate.sections.length + 1,
@@ -91,7 +91,7 @@ const myCardsSlice = createSlice({
         addDividerSection: (state) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             const newSection: TSection = {
-                id: cardToUpdate.sections.length + 1,
+                id: crypto.randomUUID(),
                 typeSectionEnum: TypeSectionEnum.divider,
                 value: {},
                 order: cardToUpdate.sections.length + 1
@@ -102,7 +102,7 @@ const myCardsSlice = createSlice({
         addVideoSection: (state, action: PayloadAction<{link: string}>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             const newSection: TSection = {
-                id: cardToUpdate.sections.length + 1,
+                id: crypto.randomUUID(),
                 typeSectionEnum: TypeSectionEnum.video,
                 value: {src: action.payload.link},
                 order: cardToUpdate.sections.length + 1
@@ -126,7 +126,7 @@ const myCardsSlice = createSlice({
         addImageSection: (state, action: PayloadAction<{data: {src: string, aspectRatio: number}}>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             const newSection: TSection = {
-                id: cardToUpdate.sections.length + 1,
+                id: crypto.randomUUID(),
                 typeSectionEnum: TypeSectionEnum.image,
                 value: {
                     src: action.payload.data.src,
