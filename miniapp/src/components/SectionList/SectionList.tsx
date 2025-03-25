@@ -15,6 +15,8 @@ import {updateCardSections} from "../../store/slices/myCardsSlice";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCardSections from "../../hooks/CardPage/useCardSections";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {Spinner} from "@telegram-apps/telegram-ui";
+import Loader from "../Loader/Loader";
 
 interface SectionListProps {
     isGuest: boolean;
@@ -23,7 +25,7 @@ interface SectionListProps {
 const SectionList = (props: SectionListProps) => {
     const dispatch = useAppDispatch();
     const {handleSectionClick} = useCardSections();
-    const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards);
+    const {cards, selectedCardId, selectedSectionId, isLoading} = useAppSelector(state => state.myCards);
     let card = cards.find(card => card.businessCardId === selectedCardId)!;
 
     const isTouchDevice = 'ontouchstart' in window;
@@ -83,8 +85,8 @@ const SectionList = (props: SectionListProps) => {
         dispatch(updateBusinessCards({}))
     };
 
-    if (!card) {
-        return <div>Loading...</div>;
+    if (isLoading || !card) {
+        return <Loader />
     }
 
     return (

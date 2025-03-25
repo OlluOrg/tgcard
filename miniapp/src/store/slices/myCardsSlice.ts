@@ -14,6 +14,7 @@ interface MyCardsState {
     selectedCardId: string | null,
     selectedSectionId: string | null,
     viewHistory: TCardHistory[],
+    isLoading: boolean,
 }
 
 const initialState: MyCardsState = {
@@ -21,6 +22,7 @@ const initialState: MyCardsState = {
     selectedCardId: null,
     selectedSectionId: null,
     viewHistory: [],
+    isLoading: false
 }
 
 const myCardsSlice = createSlice({
@@ -164,10 +166,15 @@ const myCardsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(readBusinessCards.rejected, (state) => {
+                state.isLoading = false;
                 console.log('КАРТОЧКИ НЕ ПРОЧИТАЛИСЬ С БЕКА')
+            })
+            .addCase(readBusinessCards.pending, (state) => {
+                state.isLoading = true;
             })
             .addCase(readBusinessCards.fulfilled, (state, action: PayloadAction<TCard[]>) => {
                 state.cards = action.payload;
+                state.isLoading = false;
             })
             .addCase(createBusinessCard.fulfilled, (state, action: PayloadAction<TCard>) => {
                 state.cards.push(action.payload);
@@ -178,7 +185,14 @@ const myCardsSlice = createSlice({
             .addCase(deleteBusinessCard.fulfilled, (state, action: PayloadAction<number>) => {
                 console.log(`Удалено ${action.payload} карточек`);
             })
+            .addCase(readOneBusinessCard.rejected, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(readOneBusinessCard.pending, (state) => {
+                state.isLoading = true;
+            })
             .addCase(readOneBusinessCard.fulfilled, (state, action: PayloadAction<TCard>) => {
+                state.isLoading = false;
                 state.cards = [action.payload];
                 state.selectedCardId = action.payload.businessCardId!;
             })
