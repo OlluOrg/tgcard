@@ -9,6 +9,7 @@ import ModalSettingsCard from "../../components/ModalSettingsCard/ModalSettingsC
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {readBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {useLocation} from "react-router-dom";
+import CopyLinkSnackbar from "../../components/CopyLinkSnackbar/CopyLinkSnackbar";
 
 const MyCardsPage = () => {
     const dispatch = useAppDispatch();
@@ -32,6 +33,8 @@ const MyCardsPage = () => {
             <ModalDeleteCard />
             
             <ModalSettingsCard />
+
+            <CopyLinkSnackbar />
         </div>
     );
 };

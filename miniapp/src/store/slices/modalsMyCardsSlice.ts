@@ -4,12 +4,14 @@ interface ModalsMyCardsSlice {
     isModalAddOpen: boolean,
     isModalDeleteOpen: boolean,
     isModalSettingsOpen: boolean,
+    isSnackbarCopyLinkOpen: boolean,
 }
 
 const initialState: ModalsMyCardsSlice = {
     isModalAddOpen: false,
     isModalDeleteOpen: false,
     isModalSettingsOpen: false,
+    isSnackbarCopyLinkOpen: false,
 }
 
 const modalsMyCardsSlice = createSlice({
@@ -24,9 +26,12 @@ const modalsMyCardsSlice = createSlice({
         },
         setIsModalDeleteOpen: (state, action: PayloadAction<boolean>) => {
             state.isModalDeleteOpen = action.payload;
+        },
+        setIsSnackbarCopyLinkOpen: (state, action) => {
+            state.isSnackbarCopyLinkOpen = action.payload;
         }
     }
 });
 
-export const {setIsModalAddOpen, setIsModalDeleteOpen, setIsModalSettingsOpen} = modalsMyCardsSlice.actions;
+export const {setIsModalAddOpen, setIsModalDeleteOpen, setIsModalSettingsOpen, setIsSnackbarCopyLinkOpen} = modalsMyCardsSlice.actions;
 export const modalsMyCardsReducer = modalsMyCardsSlice.reducer;
