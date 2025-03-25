@@ -21,10 +21,10 @@ import {closeAllModals} from "../../store/slices/modalsCardPageSlice";
 import {clearLinkSlice} from "../../store/slices/linkSlice";
 import {clearTextSlice} from "../../store/slices/textSlice";
 import {clearVideoSlice} from "../../store/slices/videoSlice";
+import {selectSection} from "../../store/slices/myCardsSlice";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
 
     const {cardId} = useParams();
     const {cards, isLoading} = useAppSelector(state => state.myCards);
@@ -46,7 +46,8 @@ const CardPage = () => {
             dispatch(closeAllModals());
             dispatch(clearLinkSlice());
             dispatch(clearTextSlice());
-            dispatch(clearVideoSlice())
+            dispatch(clearVideoSlice());
+            dispatch(selectSection({selectedSectionId: null}))
             window.history.back();
         });
 
