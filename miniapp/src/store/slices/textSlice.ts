@@ -22,9 +22,15 @@ const textSlice = createSlice({
 
         setMarkdownError: (state, action: PayloadAction<string>) => {
             state.markdownError = action.payload;
+        },
+
+        clearTextSlice: (state) => {
+            state.markdown = '';
+
+            state.markdownError = '';
         }
     }
 });
 
-export const {setMarkdown, setMarkdownError} = textSlice.actions;
+export const {setMarkdown, setMarkdownError, clearTextSlice} = textSlice.actions;
 export const textReducer = textSlice.reducer;

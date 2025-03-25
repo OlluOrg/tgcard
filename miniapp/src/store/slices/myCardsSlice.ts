@@ -230,7 +230,6 @@ export const {
     editImageSection,
     deleteSection,
     selectSection,
-    updateCards,
     addToViewHistory,
     updateCardSections
 } = myCardsSlice.actions;

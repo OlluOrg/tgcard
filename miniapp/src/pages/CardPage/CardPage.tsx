@@ -17,6 +17,10 @@ import { useNavigate } from 'react-router-dom';
 import {Spinner} from "@telegram-apps/telegram-ui";
 import styles from '../../pages/CardPage/CardPage.module.scss';
 import Loader from "../../components/Loader/Loader";
+import {closeAllModals} from "../../store/slices/modalsCardPageSlice";
+import {clearLinkSlice} from "../../store/slices/linkSlice";
+import {clearTextSlice} from "../../store/slices/textSlice";
+import {clearVideoSlice} from "../../store/slices/videoSlice";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
@@ -39,7 +43,11 @@ const CardPage = () => {
         Telegram.WebApp.BackButton.show();
 
         Telegram.WebApp.BackButton.onClick(() => {
-            navigate(-1);
+            dispatch(closeAllModals());
+            dispatch(clearLinkSlice());
+            dispatch(clearTextSlice());
+            dispatch(clearVideoSlice())
+            window.history.back();
         });
 
         return () => {
