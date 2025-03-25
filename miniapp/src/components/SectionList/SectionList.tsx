@@ -84,7 +84,6 @@ const SectionList = (props: SectionListProps) => {
     };
 
     if (!card) {
-        Telegram.WebApp.MainButton.showProgress(true);
         return <div>Loading...</div>;
     }
 

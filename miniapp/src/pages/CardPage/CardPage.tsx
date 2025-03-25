@@ -13,9 +13,11 @@ import {readOneBusinessCard} from "../../store/apiThunks/businessCardThunks";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
+import { useNavigate } from 'react-router-dom';
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const {cardId} = useParams();
     const {cards} = useAppSelector(state => state.myCards);
@@ -34,7 +36,7 @@ const CardPage = () => {
         Telegram.WebApp.BackButton.show();
 
         Telegram.WebApp.BackButton.onClick(() => {
-            window.history.back();
+            navigate(-1);
         });
 
         return () => {
@@ -45,10 +47,6 @@ const CardPage = () => {
     if (!currentCard) {
         return <div>LOADING...</div>
     }
-
-    const topTabs = [
-        { id: 'title', text: currentCard.title },
-    ];
 
     return (
         <div>
