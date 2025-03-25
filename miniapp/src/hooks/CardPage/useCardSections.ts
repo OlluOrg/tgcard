@@ -33,7 +33,7 @@ export const useCardSections = () => {
     }
 
     const handleEdit = () => {
-        if (selectedSectionId === 0) {
+        if (selectedSectionId === '') {
             alert(`Выберете секцию`);
         }
         dispatch(setIsEditBlock(true));
@@ -57,7 +57,7 @@ export const useCardSections = () => {
         }
     };
 
-    const handleSectionClick = (id: number) => {
+    const handleSectionClick = (id: string) => {
         dispatch(selectSection({selectedSectionId: selectedSectionId === id ? null : id}));
     };
 

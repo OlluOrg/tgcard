@@ -1,5 +1,5 @@
 type TSection = {
-    id: number,
+    id: string,
     typeSectionEnum: TypeSectionEnum,
     value: TSectionText | TSectionBlockLink | TDivider | TVideoSection | TImageSection,
     order: number,
