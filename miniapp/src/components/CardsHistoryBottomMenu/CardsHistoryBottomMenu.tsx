@@ -28,7 +28,6 @@ const CardsHistoryBottomMenu = () => {
     const allTabs = [
         { id: 'copy', text: 'Скопировать', Icon: Icon24Link },
         { id: 'edit', text: 'Изменить', Icon: Icon24Edit },
-        { id: 'delete', text: 'Удалить', Icon: Icon24Bin },
     ];
 
     const filteredTabs = selectedCardId ? allTabs : [];
