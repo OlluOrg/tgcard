@@ -197,9 +197,15 @@ const myCardsSlice = createSlice({
                 state.selectedCardId = action.payload.businessCardId!;
             })
             .addCase(getHistory.rejected, (state) => {
+                state.isLoading = false;
+                console.log("Истории не прочитались с бэка");
+            })
+            .addCase(getHistory.pending, (state) => {
+                state.isLoading = true;
                 console.log("Истории не прочитались с бэка");
             })
             .addCase(getHistory.fulfilled, (state, action: PayloadAction<TCardHistory[]>) => {
+                state.isLoading = false;
                 state.viewHistory = action.payload;
             })
             .addCase(addHistory.fulfilled, (state, action: PayloadAction<string>) => {

@@ -13,8 +13,6 @@ import {readOneBusinessCard} from "../../store/apiThunks/businessCardThunks";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
-import {Spinner} from "@telegram-apps/telegram-ui";
-import styles from '../../pages/CardPage/CardPage.module.scss';
 import Loader from "../../components/Loader/Loader";
 
 const CardPage = () => {
@@ -25,7 +23,7 @@ const CardPage = () => {
 
     useEffect(() => {
         dispatch(readOneBusinessCard({ businessCardId: cardId }));
-    }, [dispatch, cardId]);
+    }, [cardId]);
 
     const currentCard = useMemo(() => {
         return cards.find(card => card.businessCardId === cardId)

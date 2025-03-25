@@ -8,15 +8,8 @@ import {readBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {useLocation} from "react-router-dom";
 
 const CardList = () => {
-    // const dispatch = useAppDispatch();
-    // const location = useLocation()
-
     const {cards, selectedCardId} = useAppSelector(state => state.myCards);
     const {handleCardClick} = useCard();
-
-    // useEffect(() => {
-    //     dispatch(readBusinessCards({}))
-    // }, [dispatch, location]);
 
     const sortCardsByDate = (cards: TCard[]) => {
         return [...cards].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
