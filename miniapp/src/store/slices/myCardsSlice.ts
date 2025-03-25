@@ -179,6 +179,8 @@ const myCardsSlice = createSlice({
                 console.log(`Удалено ${action.payload} карточек`);
             })
             .addCase(readOneBusinessCard.fulfilled, (state, action: PayloadAction<TCard>) => {
+                state.cards = [action.payload];
+                state.selectedCardId = action.payload.businessCardId!;
             })
             .addCase(getHistory.rejected, (state) => {
                 console.log("Истории не прочитались с бэка");
