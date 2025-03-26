@@ -36,6 +36,8 @@ const ChooseSectionModal = () => {
             <Modal
                 open={isModalChooseSectionOpen}
                 onOpenChange={(open) => dispatch(setIsModalChooseSectionOpen(open))}
+                style={{ zIndex: 1001}}
+
             >
                 <Cell
                     onClick={handleChooseTextSection}
