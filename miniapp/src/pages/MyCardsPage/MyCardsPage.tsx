@@ -15,7 +15,7 @@ import Loader from "../../components/Loader/Loader";
 const MyCardsPage = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
-    const {cards, isLoading} = useAppSelector(state => state.myCards);
+    const {isLoading} = useAppSelector(state => state.myCards);
 
     useEffect(() => {
         dispatch(readBusinessCards({}));

@@ -23,6 +23,7 @@ export const getHistory = createAsyncThunk(
             const cardsHistory: TCardHistory[] = response.map(businessCard => {
                 return {
                     ...businessCard.data as TCard,
+                    userId: businessCard.userId,
                     businessCardId: businessCard._id,
                     lastViewedAt: businessCard.lastViewedAt,
                 }

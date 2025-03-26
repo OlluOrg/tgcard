@@ -11,8 +11,6 @@ import {
   setIsModalSettingsOpen, setIsSnackbarCopyLinkOpen,
 } from "../../store/slices/modalsMyCardsSlice";
 import {
-  addCard,
-  addToViewHistory,
   deleteCard,
   selectCard,
   updateCard,
@@ -24,7 +22,7 @@ import {
   createBusinessCard,
   deleteBusinessCard, updateBusinessCards,
 } from "../../store/apiThunks/businessCardThunks";
-import { TCard, TSection, TypeSectionEnum } from "../../types/types";
+import { TCard } from "../../types/types";
 import {addHistory} from "../../store/apiThunks/historyThunks";
 import {getUserId} from "../../utils/getUserId";
 
@@ -95,9 +93,12 @@ const useCards = () => {
         }],
     };
 
-        dispatch(createBusinessCard({card: newCard}));
-        closeAddModal();
-    };
+    closeAddModal();
+    dispatch(createBusinessCard({card: newCard})).unwrap().then((result) => {
+      navigate(generatePath(ROUTES.CARD, {cardId: result.businessCardId}));
+      dispatch(addHistory({userId: userId, businessCardId: result.businessCardId}));
+    });
+  };
 
   const handleDeleteConfirm = () => {
     dispatch(deleteBusinessCard({}));
