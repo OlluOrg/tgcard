@@ -41,11 +41,10 @@ const TextModal = () => {
                     dispatch(setMarkdown(''));
                 }
             }}
-            style={{ zIndex: 1001}}
+            style={{ margin: 25px}}
         >
             <MDXEditor
                 className="dark-theme"
-                style={{zIndex:1001}}
                 ref={editorRef}
                 markdown={markdown}
                 autoFocus={{defaultSelection: 'rootEnd'}}  
