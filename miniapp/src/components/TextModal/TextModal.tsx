@@ -45,6 +45,7 @@ const TextModal = () => {
         >
             <MDXEditor
                 className="dark-theme"
+                style={{zIndex:1001}}
                 ref={editorRef}
                 markdown={markdown}
                 autoFocus={{defaultSelection: 'rootEnd'}}  
