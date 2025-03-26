@@ -28,6 +28,7 @@ const LinkModal = () => {
     return (
         <Modal
             className={styles.mdx}
+            style={{ zIndex: 1001}}
             header={<ModalHeader>Создать ссылку</ModalHeader>}
             open={isModalEditBlockLinkOpen}
             onOpenChange={(open) => dispatch(setIsModalEditBlockLinkOpen(open))}
