@@ -25,6 +25,7 @@ type TCardHistory  = {
     businessCardId?: string
     title: string,
     description: string,
+    userId?: string,
     date: Date,
     sections: TSection[],
     lastViewedAt: Date,
