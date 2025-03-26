@@ -32,6 +32,7 @@ const ModalSettingsCard = () => {
     return (
         <Modal
             header={<ModalHeader>Настройки визитки</ModalHeader>}
+            style={{ zIndex: 1001}}
             open={isModalSettingsOpen}
             onOpenChange={(open) => {
                 if (!open) {

@@ -41,6 +41,7 @@ const TextModal = () => {
                     dispatch(setMarkdown(''));
                 }
             }}
+            style={{ zIndex: 1001}}
         >
             <MDXEditor
                 className="dark-theme"

@@ -20,6 +20,7 @@ const ModalAddCard = () => {
     return (
         <Modal
             header={<ModalHeader>Создать визитку</ModalHeader>}
+            style={{ zIndex: 1001}}
             open={isModalAddOpen}
             onOpenChange={(open) => dispatch(setIsModalAddOpen(open))}
         >

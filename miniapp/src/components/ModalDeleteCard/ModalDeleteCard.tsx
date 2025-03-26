@@ -18,6 +18,7 @@ const ModalDeleteCard = () => {
     return (
         <Modal
             header={<ModalHeader>Удалить визитку?</ModalHeader>}
+            style={{ zIndex: 1001}}
             open={isModalDeleteOpen}
             onOpenChange={open => dispatch(setIsModalDeleteOpen(open))}
         >
