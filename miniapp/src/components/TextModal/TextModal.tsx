@@ -41,7 +41,7 @@ const TextModal = () => {
                     dispatch(setMarkdown(''));
                 }
             }}
-            style={{ margin: 25px}}
+            style={{ marginBottom: 25}}
         >
             <MDXEditor
                 className="dark-theme"
