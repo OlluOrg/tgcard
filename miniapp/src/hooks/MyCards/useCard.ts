@@ -95,8 +95,10 @@ const useCards = () => {
         }],
     };
 
-        dispatch(createBusinessCard({card: newCard}));
-        closeAddModal();
+        dispatch(createBusinessCard({card: newCard})).unwrap().then((result) => {
+          navigate(generatePath(ROUTES.CARD, {cardId: result.businessCardId}));
+          closeAddModal();
+        });
     };
 
   const handleDeleteConfirm = () => {
