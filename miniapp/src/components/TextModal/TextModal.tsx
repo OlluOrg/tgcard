@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {setIsModalEditTextOpen} from "../../store/slices/modalsCardPageSlice";
 import {
     BlockTypeSelect,
@@ -21,8 +21,16 @@ const TextModal = () => {
     const {markdown, markdownError} = useAppSelector(state => state.text);
 
     const {closeModalEditText, isTextValid, handleAddText, handleEditText} = useTextSection();
+    
+    const [isFocused, setIsFocused] = useState(false);
 
     const editorRef = useRef<MDXEditorMethods>(null);
+
+    useEffect(() => {
+        if (isModalEditTextOpen) {
+            setIsFocused(true); // Устанавливаем фокус при открытии
+        }
+    }, [isModalEditTextOpen]);
 
     return (
         <Modal
@@ -38,7 +46,8 @@ const TextModal = () => {
                 className="dark-theme"
                 ref={editorRef}
                 markdown={markdown}
-                autoFocus={{defaultSelection: 'rootEnd'}}
+                autoFocus={{defaultSelection: 'rootEnd'}}  
+                onBlur={() => setIsFocused(false)}
                 onChange={(newMarkdown: string) => dispatch(setMarkdown(newMarkdown))}
                 contentEditableClassName={styles.mdx}
                 plugins={[listsPlugin(), headingsPlugin() ,toolbarPlugin({
@@ -50,7 +59,7 @@ const TextModal = () => {
                         </>
                 })]}
             />
-            {markdownError && <div className={styles.errorMessage}>{markdownError}</div>}
+            {!isFocused && markdownError && <div className={styles.errorMessage}>{markdownError}</div>}
             <div className={styles.modalAddBtns}>
                 <Button
                     mode="outline"

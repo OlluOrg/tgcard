@@ -25,6 +25,7 @@ const VideoModal = () => {
         >
             <Input
                 header="Ссылка на видео"
+                status={videoError ? "error" : "default"}
                 placeholder="Ссылка на видео"
                 value={linkVideoInput}
                 onChange={e => dispatch(setLinkVideoInput(e.target.value))}

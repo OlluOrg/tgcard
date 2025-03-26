@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "../../pages/CardPage/CardPage.module.scss";
 import {
     ModalHeader
@@ -14,6 +14,9 @@ const LinkModal = () => {
     const {isModalEditBlockLinkOpen, isEditBlock} = useAppSelector(state => state.modalsCardPage);
 
     const {nameBlockLinkInput, linkBlockLinkInput, nameError, linkError} = useAppSelector(state => state.link)
+
+    const [isNameFocused, setIsNameFocused] = useState(false);
+    const [isLinkFocused, setIsLinkFocused] = useState(true);
 
     const {
         closeModalEditBlockLink,
@@ -32,22 +35,27 @@ const LinkModal = () => {
             <div className={styles.inputGroup}>
                 <Input
                     header="Название"
+                    autoFocus
+                    status={isNameFocused ? "default" : nameError ? "error" : "default"}
                     placeholder="Название"
                     value={nameBlockLinkInput}
+                    onFocus={() => setIsNameFocused(true)}
+                    onBlur={() => setIsNameFocused(false)}
                     onChange={e => dispatch(setNameBlockLinkInput(e.target.value))}
-                    style={{borderColor: nameError ? 'var(--tgui--destructive_text_color)' : ''}}
                 />
-                {nameError && <div className={styles.errorMessage}>{nameError}</div>}
+                {!isNameFocused && nameError && <div className={styles.errorMessage}>{nameError}</div>}
             </div>
             <div className={styles.inputGroup}>
                 <Input
                     header="Ссылка"
+                    status={isLinkFocused ? "default" : nameError ? "error" : "default"}
                     placeholder="Ссылка"
                     value={linkBlockLinkInput}
+                    onFocus={() => setIsLinkFocused(true)}
+                    onBlur={() => setIsLinkFocused(false)}
                     onChange={e => dispatch(setLinkBlockLinkInput(e.target.value))}
-                    style={{borderColor: linkError ? 'var(--tgui--destructive_text_color)' : ''}}
                 />
-                {linkError && <div className={styles.errorMessage}>{linkError}</div>}
+                {!isLinkFocused && linkError && <div className={styles.errorMessage}>{linkError}</div>}
             </div>
             <div className={styles.modalAddBtns}>
                 <Button

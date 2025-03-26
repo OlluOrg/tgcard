@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ModalHeader
 } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
@@ -16,7 +16,8 @@ const ModalSettingsCard = () => {
     const { nameNewCard, nameError, descriptionNewCard, descriptionError } = useAppSelector(state => state.card);
     const { selectedCardId, cards } = useAppSelector(state => state.myCards);
     const { isFormValid, closeSettingsModal, handleSave } = useCard();
-
+    const [isFocused, setIsFocused] = useState(false);
+    
     useEffect(() => {
         if (isModalSettingsOpen && selectedCardId) {
             const selectedCard = cards.find(card => card.businessCardId === selectedCardId);
@@ -41,29 +42,28 @@ const ModalSettingsCard = () => {
             <div className={styles.inputGroup}>
                 <Input
                     header="Название"
+                    autoFocus
+                    status={isFocused ? "default" : nameError ? "error" : "default"}
                     placeholder="Название"
                     value={nameNewCard}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
                     onChange={(e) => dispatch(setNameNewCard(e.target.value))}
-                    style={{
-                        borderColor: nameError ? 'var(--tgui--destructive_text_color)' : '',
-                        transition: 'border-color 0.2s ease'
-                    }}
                 />
-                {nameError && <div className={styles.errorMessage}>{nameError}</div>}
+                {!isFocused && nameError && <div className={styles.errorMessage}>{nameError}</div>}
             </div>
 
             <div className={styles.inputGroup}>
                 <Input
                     header="Описание"
                     placeholder="Описание"
+                    status={isFocused ? "default" : descriptionError ? "error" : "default"}
                     value={descriptionNewCard}
-                    onChange={(e) => dispatch(setDescriptionNewCard(e.target.value))}
-                    style={{
-                        borderColor: descriptionError ? 'var(--tgui--destructive_text_color)' : '',
-                        transition: 'border-color 0.2s ease'
-                    }}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    onChange={(e) => dispatch(setDescriptionNewCard(e.target.value))}                   
                 />
-                {descriptionError && <div className={styles.errorMessage}>{descriptionError}</div>}
+                {!isFocused && descriptionError && <div className={styles.errorMessage}>{descriptionError}</div>}
             </div>
 
             <div className={styles.modalAddBtns}>
