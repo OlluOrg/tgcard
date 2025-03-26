@@ -16,7 +16,8 @@ const ModalSettingsCard = () => {
     const { nameNewCard, nameError, descriptionNewCard, descriptionError } = useAppSelector(state => state.card);
     const { selectedCardId, cards } = useAppSelector(state => state.myCards);
     const { isFormValid, closeSettingsModal, handleSave } = useCard();
-    const [isFocused, setIsFocused] = useState(false);
+    const [isNameFocused, setIsNameFocused] = useState(false);
+    const [isDescriptionFocused, setIsDescriptionFocused] = useState(true);
     
     useEffect(() => {
         if (isModalSettingsOpen && selectedCardId) {
@@ -43,27 +44,27 @@ const ModalSettingsCard = () => {
                 <Input
                     header="Название"
                     autoFocus
-                    status={isFocused ? "default" : nameError ? "error" : "default"}
+                    status={isNameFocused ? "default" : nameError ? "error" : "default"}
                     placeholder="Название"
                     value={nameNewCard}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
+                    onFocus={() => setIsNameFocused(true)}
+                    onBlur={() => setIsNameFocused(false)}
                     onChange={(e) => dispatch(setNameNewCard(e.target.value))}
                 />
-                {!isFocused && nameError && <div className={styles.errorMessage}>{nameError}</div>}
+                {!isNameFocused && nameError && <div className={styles.errorMessage}>{nameError}</div>}
             </div>
 
             <div className={styles.inputGroup}>
                 <Input
                     header="Описание"
                     placeholder="Описание"
-                    status={isFocused ? "default" : descriptionError ? "error" : "default"}
+                    status={isDescriptionFocused ? "default" : descriptionError ? "error" : "default"}
                     value={descriptionNewCard}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
+                    onFocus={() => setIsDescriptionFocused(true)}
+                    onBlur={() => setIsDescriptionFocused(false)}
                     onChange={(e) => dispatch(setDescriptionNewCard(e.target.value))}                   
                 />
-                {!isFocused && descriptionError && <div className={styles.errorMessage}>{descriptionError}</div>}
+                {!isDescriptionFocused && descriptionError && <div className={styles.errorMessage}>{descriptionError}</div>}
             </div>
 
             <div className={styles.modalAddBtns}>
