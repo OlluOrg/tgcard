@@ -6,7 +6,7 @@ import {
     useSensor,
     useSensors
 } from "@dnd-kit/core";
-import {restrictToVerticalAxis, restrictToWindowEdges} from "@dnd-kit/modifiers";
+import {restrictToVerticalAxis, restrictToWindowEdges, restrictToParentElement} from "@dnd-kit/modifiers";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import styles from "../../pages/CardPage/CardPage.module.scss";
 import SortableSection from "../SortableSection/SortableSection";
@@ -92,7 +92,7 @@ const SectionList = (props: SectionListProps) => {
             sensors={sensors}
             collisionDetection={rectIntersection}
             onDragEnd={handleDragEnd}
-            modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
+            modifiers={[restrictToVerticalAxis, restrictToWindowEdges, restrictToParentElement]}
         >
             <SortableContext
                 items={card.sections}

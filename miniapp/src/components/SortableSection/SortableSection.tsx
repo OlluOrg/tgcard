@@ -18,7 +18,9 @@ const SortableSection = ({ section, onClick, isSelected }: {
         transform,
         transition,
         isDragging,
-    } = useSortable({ id: section.id });
+    } = useSortable({ 
+        id: section.id
+     });
 
     const style = {
         transform: transform ? CSS.Transform.toString({
@@ -30,7 +32,9 @@ const SortableSection = ({ section, onClick, isSelected }: {
         marginLeft: isSelected ? '0' : '20px',
         paddingRight: '20px',
         opacity: isDragging ? 0.8 : 1,
-        zIndex: isDragging ? 1 : undefined,
+        zIndex: isDragging ? 999 : 'auto',
+        position: isDragging ? 'relative' as 'relative' : 'static' as 'static',
+        willChange: 'transform',
     };
 
     return (

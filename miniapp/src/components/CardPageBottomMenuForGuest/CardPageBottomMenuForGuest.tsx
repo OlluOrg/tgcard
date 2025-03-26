@@ -30,7 +30,7 @@ const CardPageBottomMenuForGuest = () => {
     ];
 
     return (
-        <Tabbar>
+        <Tabbar style={{ zIndex: 1000}}>
             {bottomTabs.map(({id, text, Icon}) => (
                 <Tabbar.Item
                     key={id}
