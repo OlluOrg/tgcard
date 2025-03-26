@@ -1,3 +1,7 @@
 .text li::marker, ol::marker {
   color: var(--tgui--button_color);
 }
+
+.text {
+  height: 200
+}
