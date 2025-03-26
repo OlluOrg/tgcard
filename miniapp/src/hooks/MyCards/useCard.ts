@@ -96,6 +96,7 @@ const useCards = () => {
     closeAddModal();
     dispatch(createBusinessCard({card: newCard})).unwrap().then((result) => {
       navigate(generatePath(ROUTES.CARD, {cardId: result.businessCardId}));
+      dispatch(addHistory({userId: userId, businessCardId: result.businessCardId}));
     });
   };
 
