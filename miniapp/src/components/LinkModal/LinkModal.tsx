@@ -15,7 +15,7 @@ const LinkModal = () => {
 
     const {nameBlockLinkInput, linkBlockLinkInput, nameError, linkError} = useAppSelector(state => state.link)
 
-    const [isNameFocused, setIsNameFocused] = useState(false);
+    const [isNameFocused, setIsNameFocused] = useState(true);
     const [isLinkFocused, setIsLinkFocused] = useState(true);
 
     const {
