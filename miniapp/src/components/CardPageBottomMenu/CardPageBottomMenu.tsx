@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCardSections from "../../hooks/CardPage/useCardSections";
 import {TypeSectionEnum} from "../../types/types";
 
+
 const CardPageBottomMenu = () => {
     const dispatch = useAppDispatch();
     const {selectedSectionId, selectedCardId, cards} = useAppSelector(state => state.myCards);
@@ -56,7 +57,7 @@ const CardPageBottomMenu = () => {
     }
 
     return (
-        <Tabbar>
+        <Tabbar style={{ zIndex: 1000}}>
             {filteredTabs.map(({id, text, Icon}) => (
                 <Tabbar.Item
                     key={id}
