@@ -45,7 +45,7 @@ const MyCardsBottomMenu = () => {
      const filteredTabs = selectedCardId ? bottomTabs : noCardTabs;
 
     return (
-        <Tabbar>
+        <Tabbar style={{ zIndex: 1000}}>
             {filteredTabs.map(({ id, Icon }) => (
                 <Tabbar.Item
                     key={id}
