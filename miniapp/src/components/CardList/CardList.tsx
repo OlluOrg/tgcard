@@ -6,6 +6,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCard from "../../hooks/MyCards/useCard";
 import {ContextMenuItem, ContextMenuWrapperDiv} from "react-procedural-context-menu";
 import {selectCard} from "../../store/slices/myCardsSlice";
+import {ContextMenuPropsWithBindings} from "react-procedural-context-menu/dist/src/ContextMenu/ContextMenuWrapperDiv";
 
 const CardList = () => {
     const {cards, selectedCardId} = useAppSelector(state => state.myCards);
@@ -16,6 +17,22 @@ const CardList = () => {
     };
     const sortCards = sortCardsByDate(cards);
 
+    const createContextMenu = (cardId: string): ContextMenuPropsWithBindings => {
+        const menu: ContextMenuItem[] = [
+            { text: "Открыть", onClick: () => handleCardClick(cardId)},
+            { text: "Редактировать", onClick: () => handleEdit(cardId)},
+            { text: "Настройки доступа", onClick: () => alert("Не готово") },
+            { text: "Архивировать", onClick: () => alert("Не готово") },
+            { text: "Поделиться", sub: [
+                    {text: "Скопировать ссылку", onClick: () => handleCopyLink(cardId)},
+                    {text: "Отправить ссылку", onClick: () => alert("Не готово")},
+                    {text: "Показать QR код", onClick: () => alert("Не готово")}
+                ]}
+        ];
+
+        return { contextMenu: menu }
+    }
+
     return (
         <div className={styles.cardList}>
             {cards.length === 0 ? (
@@ -25,22 +42,8 @@ const CardList = () => {
                 </div>
             ) : (sortCards.map((card: TCard, index: number) => {
 
-                    const menu: ContextMenuItem[] = [
-                        { text: "Открыть", onClick: () => handleCardClick(card.businessCardId!)},
-                        { text: "Редактировать", onClick: () => handleEdit(card.businessCardId!)},
-                        { text: "Настройки доступа", onClick: () => alert("Не готово") },
-                        { text: "Архивировать", onClick: () => alert("Не готово") },
-                        { text: "Поделиться", sub: [
-                                {text: "Скопировать ссылку", onClick: () => handleCopyLink(card.businessCardId!)},
-                                {text: "Отправить ссылку", onClick: () => alert("Не готово")},
-                                {text: "Показать QR код", onClick: () => alert("Не готово")}
-                            ]}
-                    ];
-
-                    const menuCollection = { contextMenu: menu }
-
                 return (
-                    <ContextMenuWrapperDiv menus={menuCollection} >
+                    <ContextMenuWrapperDiv menus={createContextMenu(card.businessCardId!)}>
                     <Cell
                         key={card.businessCardId}
                         subtitle={card.description}
