@@ -26,10 +26,10 @@ const CardsHistoryBottomMenu = () => {
 
     const selectBottomTab = (idTab: string) => {
         const actions: Record<string, () => void> = {
-            'copy': handleCopyLink,
-            'edit': handleEdit,
+            'copy': () => handleCopyLink(selectedCardId!),
+            'edit': () => handleEdit(selectedCardId!),
             'delete': handleDelete,
-            'pass': handleEdit
+            'pass': () => handleEdit(selectedCardId!)
         };
 
         setCurrentBottomTab(idTab);

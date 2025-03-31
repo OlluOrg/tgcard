@@ -2,13 +2,14 @@ import React from 'react';
 import styles from "../../pages/MyCardsPage/MyCardsPage.module.scss";
 import {TCard} from "../../types/types";
 import {Cell} from "@telegram-apps/telegram-ui";
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCard from "../../hooks/MyCards/useCard";
 import {ContextMenuItem, ContextMenuWrapperDiv} from "react-procedural-context-menu";
+import {selectCard} from "../../store/slices/myCardsSlice";
 
 const CardList = () => {
     const {cards, selectedCardId} = useAppSelector(state => state.myCards);
-    const {handleCardClick, handleEdit} = useCard();
+    const {handleCardClick, handleEdit, handleCopyLink} = useCard();
 
     const sortCardsByDate = (cards: TCard[]) => {
         return [...cards].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -25,14 +26,12 @@ const CardList = () => {
             ) : (sortCards.map((card: TCard, index: number) => {
 
                     const menu: ContextMenuItem[] = [
-                        { text: "Открыть", onClick: () => {
-                            handleCardClick(card.businessCardId!);
-                            }},
-                        { text: "Редактировать", onClick: () => alert("Редактировать") },
+                        { text: "Открыть", onClick: () => handleCardClick(card.businessCardId!)},
+                        { text: "Редактировать", onClick: () => handleEdit(card.businessCardId!)},
                         { text: "Настройки доступа", onClick: () => alert("Не готово") },
                         { text: "Архивировать", onClick: () => alert("Не готово") },
                         { text: "Поделиться", sub: [
-                                {text: "Скопировать ссылку", onClick: () => alert("menuItem2")},
+                                {text: "Скопировать ссылку", onClick: () => handleCopyLink(card.businessCardId!)},
                                 {text: "Отправить ссылку", onClick: () => alert("Не готово")},
                                 {text: "Показать QR код", onClick: () => alert("Не готово")}
                             ]}

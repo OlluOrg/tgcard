@@ -106,32 +106,29 @@ const useCards = () => {
     dispatch(setIsModalDeleteOpen(false));
   };
 
-  const handleCopyLink = () => {
-    if (selectedCardId) {
-      const link = generatePath(ROUTES.CARD, { cardId: selectedCardId });
-      navigator.clipboard
-        .writeText(`https://t.me/tgcardi_bot?startapp=cardId_${selectedCardId}`)
-        .then(() => {
-          dispatch(setIsSnackbarCopyLinkOpen(true))
-          console.log(
-            "Link copied to clipboard:",
-            `${window.location.origin}${link}`
-          );
-        })
-        .catch((error) => {
-          console.error("Failed to copy link:", error);
-        });
-    } else {
-      console.warn("No card selected to copy link.");
-    }
+  const handleCopyLink = (cardId: string) => {
+    const link = generatePath(ROUTES.CARD, { cardId: cardId });
+    navigator.clipboard
+      .writeText(`https://t.me/tgcardi_bot?startapp=cardId_${cardId}`)
+      .then(() => {
+        dispatch(setIsSnackbarCopyLinkOpen(true))
+        console.log(
+          "Link copied to clipboard:",
+          `${window.location.origin}${link}`
+        );
+      })
+      .catch((error) => {
+        console.error("Failed to copy link:", error);
+      });
   };
 
-  const handleEdit = () => {
-    if (selectedCardId) {
-      navigate(generatePath(ROUTES.CARD, { cardId: selectedCardId }));
+  const handleEdit = (businessCardId: string) => {
+    dispatch(selectCard({selectedCardId: businessCardId}));
 
-      dispatch(addHistory({userId: userId, businessCardId: selectedCardId}));
-    }
+    navigate(generatePath(ROUTES.CARD, { cardId: businessCardId }));
+
+    dispatch(addHistory({userId: userId, businessCardId: businessCardId}));
+
   };
 
   const handleDelete = () => {
