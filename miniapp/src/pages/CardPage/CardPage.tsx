@@ -37,7 +37,7 @@ const CardPage = () => {
     }, [cards, cardId])
     const userIdFromCard: string = currentCard?.userId ?? '';
 
-    const isGuest = useMemo(() => {
+    const isViewMode = useMemo(() => {
         if (userId !== userIdFromCard) return true;
 
         return mode === CARD_MODE.VIEW
@@ -68,7 +68,7 @@ const CardPage = () => {
         <div>
             <SectionList isGuest={userId !== userIdFromCard} />
 
-            {isGuest
+            {isViewMode
                 ? <CardPageBottomMenuForGuest />
                 : <CardPageBottomMenu />
             }
