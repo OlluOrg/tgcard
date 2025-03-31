@@ -25,6 +25,7 @@ import {
 import { TCard } from "../../types/types";
 import {addHistory} from "../../store/apiThunks/historyThunks";
 import {getUserId} from "../../utils/getUserId";
+import {CARD_MODE} from "../../constants/cardMode";
 
 const useCards = () => {
   const dispatch = useAppDispatch();
@@ -139,6 +140,8 @@ const useCards = () => {
 
   const handleCardClick = (id: string) => {
     dispatch(selectCard({ selectedCardId: id === selectedCardId ? null : id }));
+
+    navigate(generatePath(ROUTES.CARD, { cardId: id, mode: CARD_MODE.VIEW }));
   };
 
   const closeSettingsModal = () => {

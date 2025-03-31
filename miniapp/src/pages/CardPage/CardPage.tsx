@@ -13,20 +13,18 @@ import {readOneBusinessCard} from "../../store/apiThunks/businessCardThunks";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {getUserId} from "../../utils/getUserId";
 import CardPageBottomMenuForGuest from "../../components/CardPageBottomMenuForGuest/CardPageBottomMenuForGuest";
-import { useNavigate } from 'react-router-dom';
-import {Spinner} from "@telegram-apps/telegram-ui";
-import styles from '../../pages/CardPage/CardPage.module.scss';
 import Loader from "../../components/Loader/Loader";
 import {closeAllModals} from "../../store/slices/modalsCardPageSlice";
 import {clearLinkSlice} from "../../store/slices/linkSlice";
 import {clearTextSlice} from "../../store/slices/textSlice";
 import {clearVideoSlice} from "../../store/slices/videoSlice";
 import {selectSection} from "../../store/slices/myCardsSlice";
+import {CARD_MODE} from "../../constants/cardMode";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
 
-    const {cardId} = useParams();
+    const {cardId, mode} = useParams();
     const {cards, isLoading} = useAppSelector(state => state.myCards);
     const userId: string = getUserId();
 
@@ -38,6 +36,12 @@ const CardPage = () => {
         return cards.find(card => card.businessCardId === cardId)
     }, [cards, cardId])
     const userIdFromCard: string = currentCard?.userId ?? '';
+
+    const isGuest = useMemo(() => {
+        if (userId !== userIdFromCard) return true;
+
+        return mode === CARD_MODE.VIEW
+    }, [userId, userIdFromCard, mode]);
 
     useEffect(() => {
         Telegram.WebApp.BackButton.show();
@@ -64,9 +68,9 @@ const CardPage = () => {
         <div>
             <SectionList isGuest={userId !== userIdFromCard} />
 
-            {userId === userIdFromCard
-                ? <CardPageBottomMenu />
-                : <CardPageBottomMenuForGuest />
+            {isGuest
+                ? <CardPageBottomMenuForGuest />
+                : <CardPageBottomMenu />
             }
 
             <LinkModal />
