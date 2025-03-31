@@ -19,8 +19,8 @@ const MyCardsBottomMenu = () => {
 
     const selectBottomTab = (idTab: string) => {
         const actions: Record<string, () => void> = {
-            'copy': handleCopyLink,
-            'edit': handleEdit,
+            'copy': () => handleCopyLink(selectedCardId!),
+            'edit': () => handleEdit(selectedCardId!),
             'delete': handleDelete,
             'create': () => dispatch(setIsModalAddOpen(true)),
             'settings': () => dispatch(setIsModalSettingsOpen(true)),

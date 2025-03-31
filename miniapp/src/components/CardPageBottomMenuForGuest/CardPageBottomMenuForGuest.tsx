@@ -5,19 +5,22 @@ import useCard from "../../hooks/MyCards/useCard";
 import {generatePath, useNavigate} from "react-router-dom";
 import {ROUTES} from "../../routes";
 import IconBack from "../../icons/IconBack/IconBack";
+import {useAppSelector} from "../../hooks/hooks";
+import useCardSections from "../../hooks/CardPage/useCardSections";
 
 const CardPageBottomMenuForGuest = () => {
     const {handleCopyLink} = useCard();
-    const navigate = useNavigate();
+    const {selectedCardId} = useAppSelector(state => state.myCards);
+    const {handleDone} = useCardSections()
 
     const handleMenuClick = (id: string) => {
         switch(id) {
             case 'back':
-                navigate(generatePath(ROUTES.MY_CARDS));
+                handleDone();
                 break;
 
             case 'link':
-                handleCopyLink();
+                handleCopyLink(selectedCardId!);
                 break;
         }
     }
