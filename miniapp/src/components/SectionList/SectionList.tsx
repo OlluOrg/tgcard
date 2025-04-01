@@ -17,7 +17,7 @@ import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import Loader from "../Loader/Loader";
 
 interface SectionListProps {
-    isGuest: boolean;
+    isViewMode: boolean;
 }
 
 const SectionList = (props: SectionListProps) => {
@@ -43,7 +43,7 @@ const SectionList = (props: SectionListProps) => {
 
     const sensors = useSensors(
         ...useMemo(() => {
-            if (props.isGuest) {
+            if (props.isViewMode) {
                 return [];
             }
             const sensorsArray = [];
@@ -61,7 +61,7 @@ const SectionList = (props: SectionListProps) => {
     );
 
     const handleDragEnd = (event: DragEndEvent) => {
-        if (props.isGuest) {
+        if (props.isViewMode) {
             return;
         }
         const { active, over } = event;
