@@ -110,6 +110,7 @@ const SectionList = (props: SectionListProps) => {
                                 section={section}
                                 onClick={() => handleSectionClick(section.id)}
                                 isSelected={section.id === selectedSectionId}
+                                isViewMode={props.isViewMode}
                             />
                         ))
                     )}
