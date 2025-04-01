@@ -26,6 +26,7 @@ import { TCard } from "../../types/types";
 import {addHistory} from "../../store/apiThunks/historyThunks";
 import {getUserId} from "../../utils/getUserId";
 import {CARD_MODE} from "../../constants/cardMode";
+import {CARD_TITLE} from "../../constants/cardTitle";
 
 const useCards = () => {
   const dispatch = useAppDispatch();
@@ -41,8 +42,8 @@ const useCards = () => {
   useEffect(() => {
     if (nameNewCard.length === 0) {
       dispatch(setNameError("Название обязательно"));
-    } else if (nameNewCard.length > 100) {
-      dispatch(setNameError("Максимум 100 символов"));
+    } else if (nameNewCard.length > CARD_TITLE.MAX_NAME_LENGTH) {
+      dispatch(setNameError(`Максимум ${CARD_TITLE.MAX_NAME_LENGTH} символов`));
     } else {
       dispatch(setNameError(""));
     }
@@ -59,7 +60,7 @@ const useCards = () => {
   const isFormValid = () => {
     return (
       nameNewCard.length > 0 &&
-      nameNewCard.length <= 100 &&
+      nameNewCard.length <= CARD_TITLE.MAX_NAME_LENGTH &&
       descriptionNewCard.length <= 200
     );
   };

@@ -47,6 +47,10 @@ const myCardsSlice = createSlice({
                 state.cards[cardIndex] = { ...state.cards[cardIndex], title, description };
             }
         },
+        editTitle: (state, action: PayloadAction<string>) => {
+            const card = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
+            card.title = action.payload
+        },
         selectCard: (state, action: PayloadAction<{selectedCardId: string | null }>) => {
             state.selectedCardId = action.payload.selectedCardId;
         },
@@ -217,6 +221,7 @@ const myCardsSlice = createSlice({
 export const {
     addCard,
     updateCard,
+    editTitle,
     selectCard,
     deleteCard,
     addTextSection,

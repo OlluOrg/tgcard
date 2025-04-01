@@ -1,9 +1,10 @@
 import React from 'react';
 import {marked} from "marked";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch} from "../../hooks/hooks";
 import {setIsTitleEditOpen} from "../../store/slices/modalsCardPageSlice";
 
 interface CardTitleProps {
+    isViewMode: boolean;
     title: string;
 }
 
@@ -14,7 +15,9 @@ const CardTitle = (props: CardTitleProps) => {
 
     return (
         <div
-            onClick={() => dispatch(setIsTitleEditOpen(true))}
+            onClick={() => {
+                if (!props.isViewMode) dispatch(setIsTitleEditOpen(true));
+            }}
             dangerouslySetInnerHTML={{__html: markedTitle}}
         />
     );

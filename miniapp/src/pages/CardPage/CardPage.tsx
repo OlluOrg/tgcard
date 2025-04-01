@@ -21,6 +21,7 @@ import {clearVideoSlice} from "../../store/slices/videoSlice";
 import {selectSection} from "../../store/slices/myCardsSlice";
 import {CARD_MODE} from "../../constants/cardMode";
 import CardTitle from "../../components/CardTitle/CardTitle";
+import TitleModal from "../../components/TitleModal/TitleModal";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
@@ -67,7 +68,7 @@ const CardPage = () => {
 
     return (
         <div>
-            <CardTitle title={currentCard?.title}/>
+            <CardTitle isViewMode={isViewMode} title={currentCard?.title}/>
 
             <SectionList isViewMode={isViewMode} />
 
@@ -77,6 +78,8 @@ const CardPage = () => {
             }
 
             <LinkModal />
+
+            <TitleModal />
 
             <ChooseSectionModal />
 
