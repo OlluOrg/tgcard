@@ -79,20 +79,7 @@ const useCards = () => {
       date: new Date(),
       title: nameNewCard,
       description: descriptionNewCard,
-      sections: [{
-          id: "7101b6cb-5ec4-4d87-8346-4846dbfc1727",
-          typeSectionEnum: 0,
-          value: {
-            value: `## ${nameNewCard}`
-          },
-          order: 1
-        },
-        {
-          id: "38b3c668-8d8e-4065-931f-8ba582ed9a33",
-          typeSectionEnum: 2,
-          order: 2,
-          value: ''
-        }],
+      sections: [],
     };
 
     closeAddModal();
