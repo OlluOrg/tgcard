@@ -5,8 +5,9 @@ interface ModalsState {
     isModalEditBlockLinkOpen: boolean,
     isModalChooseSectionOpen: boolean,
     isModalEditVideoSectionOpen: boolean,
-    isModalEditTextOpen: boolean
+    isModalEditTextOpen: boolean,
     isModalEditImageOpen: boolean,
+    isTitleEditOpen: boolean,
 }
 
 const initialState: ModalsState = {
@@ -16,6 +17,7 @@ const initialState: ModalsState = {
     isModalEditVideoSectionOpen: false,
     isModalEditTextOpen: false,
     isModalEditImageOpen: false,
+    isTitleEditOpen: false,
 }
 
 const modalsCardPageSlice = createSlice({
@@ -40,6 +42,9 @@ const modalsCardPageSlice = createSlice({
         setIsModalEditImageOpen:(state, action: PayloadAction<boolean>) => {
             state.isModalEditImageOpen = action.payload;
         },
+        setIsTitleEditOpen: (state, action: PayloadAction<boolean>) => {
+            state.isTitleEditOpen = action.payload;
+        },
         closeAllModals: (state) => {
             state.isEditBlock = false;
             state.isModalEditBlockLinkOpen = false;
@@ -47,6 +52,7 @@ const modalsCardPageSlice = createSlice({
             state.isModalEditVideoSectionOpen = false;
             state.isModalEditTextOpen = false;
             state.isModalEditImageOpen = false;
+            state.isTitleEditOpen = false;
         }
     }
 });
@@ -58,7 +64,8 @@ export const {
     setIsModalEditVideoSectionOpen,
     setIsModalEditTextOpen,
     setIsModalEditImageOpen,
-    closeAllModals
+    closeAllModals,
+    setIsTitleEditOpen
 } = modalsCardPageSlice.actions;
 
 export const modalsCardPageReducer = modalsCardPageSlice.reducer;

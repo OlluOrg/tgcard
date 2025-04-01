@@ -20,6 +20,8 @@ import {clearTextSlice} from "../../store/slices/textSlice";
 import {clearVideoSlice} from "../../store/slices/videoSlice";
 import {selectSection} from "../../store/slices/myCardsSlice";
 import {CARD_MODE} from "../../constants/cardMode";
+import CardTitle from "../../components/CardTitle/CardTitle";
+import TitleModal from "../../components/TitleModal/TitleModal";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
@@ -66,7 +68,9 @@ const CardPage = () => {
 
     return (
         <div>
-            <SectionList isGuest={userId !== userIdFromCard} />
+            <CardTitle isViewMode={isViewMode} title={currentCard?.title}/>
+
+            <SectionList isViewMode={isViewMode} />
 
             {isViewMode
                 ? <CardPageBottomMenuForGuest />
@@ -74,6 +78,8 @@ const CardPage = () => {
             }
 
             <LinkModal />
+
+            <TitleModal />
 
             <ChooseSectionModal />
 
