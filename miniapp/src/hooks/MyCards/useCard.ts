@@ -49,25 +49,15 @@ const useCards = () => {
     }
   }, [nameNewCard]);
 
-  useEffect(() => {
-    if (descriptionNewCard.length > 200) {
-      dispatch(setDescriptionError("Максимум 200 символов"));
-    } else {
-      dispatch(setDescriptionError(""));
-    }
-  }, [descriptionNewCard]);
-
   const isFormValid = () => {
     return (
       nameNewCard.length > 0 &&
-      nameNewCard.length <= CARD_TITLE.MAX_NAME_LENGTH &&
-      descriptionNewCard.length <= 200
+      nameNewCard.length <= CARD_TITLE.MAX_NAME_LENGTH
     );
   };
 
   const closeAddModal = () => {
     dispatch(setNameNewCard(""));
-    dispatch(setDescriptionNewCard(""));
     dispatch(setIsModalAddOpen(false));
   };
 
