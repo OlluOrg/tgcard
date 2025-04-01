@@ -76,7 +76,6 @@ const useCards = () => {
 
     const newCard: TCard = {
       id: cards.length + 1,
-      date: new Date(),
       title: nameNewCard,
       description: descriptionNewCard,
       sections: [],
@@ -114,11 +113,8 @@ const useCards = () => {
 
   const handleEdit = (businessCardId: string) => {
     dispatch(selectCard({selectedCardId: businessCardId}));
-
     navigate(generatePath(ROUTES.CARD, { cardId: businessCardId }));
-
     dispatch(addHistory({userId: userId, businessCardId: businessCardId}));
-
   };
 
   const handleDelete = (businessCardId: string) => {
@@ -128,8 +124,8 @@ const useCards = () => {
 
   const handleCardClick = (id: string) => {
     dispatch(selectCard({ selectedCardId: id === selectedCardId ? null : id }));
-
     navigate(generatePath(ROUTES.CARD, { cardId: id, mode: CARD_MODE.VIEW }));
+    dispatch(addHistory({userId: userId, businessCardId: id}));
   };
 
   const closeSettingsModal = () => {

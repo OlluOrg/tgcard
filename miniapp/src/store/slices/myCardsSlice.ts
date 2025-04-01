@@ -32,7 +32,7 @@ const myCardsSlice = createSlice({
         addCard: (state, action: PayloadAction<{title: string, description: string}>) => {
             const newCard: TCard = {
                 id: state.cards.length + 1,
-                date: new Date(),
+                createdAt: new Date(),
                 title: action.payload.title,
                 description: action.payload.description,
                 sections: [],

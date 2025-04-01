@@ -2,21 +2,13 @@ import React from 'react';
 import styles from "../../pages/MyCardsPage/MyCardsPage.module.scss";
 import {TCard} from "../../types/types";
 import {Cell} from "@telegram-apps/telegram-ui";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/hooks";
 import useCard from "../../hooks/MyCards/useCard";
 import { ContextMenu } from "radix-ui";
-import {selectCard} from "../../store/slices/myCardsSlice";
 
 const CardList = () => {
     const {cards, selectedCardId} = useAppSelector(state => state.myCards);
     const {handleCardClick, handleEdit, handleCopyLink, handleDelete} = useCard();
-
-    const dispatch = useAppDispatch();
-
-    const sortCardsByDate = (cards: TCard[]) => {
-        return [...cards].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    };
-    const sortCards = sortCardsByDate(cards);
 
     return (
         <>
@@ -26,14 +18,14 @@ const CardList = () => {
                         <p className={styles.emptyStateTitle}>Тут пока пусто...</p>
                         <p className={styles.emptyStateSubtitle}>но вы можете добавить свою первую визитку</p>
                     </div>
-                ) : (sortCards.map((card: TCard, index: number) => {
+                ) : (cards.map((card: TCard, index: number) => {
                         return (
                             <ContextMenu.Root>
                                 <ContextMenu.Trigger>
                                     <Cell
                                         key={card.businessCardId}
                                         subtitle={card.description}
-                                        description={new Date(card.date).toLocaleDateString()}
+                                        description={card.createdAt ? new Date(card.createdAt).toLocaleDateString() : ''}
                                         onClick={() => handleCardClick(card.businessCardId!)}
                                         hovered={card.businessCardId === selectedCardId}
                                     >

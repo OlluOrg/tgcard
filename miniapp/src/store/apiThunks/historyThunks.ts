@@ -26,6 +26,7 @@ export const getHistory = createAsyncThunk(
                     userId: businessCard.userId,
                     businessCardId: businessCard._id,
                     lastViewedAt: businessCard.lastViewedAt,
+                    createdAt: businessCard.createdAt,
                 }
             });
 

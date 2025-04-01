@@ -1,22 +1,14 @@
-import React, {useEffect} from 'react';
-import {TCard, TCardHistory} from "../../types/types";
+import {TCardHistory} from "../../types/types";
 import styles from "../../pages/MyCardsPage/MyCardsPage.module.scss";
 import {Cell} from "@telegram-apps/telegram-ui";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/hooks";
 import useCard from "../../hooks/MyCards/useCard";
-import {addHistory, getHistory} from "../../store/apiThunks/historyThunks";
-import {getUserId} from "../../utils/getUserId";
 
 const CardsHistoryList = () => {
     const { viewHistory } = useAppSelector(state => state.myCards);
     const { selectedCardId } = useAppSelector(state => state.myCards);
 
     const { handleCardClick } = useCard();
-
-    const sortCardsByDate = (cards: TCardHistory[]) => {
-        return [...cards].sort((a, b) => new Date(b.lastViewedAt).getTime() - new Date(a.lastViewedAt).getTime());
-    };
-    const sortCards = sortCardsByDate(viewHistory);
 
     return (
         <div className={styles.cardList}>
@@ -26,11 +18,11 @@ const CardsHistoryList = () => {
                 <p className={styles.emptyStateSubtitle}>но здесь отобразится ваша история визиток</p>
             </div>
             ) : (
-                sortCards.map((card: TCard) => (
+                viewHistory.map((card: TCardHistory) => (
                     <Cell
                         key={card.id}
                         subtitle={card.description}
-                        description={new Date(card.date).toLocaleDateString()}
+                        description={card.createdAt ? new Date(card.createdAt).toLocaleDateString() : ''}
                         onClick={() => handleCardClick(card.businessCardId!)}
                         hovered={card.businessCardId === selectedCardId}
                     >
