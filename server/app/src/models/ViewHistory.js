@@ -33,8 +33,8 @@ viewHistorySchema.statics.addOrUpdateView =  function(userId, cardId) {
     return an;
 };
 
-// Метод для получения истории просмотров по userId
 viewHistorySchema.statics.getViewsByUser = function(userId) {
+    // Используем агрегацию для объединения коллекций и фильтрации данных
     return BusinessCard.aggregate([
         {
             $lookup: {
@@ -43,9 +43,6 @@ viewHistorySchema.statics.getViewsByUser = function(userId) {
                 foreignField: 'cardId',   // Поле в viewHistorySchema для соединения
                 as: "viewHistory"          // Имя поля, содержащего массив viewHistory
             }
-        },
-        {
-            $unwind: "$viewHistory" // Разворачиваем массив viewHistory
         },
         {
             $match: {
@@ -58,25 +55,8 @@ viewHistorySchema.statics.getViewsByUser = function(userId) {
             }
         },
         {
-            $group: {
-                _id: "$_id", // Группируем обратно по _id бизнес-карты
-                businessCardData: { $first: "$$ROOT" }, // Сохраняем данные бизнес-карты
-                lastViewedAt: { $first: "$viewHistory.lastViewedAt" } // Сохраняем только lastViewedAt
-            }
-        },
-        {
-            $replaceRoot: {
-                newRoot: {
-                    $mergeObjects: [
-                        "$businessCardData", // Все поля из businessCardSchema
-                        { lastViewedAt: "$lastViewedAt" } // Добавляем lastViewedAt
-                    ]
-                }
-            }
-        },
-        {
             $project: {
-                viewHistory: 0 // Убираем поле viewHistory из результата
+                viewHistory: 0 // Исключаем поле viewHistory из результата (необязательно)
             }
         }
     ]).exec();

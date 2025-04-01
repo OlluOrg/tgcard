@@ -15,6 +15,7 @@ export interface BusinessCardCreate {
 export interface BusinessCardRead {
     _id: string;
     userId: string;
+    createdAt?: Date;
     data: Record<string, any>;
 }
 
@@ -36,6 +37,7 @@ export interface HistoryRead {
     _id: string;
     userId: string;
     lastViewedAt: Date;
+    createdAt: Date;
     data: Record<string, any>;
 }
 

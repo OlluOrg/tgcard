@@ -75,23 +75,9 @@ const useCards = () => {
 
     const newCard: TCard = {
       id: cards.length + 1,
-      date: new Date(),
       title: nameNewCard,
       description: descriptionNewCard,
-      sections: [{
-          id: "7101b6cb-5ec4-4d87-8346-4846dbfc1727",
-          typeSectionEnum: 0,
-          value: {
-            value: `## ${nameNewCard}`
-          },
-          order: 1
-        },
-        {
-          id: "38b3c668-8d8e-4065-931f-8ba582ed9a33",
-          typeSectionEnum: 2,
-          order: 2,
-          value: ''
-        }],
+      sections: [],
     };
 
     closeAddModal();
@@ -125,11 +111,8 @@ const useCards = () => {
 
   const handleEdit = (businessCardId: string) => {
     dispatch(selectCard({selectedCardId: businessCardId}));
-
     navigate(generatePath(ROUTES.CARD, { cardId: businessCardId }));
-
     dispatch(addHistory({userId: userId, businessCardId: businessCardId}));
-
   };
 
   const handleDelete = () => {
@@ -138,8 +121,8 @@ const useCards = () => {
 
   const handleCardClick = (id: string) => {
     dispatch(selectCard({ selectedCardId: id === selectedCardId ? null : id }));
-
     navigate(generatePath(ROUTES.CARD, { cardId: id, mode: CARD_MODE.VIEW }));
+    dispatch(addHistory({userId: userId, businessCardId: id}));
   };
 
   const closeSettingsModal = () => {
