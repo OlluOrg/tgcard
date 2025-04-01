@@ -66,7 +66,7 @@ const CardPage = () => {
 
     return (
         <div>
-            <SectionList isGuest={userId !== userIdFromCard} />
+            <SectionList isViewMode={isViewMode} />
 
             {isViewMode
                 ? <CardPageBottomMenuForGuest />
