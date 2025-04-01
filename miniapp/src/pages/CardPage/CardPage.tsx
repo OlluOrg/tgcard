@@ -20,6 +20,7 @@ import {clearTextSlice} from "../../store/slices/textSlice";
 import {clearVideoSlice} from "../../store/slices/videoSlice";
 import {selectSection} from "../../store/slices/myCardsSlice";
 import {CARD_MODE} from "../../constants/cardMode";
+import CardTitle from "../../components/CardTitle/CardTitle";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
@@ -66,6 +67,8 @@ const CardPage = () => {
 
     return (
         <div>
+            <CardTitle title={currentCard?.title}/>
+
             <SectionList isViewMode={isViewMode} />
 
             {isViewMode
