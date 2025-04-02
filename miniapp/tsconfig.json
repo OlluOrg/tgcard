@@ -20,7 +20,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "./node_modules/telegram-webapps"
+      "./node_modules/telegram-webapps",
     ]
   },
   "include": [
