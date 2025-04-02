@@ -4,7 +4,6 @@ import {useAppDispatch, useAppSelector} from "../hooks";
 import {addLinkSection, editLinkSection} from "../../store/slices/myCardsSlice";
 import {setLinkBlockLinkInput, setLinkError, setNameBlockLinkInput, setNameError} from "../../store/slices/linkSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import { log } from "console";
 
 const useLinkSection = () => {
     const dispatch = useAppDispatch();

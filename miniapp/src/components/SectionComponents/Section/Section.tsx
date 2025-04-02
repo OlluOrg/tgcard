@@ -17,6 +17,7 @@ import ImageSection from "../Image/ImageSection/ImageSection";
 type SectionProps = {
     section: TSection,
     isSelected: boolean,
+    isViewMode: boolean;
 }
 
 const Section = (props: SectionProps) => {
@@ -25,7 +26,7 @@ const Section = (props: SectionProps) => {
             return <TextSection text={props.section.value as TSectionText} />
         }
         if (typeSectionEnum === TypeSectionEnum.blockLink) {
-            return <BlockLinkSection blockLink={props.section.value as TSectionBlockLink} />
+            return <BlockLinkSection blockLink={props.section.value as TSectionBlockLink} isViewMode={props.isViewMode} />
         }
         if (typeSectionEnum === TypeSectionEnum.divider) {
             return <DividerSection />
