@@ -16,26 +16,12 @@ div {
 }
 
 .sectionWrapper {
-  //transition: all 0.2s ease;
-  cursor: pointer;
   display: flex;
   align-items: stretch;
   border: 2px solid transparent;
   overflow-y: hidden;
   overflow-x: hidden;
 }
-
-//.dragHandle {
-//  width: 23.5px;
-//  display: flex;
-//  align-items: center;
-//  transition: all 0.2s ease;
-//  flex-shrink: 0;
-//
-//  &:active {
-//    cursor: grabbing;
-//  }
-//}
 
 .modalAddBtns {
   margin-bottom: 30px;
