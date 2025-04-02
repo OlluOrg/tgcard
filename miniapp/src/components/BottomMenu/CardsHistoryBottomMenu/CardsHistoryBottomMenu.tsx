@@ -28,7 +28,7 @@ const CardsHistoryBottomMenu = () => {
         const actions: Record<string, () => void> = {
             'copy': () => handleCopyLink(selectedCardId!),
             'edit': () => handleEdit(selectedCardId!),
-            'delete': handleDelete,
+            'delete': () => handleDelete(selectedCardId!),
             'pass': () => handleEdit(selectedCardId!)
         };
 
