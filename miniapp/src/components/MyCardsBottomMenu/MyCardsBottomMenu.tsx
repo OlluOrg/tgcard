@@ -8,6 +8,7 @@ import {setIsModalAddOpen, setIsModalSettingsOpen} from "../../store/slices/moda
 import useCard from "../../hooks/MyCards/useCard";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import Icon24Settings from "../../icons/Icon24Settings/Icon24Settings";
+import {selectCard} from "../../store/slices/myCardsSlice";
 
 const MyCardsBottomMenu = () => {
     const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const MyCardsBottomMenu = () => {
         const actions: Record<string, () => void> = {
             'copy': () => handleCopyLink(selectedCardId!),
             'edit': () => handleEdit(selectedCardId!),
-            'delete': handleDelete,
+            'delete': () => handleDelete(selectedCardId!),
             'create': () => dispatch(setIsModalAddOpen(true)),
             'settings': () => dispatch(setIsModalSettingsOpen(true)),
         };

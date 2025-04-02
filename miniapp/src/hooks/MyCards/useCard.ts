@@ -104,6 +104,7 @@ const useCards = () => {
   const handleDeleteConfirm = () => {
     dispatch(deleteBusinessCard({}));
     dispatch(deleteCard());
+    dispatch(selectCard({selectedCardId: null}))
     dispatch(setIsModalDeleteOpen(false));
   };
 
@@ -132,8 +133,9 @@ const useCards = () => {
 
   };
 
-  const handleDelete = () => {
-    selectedCardId && dispatch(setIsModalDeleteOpen(true));
+  const handleDelete = (businessCardId: string) => {
+    dispatch(selectCard({selectedCardId: businessCardId}));
+    dispatch(setIsModalDeleteOpen(true));
   };
 
   const handleCardClick = (id: string) => {

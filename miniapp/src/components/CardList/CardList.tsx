@@ -2,13 +2,16 @@ import React from 'react';
 import styles from "../../pages/MyCardsPage/MyCardsPage.module.scss";
 import {TCard} from "../../types/types";
 import {Cell} from "@telegram-apps/telegram-ui";
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import useCard from "../../hooks/MyCards/useCard";
 import { ContextMenu } from "radix-ui";
+import {selectCard} from "../../store/slices/myCardsSlice";
 
 const CardList = () => {
     const {cards, selectedCardId} = useAppSelector(state => state.myCards);
-    const {handleCardClick, handleEdit, handleCopyLink} = useCard();
+    const {handleCardClick, handleEdit, handleCopyLink, handleDelete} = useCard();
+
+    const dispatch = useAppDispatch();
 
     const sortCardsByDate = (cards: TCard[]) => {
         return [...cards].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -41,6 +44,7 @@ const CardList = () => {
                                     <ContextMenu.Content>
                                         <ContextMenu.Item onClick={() => handleCardClick(card.businessCardId!)}>Открыть</ContextMenu.Item>
                                         <ContextMenu.Item onClick={() => handleEdit(card.businessCardId!)}>Редактировать</ContextMenu.Item>
+                                        <ContextMenu.Item onClick={() => handleDelete(card.businessCardId!)}>Удалить</ContextMenu.Item>
                                         <ContextMenu.Item onClick={() => alert("Не готово")}>Настройки доступа</ContextMenu.Item>
                                         <ContextMenu.Item onClick={() => alert("Не готово")}>Архивировать</ContextMenu.Item>
                                         <ContextMenu.Sub>
