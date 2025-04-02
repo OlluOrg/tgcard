@@ -3,6 +3,7 @@ import {setIsTitleEditOpen} from "../../store/slices/modalsCardPageSlice";
 import {editTitle} from "../../store/slices/myCardsSlice";
 import useCard from "../MyCards/useCard";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {setNameNewCard} from "../../store/slices/cardSlice";
 
 export const useTitle = () => {
     const dispatch = useAppDispatch();
@@ -17,8 +18,9 @@ export const useTitle = () => {
     const handleSave = () => {
         if (!isFormValid()) return;
 
-        dispatch(setIsTitleEditOpen(false))
-        dispatch(editTitle(nameNewCard))
+        dispatch(setIsTitleEditOpen(false));
+        dispatch(editTitle(nameNewCard));
+        dispatch(setNameNewCard(""));
 
         dispatch(updateBusinessCards({}));
     }

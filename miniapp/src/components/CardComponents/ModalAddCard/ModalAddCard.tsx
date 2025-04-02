@@ -15,7 +15,6 @@ const ModalAddCard = () => {
     const {nameNewCard, nameError} = useAppSelector(state => state.card);
     const {isFormValid, closeAddModal, handleAdd} = useCard();
     const [isNameFocused, setIsNameFocused] = useState(false);
-    const [isDescriptionFocused, setIsDescriptionFocused] = useState(true);
 
     return (
         <Modal

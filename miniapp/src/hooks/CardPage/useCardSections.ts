@@ -16,6 +16,7 @@ import {setLinkBlockLinkInput, setNameBlockLinkInput} from "../../store/slices/l
 import {setMarkdown} from "../../store/slices/textSlice";
 import {setLinkVideoInput} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {setNameNewCard} from "../../store/slices/cardSlice";
 
 
 export const useCardSections = () => {
@@ -69,6 +70,7 @@ export const useCardSections = () => {
     const handleDone = () => {
         dispatch(selectSection({selectedSectionId: null}));
         dispatch(selectCard({selectedCardId: null}))
+        dispatch(setNameNewCard(""));
         const url = generatePath(ROUTES.MY_CARDS);
         navigate(url);
     };
