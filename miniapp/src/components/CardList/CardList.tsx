@@ -12,11 +12,6 @@ const CardList = () => {
     const {cards, selectedCardId} = useAppSelector(state => state.myCards);
     const {handleCardClick, handleEdit, handleCopyLink} = useCard();
 
-    const sortCardsByDate = (cards: TCard[]) => {
-        return [...cards].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    };
-    const sortCards = sortCardsByDate(cards);
-
     const createContextMenu = (cardId: string): ContextMenuPropsWithBindings => {
         const menu: ContextMenuItem[] = [
             { text: "Открыть", onClick: () => handleCardClick(cardId)},
@@ -40,14 +35,14 @@ const CardList = () => {
                     <p className={styles.emptyStateTitle}>Тут пока пусто...</p>
                     <p className={styles.emptyStateSubtitle}>но вы можете добавить свою первую визитку</p>
                 </div>
-            ) : (sortCards.map((card: TCard, index: number) => {
+            ) : (cards.map((card: TCard, index: number) => {
 
                 return (
                     <ContextMenuWrapperDiv menus={createContextMenu(card.businessCardId!)}>
                     <Cell
                         key={card.businessCardId}
                         subtitle={card.description}
-                        description={new Date(card.date).toLocaleDateString()}
+                        description={card.createdAt ? new Date(card.createdAt).toLocaleDateString() : ''}
                         onClick={() => handleCardClick(card.businessCardId!)}
                         hovered={card.businessCardId === selectedCardId}
                     >

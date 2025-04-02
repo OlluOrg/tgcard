@@ -62,7 +62,6 @@ export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolea
                 id: frontendData.id.toString(),
                 title: frontendData.title,
                 description: frontendData.description,
-                date: frontendData.date,
                 sections: transformedSections,
             },
         }
@@ -72,7 +71,6 @@ export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolea
         id: frontendData.id.toString(),
         title: frontendData.title,
         description: frontendData.description,
-        date: frontendData.date,
         sections: transformedSections,
     }
 };
@@ -105,7 +103,8 @@ export const readBusinessCards = createAsyncThunk(
                 return {
                     ...businessCard.data as TCard,
                     businessCardId: businessCard._id,
-                    userId: businessCard.userId
+                    userId: businessCard.userId,
+                    createdAt: businessCard.createdAt,
                 }
             })
 

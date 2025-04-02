@@ -11,7 +11,7 @@ type TCard = {
     userId?: string,
     title: string,
     description: string,
-    date: Date,
+    createdAt?: Date,
     sections: TSection[],
 }
 
@@ -20,16 +20,9 @@ type TCardWithUserId = {
     userId: string,
 }
 
-type TCardHistory  = {
-    id: number,
-    businessCardId?: string
-    title: string,
-    description: string,
-    userId?: string,
-    date: Date,
-    sections: TSection[],
-    lastViewedAt: Date,
-}
+type TCardHistory  = TCard & {
+    lastViewedAt: Date;
+};
 
 export enum TypeSectionEnum {
     text,
