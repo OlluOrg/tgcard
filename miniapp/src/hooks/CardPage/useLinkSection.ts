@@ -18,17 +18,25 @@ const useLinkSection = () => {
             dispatch(setNameError(''));
         }
 
-        const urlPattern = /^https?:\/\/.*/;
         if (linkBlockLinkInput.length === 0) {
             dispatch(setLinkError('Ссылка обязательна'));
         } else if (linkBlockLinkInput.length > 500) {
             dispatch(setLinkError('Максимум 500 символов'));
-        } else if (!urlPattern.test(linkBlockLinkInput)) {
-            dispatch(setLinkError('Должна начинаться с http:// или https://'));
+        } else if (!isValidHttpUrl(linkBlockLinkInput)) {
+            dispatch(setLinkError('Должна начинаться с http:// или https:// и не быть пустой'));
         } else {
             dispatch(setLinkError(''));
         }
     }, [nameBlockLinkInput, linkBlockLinkInput]);
+
+    const isValidHttpUrl = (string: string): boolean => {
+        try {
+          const url = new URL(string);
+          return (url.protocol === "http:" || url.protocol === "https:") && url.hostname.length > 0;
+        } catch (_) {
+          return false;
+        }
+      }
 
     const isBlockLinkValid = () => {
         return !nameError && !linkError &&
