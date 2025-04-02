@@ -57,6 +57,7 @@ const SortableSection = ({ section, onClick, isSelected, isViewMode }: {
             <Section
                 section={section}
                 isSelected={isSelected}
+                isViewMode={isViewMode}
             />
         </div>
     );

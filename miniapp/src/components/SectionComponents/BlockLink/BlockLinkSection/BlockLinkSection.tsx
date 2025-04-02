@@ -5,11 +5,12 @@ import IconGoToLink from "../../../../icons/IconGoToLink/IconGoToLink";
 
 type BlockLinkSectionProps = {
     blockLink: TSectionBlockLink;
+    isViewMode: boolean;
 };
 
 const BlockLinkSection = (props: BlockLinkSectionProps) => {    
     const handleLinkClick = () => {
-        if (props.blockLink.link) {
+        if (props.blockLink.link && !props.isViewMode) {
             Telegram.WebApp.openLink(props.blockLink.link);
         } else {
             console.log('No URL provided for this link.');
