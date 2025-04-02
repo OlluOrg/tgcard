@@ -40,7 +40,6 @@ const CardList = () => {
                     <ContextMenuWrapperDiv menus={createContextMenu(card.businessCardId!)}>
                     <Cell
                         key={card.businessCardId}
-                        subtitle={card.description}
                         description={card.createdAt ? new Date(card.createdAt).toLocaleDateString() : ''}
                         onClick={() => handleCardClick(card.businessCardId!)}
                         hovered={card.businessCardId === selectedCardId}

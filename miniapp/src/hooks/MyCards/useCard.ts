@@ -1,7 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../hooks";
 import {
-  setDescriptionError,
-  setDescriptionNewCard,
   setNameError,
   setNameNewCard,
 } from "../../store/slices/cardSlice";
@@ -35,7 +33,7 @@ const useCards = () => {
   const userId = getUserId();
 
   const { cards, selectedCardId } = useAppSelector((state) => state.myCards);
-  const { nameNewCard, descriptionNewCard } = useAppSelector(
+  const { nameNewCard } = useAppSelector(
     (state) => state.card
   );
 
@@ -67,7 +65,6 @@ const useCards = () => {
     const newCard: TCard = {
       id: cards.length + 1,
       title: nameNewCard,
-      description: descriptionNewCard,
       sections: [],
     };
 
@@ -119,7 +116,6 @@ const useCards = () => {
   const closeSettingsModal = () => {
     dispatch(setIsModalSettingsOpen(false));
     dispatch(setNameNewCard(""));
-    dispatch(setDescriptionNewCard(""));
   };
 
   const handleSave = () => {
@@ -129,7 +125,6 @@ const useCards = () => {
       updateCard({
         id: selectedCardId,
         title: nameNewCard,
-        description: descriptionNewCard,
       })
     );
 

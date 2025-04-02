@@ -6,7 +6,6 @@ import {
     readBusinessCards, readOneBusinessCard,
     updateBusinessCards
 } from "../apiThunks/businessCardThunks";
-import {setDescriptionNewCard} from "./cardSlice";
 import {addHistory, getHistory} from "../apiThunks/historyThunks";
 
 interface MyCardsState {
@@ -34,17 +33,16 @@ const myCardsSlice = createSlice({
                 id: state.cards.length + 1,
                 createdAt: new Date(),
                 title: action.payload.title,
-                description: action.payload.description,
                 sections: [],
             }
 
             state.cards.push(newCard);
         },
         updateCard: (state, action) => {
-            const { id, title, description } = action.payload;
+            const { id, title } = action.payload;
             const cardIndex = state.cards.findIndex(card => card.businessCardId === id);
             if (cardIndex !== -1) {
-                state.cards[cardIndex] = { ...state.cards[cardIndex], title, description };
+                state.cards[cardIndex] = { ...state.cards[cardIndex], title };
             }
         },
         editTitle: (state, action: PayloadAction<string>) => {

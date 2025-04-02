@@ -3,7 +3,7 @@ import {setIsTitleEditOpen} from "../../../../store/slices/modalsCardPageSlice";
 import styles from "../../../../pages/CardPage/CardPage.module.scss";
 import {Button, Input, Modal} from "@telegram-apps/telegram-ui";
 import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
-import {setDescriptionNewCard, setNameNewCard} from "../../../../store/slices/cardSlice";
+import {setNameNewCard} from "../../../../store/slices/cardSlice";
 import useTitle from "../../../../hooks/CardPage/useTitle";
 import useCard from "../../../../hooks/MyCards/useCard";
 
@@ -24,7 +24,6 @@ const TitleModal = () => {
             const selectedCard = cards.find(card => card.businessCardId === selectedCardId);
             if (selectedCard) {
                 dispatch(setNameNewCard(selectedCard.title));
-                dispatch(setDescriptionNewCard(selectedCard.description));
             }
         }
     }, [selectedCardId, cards]);

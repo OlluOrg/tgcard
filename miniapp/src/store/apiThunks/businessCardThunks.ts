@@ -61,7 +61,6 @@ export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolea
             data: {
                 id: frontendData.id.toString(),
                 title: frontendData.title,
-                description: frontendData.description,
                 sections: transformedSections,
             },
         }
@@ -70,7 +69,6 @@ export const transformFrontendToBackend = (frontendData: TCard, isCreate: boolea
     return {
         id: frontendData.id.toString(),
         title: frontendData.title,
-        description: frontendData.description,
         sections: transformedSections,
     }
 };

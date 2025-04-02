@@ -10,7 +10,6 @@ type TCard = {
     businessCardId?: string,
     userId?: string,
     title: string,
-    description: string,
     createdAt?: Date,
     sections: TSection[],
 }
