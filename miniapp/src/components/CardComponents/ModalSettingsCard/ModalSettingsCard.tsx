@@ -6,13 +6,13 @@ import styles from "../../../pages/MyCardsPage/MyCardsPage.module.scss";
 import { Button, Input, Modal } from "@telegram-apps/telegram-ui";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { setIsModalSettingsOpen } from "../../../store/slices/modalsMyCardsSlice";
-import { setDescriptionNewCard, setNameNewCard } from "../../../store/slices/cardSlice";
+import { setNameNewCard } from "../../../store/slices/cardSlice";
 import useCard from "../../../hooks/MyCards/useCard";
 
 const ModalSettingsCard = () => {
     const dispatch = useAppDispatch();
     const { isModalSettingsOpen } = useAppSelector(state => state.modalsMyCards);
-    const { nameNewCard, nameError, descriptionNewCard, descriptionError } = useAppSelector(state => state.card);
+    const { nameNewCard, nameError } = useAppSelector(state => state.card);
     const { selectedCardId, cards } = useAppSelector(state => state.myCards);
     const { isFormValid, closeSettingsModal, handleSave } = useCard();
     const [isNameFocused, setIsNameFocused] = useState(false);
@@ -23,7 +23,6 @@ const ModalSettingsCard = () => {
             const selectedCard = cards.find(card => card.businessCardId === selectedCardId);
             if (selectedCard) {
                 dispatch(setNameNewCard(selectedCard.title));
-                dispatch(setDescriptionNewCard(selectedCard.description));
             }
         }
     }, [isModalSettingsOpen, selectedCardId, cards, dispatch]);
@@ -52,19 +51,6 @@ const ModalSettingsCard = () => {
                     onChange={(e) => dispatch(setNameNewCard(e.target.value))}
                 />
                 {!isNameFocused && nameError && <div className={styles.errorMessage}>{nameError}</div>}
-            </div>
-
-            <div className={styles.inputGroup}>
-                <Input
-                    header="Описание"
-                    placeholder="Описание"
-                    status={isDescriptionFocused ? "default" : descriptionError ? "error" : "default"}
-                    value={descriptionNewCard}
-                    onFocus={() => setIsDescriptionFocused(true)}
-                    onBlur={() => setIsDescriptionFocused(false)}
-                    onChange={(e) => dispatch(setDescriptionNewCard(e.target.value))}                   
-                />
-                {!isDescriptionFocused && descriptionError && <div className={styles.errorMessage}>{descriptionError}</div>}
             </div>
 
             <div className={styles.modalAddBtns}>

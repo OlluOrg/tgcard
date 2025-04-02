@@ -21,7 +21,6 @@ const CardsHistoryList = () => {
                 viewHistory.map((card: TCardHistory) => (
                     <Cell
                         key={card.id}
-                        subtitle={card.description}
                         description={card.createdAt ? new Date(card.createdAt).toLocaleDateString() : ''}
                         onClick={() => handleCardClick(card.businessCardId!)}
                         hovered={card.businessCardId === selectedCardId}
