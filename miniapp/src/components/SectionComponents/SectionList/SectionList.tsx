@@ -22,8 +22,8 @@ interface SectionListProps {
 
 const SectionList = (props: SectionListProps) => {
     const dispatch = useAppDispatch();
-    const {handleSectionClick} = useCardSections();
-    const {cards, selectedCardId, selectedSectionId, isLoading} = useAppSelector(state => state.myCards);
+    const {handleEdit} = useCardSections();
+    const {cards, selectedCardId, isLoading} = useAppSelector(state => state.myCards);
     let card = cards.find(card => card.businessCardId === selectedCardId)!;
 
     const isTouchDevice = 'ontouchstart' in window;
@@ -108,8 +108,7 @@ const SectionList = (props: SectionListProps) => {
                             <SortableSection
                                 key={section.id}
                                 section={section}
-                                onClick={() => handleSectionClick(section.id)}
-                                isSelected={section.id === selectedSectionId}
+                                onClick={() => handleEdit(section.id, props.isViewMode)}
                                 isViewMode={props.isViewMode}
                             />
                         ))
