@@ -1,6 +1,7 @@
 const mongoose = require('../config/database');
 const { Schema } = mongoose;
 const { constants } = require('../config/constants');
+const { ForbiddenError, NotFoundError } = require('../errors/errors.js')
 
 const TypeSectionEnum = {
     text: 0,
@@ -31,6 +32,7 @@ const businessCardSchema = new Schema({
         title: { type: String, required: false },
         sections: { type: [SectionSchema], default: [] },
     },
+    isArchived: { type: Boolean, required: true },
 }, { 
     collection: constants.COLLECTION_BUSINESS_CARDS,
     timestamps: true,
@@ -38,6 +40,7 @@ const businessCardSchema = new Schema({
 
 // Метод для создания визитки
 businessCardSchema.statics.createCard = async function(data) {
+    data.isArchived = false;
     const card = new this(data);
     await card.save();
     return card;
@@ -45,12 +48,23 @@ businessCardSchema.statics.createCard = async function(data) {
 
 // Метод для поиска визитки по ID
 businessCardSchema.statics.findById = async function(id) {
-    return this.findOne({ _id: id });
+    const card = await this.findOne({ _id: id }).lean();
+    console.log(card);
+
+    if (!card) {
+        throw new NotFoundError("Визитка не найдена");
+    }
+
+    if (card.isArchived) {
+        throw new ForbiddenError("Визитка архивированна");
+    }
+
+    return card;
 };
 
 // Метод для поиска визиток userId
 businessCardSchema.statics.findByUserId = async function(id) {
-    return this.find({ userId: id }).sort({ updatedAt: -1 });
+    return this.find({ userId: id, isArchived: false }).sort({ updatedAt: -1 });
 };
 
 // Метод для поиска всех визиток
@@ -62,14 +76,16 @@ businessCardSchema.statics.findAll = async function() {
 businessCardSchema.statics.updateCard = async function(id, data) {
     const card = await this.findById(id);
     if (!card) throw new Error("Card not found");
-    console.log(data);
     card.data = data;
     return card.save();
 };
 
 // Метод для удаления визитки
 businessCardSchema.statics.deleteCard = async function(id) {
-    return this.deleteOne({ _id: id });
+    const card = await this.findById(id);
+    if (!card) throw new Error("Card not found");
+    card.isArchived = true;
+    return card.save();
 };
 
 const BusinessCard = mongoose.model('BusinessCard', businessCardSchema);

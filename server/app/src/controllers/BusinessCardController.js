@@ -1,5 +1,6 @@
 const BusinessCard = require('../models/BusinessCard');
 const { constants } = require('../config/constants');
+const { ForbiddenError, NotFoundError } = require('../errors/errors.js')
 
 exports.create = async (req, res) => {
     const data = req.body.data;
@@ -19,11 +20,21 @@ exports.read = async (req, res) => {
     const id = req.body.id;
     const userId = req.body.userId;
     if (id) {
-        const card = await BusinessCard.findById(id);
-        if (card) {
+        try {
+            const card = await BusinessCard.findById(id);
             res.json(card);
-        } else {
-            res.status(constants.HTTP_NOT_FOUND).json({ error: constants.ERROR_RESOURCE_NOT_FOUND });
+        } catch (error) {
+            if (error instanceof NotFoundError) {
+                return res.status(404).json({ error: error.message });
+            }
+            if (error instanceof ForbiddenError) {
+                return res.status(403).json({ 
+                    error: 'Доступ запрещен',
+                    message: error.message
+                });
+            }
+            // Обработка других ошибок
+            res.status(500).json({ error: 'Внутренняя ошибка сервера' });
         }
     } else if (userId) {
         const card = await BusinessCard.findByUserId(userId);
