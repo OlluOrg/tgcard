@@ -32,7 +32,7 @@ const useLinkSection = () => {
     const isValidHttpUrl = (string: string): boolean => {
         try {
           const url = new URL(string);
-          return (url.protocol === "http:" || url.protocol === "https:") && url.hostname.length > 0;
+          return (url.protocol === "http:" || url.protocol === "https:" || url.protocol === "tg:") && url.hostname.length > 0;
         } catch (_) {
           return false;
         }
