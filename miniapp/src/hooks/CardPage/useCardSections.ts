@@ -23,43 +23,45 @@ export const useCardSections = () => {
     const dispatch = useAppDispatch();
     const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards)
 
-    const {markdown} = useAppSelector(state => state.text);
-
     const navigate = useNavigate();
 
     const card = cards.find(card => card.businessCardId === selectedCardId)!;
 
-    function getSelectedSection(): TSection {
-        return card.sections.filter(a => a.id === selectedSectionId)[0];
+    function getSection(id: string): TSection {
+        return card.sections.filter(a => a.id === id)[0];
     }
 
-    const handleEdit = () => {
-        if (selectedSectionId === '') {
-            alert(`Выберете секцию`);
-        }
-        dispatch(setIsEditBlock(true));
+    type EditHandler = (value: any) => void;
 
-        let selectSection: TSection = getSelectedSection();
-        if (selectSection.typeSectionEnum === TypeSectionEnum.text) {
-            const text = selectSection.value as TSectionText;
-            dispatch(setMarkdown(text.value));
+    const editHandlers = new Map<TypeSectionEnum, EditHandler>([
+        [TypeSectionEnum.text, (value: TSectionText) => {
+            dispatch(setMarkdown(value.value));
             dispatch(setIsModalEditTextOpen(true));
-        }
-        if (selectSection.typeSectionEnum === TypeSectionEnum.blockLink) {
-            const blockLink = selectSection.value as TSectionBlockLink;
-            dispatch(setNameBlockLinkInput(blockLink.name));
-            dispatch(setLinkBlockLinkInput(blockLink.link));
+        }],
+        [TypeSectionEnum.blockLink, (value: TSectionBlockLink) => {
+            dispatch(setNameBlockLinkInput(value.name));
+            dispatch(setLinkBlockLinkInput(value.link));
             dispatch(setIsModalEditBlockLinkOpen(true));
-        }
-        if (selectSection.typeSectionEnum === TypeSectionEnum.video) {
-            const video = selectSection.value as TVideoSection;
-            dispatch(setLinkVideoInput(video.src));
+        }],
+        [TypeSectionEnum.video, (value: TVideoSection) => {
+            dispatch(setLinkVideoInput(value.src));
             dispatch(setIsModalEditVideoSectionOpen(true));
-        }
-    };
+        }]
+    ]);
 
-    const handleSectionClick = (id: string) => {
-        dispatch(selectSection({selectedSectionId: selectedSectionId === id ? null : id}));
+    const handleEdit = (id: string, isViewMode: boolean) => {
+        if (isViewMode) {
+            return;
+        }
+
+        dispatch(selectSection({selectedSectionId: id}));
+        dispatch(setIsEditBlock(true));
+        const section = getSection(id);
+        const handler = editHandlers.get(section.typeSectionEnum);
+        
+        if (handler) {
+            handler(section.value);
+        }
     };
 
     const handleDelete = () => {
@@ -77,7 +79,6 @@ export const useCardSections = () => {
 
     return {
         handleEdit,
-        handleSectionClick,
         handleDelete,
         handleDone
     };

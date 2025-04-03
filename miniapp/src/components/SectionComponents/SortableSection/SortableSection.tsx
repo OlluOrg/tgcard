@@ -6,10 +6,9 @@ import cardStyles from '../../../pages/CardPage/CardPage.module.scss';
 import Section from "../Section/Section";
 import { TSection } from "../../../types/types";
 
-const SortableSection = ({ section, onClick, isSelected, isViewMode }: {
+const SortableSection = ({ section, onClick, isViewMode }: {
     section: TSection;
     onClick: () => void;
-    isSelected: boolean;
     isViewMode: boolean;
 }) => {
     const {
@@ -30,7 +29,7 @@ const SortableSection = ({ section, onClick, isSelected, isViewMode }: {
             scaleY: 1,
         }) : undefined,
         transition: transition || undefined,
-        marginLeft: isSelected && !isViewMode ? '0' : '20px',
+        marginLeft: '20px',
         paddingRight: '20px',
         opacity: isDragging ? 0.8 : 1,
         zIndex: isDragging ? 999 : 'auto',
@@ -47,16 +46,8 @@ const SortableSection = ({ section, onClick, isSelected, isViewMode }: {
             className={`${cardStyles.sectionWrapper} ${!isViewMode ? styles.editModeStyle : ''}`}
             onClick={onClick}
         >
-            {isSelected && !isViewMode && (
-                <div
-                    className={styles.dragHandle}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                </div>
-            )}
             <Section
                 section={section}
-                isSelected={isSelected}
                 isViewMode={isViewMode}
             />
         </div>

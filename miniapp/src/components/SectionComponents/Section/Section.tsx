@@ -16,34 +16,30 @@ import ImageSection from "../Image/ImageSection/ImageSection";
 
 type SectionProps = {
     section: TSection,
-    isSelected: boolean,
     isViewMode: boolean;
 }
 
+const sectionFactory = {
+    [TypeSectionEnum.text]: (props: SectionProps) => 
+        <TextSection text={props.section.value as TSectionText} />,
+    [TypeSectionEnum.blockLink]: (props: SectionProps) => 
+        <BlockLinkSection blockLink={props.section.value as TSectionBlockLink} isViewMode={props.isViewMode} />,
+    [TypeSectionEnum.divider]: () => 
+        <DividerSection />,
+    [TypeSectionEnum.video]: (props: SectionProps) => 
+        <VideoSection video={props.section.value as TVideoSection} />,
+    [TypeSectionEnum.image]: (props: SectionProps) => 
+        <ImageSection img={props.section.value as TImageSection} />,
+};
+
 const Section = (props: SectionProps) => {
-    function renderSection(typeSectionEnum: TypeSectionEnum) {
-        if (typeSectionEnum === TypeSectionEnum.text) {
-            return <TextSection text={props.section.value as TSectionText} />
-        }
-        if (typeSectionEnum === TypeSectionEnum.blockLink) {
-            return <BlockLinkSection blockLink={props.section.value as TSectionBlockLink} isViewMode={props.isViewMode} />
-        }
-        if (typeSectionEnum === TypeSectionEnum.divider) {
-            return <DividerSection />
-        }
-        if (typeSectionEnum === TypeSectionEnum.video) {
-            return <VideoSection video={props.section.value as TVideoSection} />
-        }
-        if (typeSectionEnum === TypeSectionEnum.image) {
-            return <ImageSection img={props.section.value as TImageSection} />
-        }
-    }
+    const SectionComponent = sectionFactory[props.section.typeSectionEnum];
     
     return (
         <div
-            className={`${styles.section} ${props.isSelected ? styles.selected : ''}`}
+            className={`${styles.section}`}
         >
-            {renderSection(props.section.typeSectionEnum)}
+            <SectionComponent {...props} />
         </div>
     );
 };
