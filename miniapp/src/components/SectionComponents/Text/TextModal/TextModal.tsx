@@ -1,13 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {setIsModalEditTextOpen} from "../../../../store/slices/modalsCardPageSlice";
 import {
-    BlockTypeSelect,
     BoldItalicUnderlineToggles,
-    headingsPlugin,
-    listsPlugin,
-    ListsToggle,
     MDXEditor, MDXEditorMethods,
-    toolbarPlugin
+    toolbarPlugin,
 } from "@mdxeditor/editor";
 import styles from "../../../../pages/CardPage/CardPage.module.scss";
 import {Button, Modal} from "@telegram-apps/telegram-ui";
@@ -51,12 +47,10 @@ const TextModal = () => {
                 onBlur={() => setIsFocused(false)}
                 onChange={(newMarkdown: string) => dispatch(setMarkdown(newMarkdown))}
                 contentEditableClassName={styles.mdx}
-                plugins={[listsPlugin(), headingsPlugin() ,toolbarPlugin({
+                plugins={[toolbarPlugin({
                     toolbarContents: () =>
                         <>
                             <BoldItalicUnderlineToggles/>
-                            <ListsToggle/>
-                            <BlockTypeSelect/>
                         </>
                 })]}
             />
