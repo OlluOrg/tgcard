@@ -17,12 +17,36 @@ const BlockLinkSection = (props: BlockLinkSectionProps) => {
         }
     };
 
+    const getLinkType = () => {
+        const url = new URL(props.blockLink.link);
+        console.log(url)
+        
+        if (url.host.includes('t.me') && url.pathname.includes('tgcardi_bot')) {
+          return 'internal';
+        }
+        
+        if (url.host.includes('t.me') || 
+            url.host.includes('telegram.me') || 
+            url.protocol.startsWith('tg') || 
+            (url.protocol.startsWith('https') && url.hostname === 'telegram.org')) {
+          return 'telegram';
+        }
+
+        return 'external';
+    }
+
+    const colorBlockLink = {
+        internal: { backgroundColor: '#3A77EE' },
+        telegram: { background: 'linear-gradient(45deg, #3A77EE, #3FC1B0)' },
+        external: { backgroundColor:  'var(--tgui--button_color)' }
+    }
+
     return (
         <div className={styles.sectionContainer}>
             <div className={styles.texts}>
                 <p className={styles.sectionText}>{props.blockLink.name}</p>
             </div>
-            <div className={styles.iconWrapper} onClick={handleLinkClick}>
+            <div className={styles.iconWrapper} style={colorBlockLink[getLinkType()]} onClick={handleLinkClick}>
                 <IconGoToLink />
             </div>
         </div>
