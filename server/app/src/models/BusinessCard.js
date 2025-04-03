@@ -48,8 +48,7 @@ businessCardSchema.statics.createCard = async function(data) {
 
 // Метод для поиска визитки по ID
 businessCardSchema.statics.findById = async function(id) {
-    const card = await this.findOne({ _id: id }).lean();
-    console.log(card);
+    const card = await this.findOne({ _id: id });
 
     if (!card) {
         throw new NotFoundError("Визитка не найдена");
@@ -77,6 +76,7 @@ businessCardSchema.statics.updateCard = async function(id, data) {
     const card = await this.findById(id);
     if (!card) throw new Error("Card not found");
     card.data = data;
+    console.log(card.data);
     return card.save();
 };
 
