@@ -1,13 +1,21 @@
 import {useEffect} from "react";
-import {setIsEditBlock, setIsModalChooseSectionOpen, setIsModalEditBlockLinkOpen} from "../../store/slices/modalsCardPageSlice";
+import {
+    setIsEditBlock,
+    setIsModalChooseSectionOpen,
+    setIsModalEditBlockLinkOpen
+} from "../../store/slices/modalsCardPageSlice";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {addLinkSection, editLinkSection} from "../../store/slices/myCardsSlice";
 import {setLinkBlockLinkInput, setLinkError, setNameBlockLinkInput, setNameError} from "../../store/slices/linkSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
+import {TSectionBlockLink, TypeSectionEnum} from "../../types/types";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
 
 const useLinkSection = () => {
     const dispatch = useAppDispatch();
     const {nameBlockLinkInput, linkBlockLinkInput, nameError, linkError} = useAppSelector(state => state.link);
+    const commandManager = useCommandManager();
 
     useEffect(() => {
         if (nameBlockLinkInput.length === 0) {
@@ -44,11 +52,12 @@ const useLinkSection = () => {
             linkBlockLinkInput.length > 0;
     };
 
-    const handleAddBlockLink = () => {
-        dispatch(setIsModalEditBlockLinkOpen(false));
-        dispatch(addLinkSection({link: linkBlockLinkInput, title: nameBlockLinkInput}));
+    const handleAddBlockLinkCommand = () => {
+        const command = new AddSectionCommand(TypeSectionEnum.blockLink,
+            {link: linkBlockLinkInput, name: nameBlockLinkInput} as TSectionBlockLink);
+        commandManager.execute(command);
 
-        dispatch(updateBusinessCards({}))
+        dispatch(setIsModalEditBlockLinkOpen(false));
     };
 
     const handleEditBlockLink = () => {
@@ -72,10 +81,10 @@ const useLinkSection = () => {
 
     return {
         isBlockLinkValid,
-        handleAddBlockLink,
         handleEditBlockLink,
         closeModalEditBlockLink,
-        handleChooseBlockLinkSection
+        handleChooseBlockLinkSection,
+        handleAddBlockLinkCommand
     }
 }
 

@@ -125,8 +125,6 @@ export const readOneBusinessCard = createAsyncThunk(
                 userId: response.userId
             } as TCard
 
-            //alert(JSON.stringify(card, null, 2));
-
             return card;
         } catch (error) {
             return rejectWithValue(error);

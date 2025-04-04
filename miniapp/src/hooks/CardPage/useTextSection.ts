@@ -1,17 +1,22 @@
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {setIsEditBlock, setIsModalChooseSectionOpen, setIsModalEditTextOpen} from "../../store/slices/modalsCardPageSlice";
+import {
+    setIsEditBlock,
+    setIsModalChooseSectionOpen,
+    setIsModalEditTextOpen
+} from "../../store/slices/modalsCardPageSlice";
 import {addTextSection, editTextSection} from "../../store/slices/myCardsSlice";
 import {setMarkdown, setMarkdownError} from "../../store/slices/textSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {TCard} from "../../types/types";
+import {TSectionText, TypeSectionEnum} from "../../types/types";
+import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
 
 const useTextSection = () => {
     const dispatch = useAppDispatch();
+    const commandManager = useCommandManager();
 
     const {markdown} = useAppSelector(state => state.text);
-    const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards);
-    const card: TCard = cards.find(card => card.businessCardId === selectedCardId)!;
 
     useEffect(() => {
         if (markdown.trim().length === 0) {
@@ -41,12 +46,12 @@ const useTextSection = () => {
         dispatch(updateBusinessCards({}))
     };
 
-    const handleAddText = () => {
-        dispatch(setIsModalEditTextOpen(false));
-        dispatch(addTextSection({text: markdown}));
-        dispatch(setMarkdown(''));
+    const handleAddTextCommand = () => {
+        const command = new AddSectionCommand(TypeSectionEnum.text, {value: markdown} as TSectionText)
+        commandManager.execute(command);
 
-        dispatch(updateBusinessCards({}))
+        dispatch(setIsModalEditTextOpen(false));
+        dispatch(setMarkdown(''));
     };
 
     const handleChooseTextSection = () => {
@@ -58,9 +63,9 @@ const useTextSection = () => {
     return {
         closeModalEditText,
         handleEditText,
-        handleAddText,
         isTextValid,
         handleChooseTextSection,
+        handleAddTextCommand
     };
 }
 

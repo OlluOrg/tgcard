@@ -1,5 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {
+    addTextSection,
     deleteSection, selectCard,
     selectSection,
 } from "../../store/slices/myCardsSlice";
@@ -17,6 +18,7 @@ import {setMarkdown} from "../../store/slices/textSlice";
 import {setLinkVideoInput} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {setNameNewCard} from "../../store/slices/cardSlice";
+import {text} from "node:stream/consumers";
 
 
 export const useCardSections = () => {
@@ -64,6 +66,18 @@ export const useCardSections = () => {
         }
     };
 
+    const addSection = (sectionType: TypeSectionEnum, value: any) => {
+        switch (sectionType) {
+            case TypeSectionEnum.text:
+                dispatch(setIsModalEditTextOpen(false));
+                dispatch(addTextSection({text: value}));
+                dispatch(setMarkdown(''));
+                break;
+        }
+
+        dispatch(updateBusinessCards({}))
+    }
+
     const handleDelete = () => {
         dispatch(deleteSection());
         dispatch(updateBusinessCards({}))
@@ -80,7 +94,8 @@ export const useCardSections = () => {
     return {
         handleEdit,
         handleDelete,
-        handleDone
+        handleDone,
+        addSection
     };
 }
 

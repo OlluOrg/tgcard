@@ -8,11 +8,13 @@ import {setIsModalChooseSectionOpen} from "../../../store/slices/modalsCardPageS
 import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 import useCardSections from "../../../hooks/CardPage/useCardSections";
 import {TypeSectionEnum} from "../../../types/types";
+import {useCommandManager} from "../../../commands/commandManager/CommandManagerContext";
 
 
 const CardPageBottomMenu = () => {
     const dispatch = useAppDispatch();
     const {selectedCardId, cards} = useAppSelector(state => state.myCards);
+    const commandManager = useCommandManager()
 
     const {handleDone, handleDelete} = useCardSections();
     const [currentBottomTab, setCurrentBottomTab] = useState<string>('');
@@ -31,11 +33,19 @@ const CardPageBottomMenu = () => {
         if (idTab === 'settings'){
             dispatch(setIsModalChooseSectionOpen(true));
         }
+        if (idTab === 'undo'){
+            commandManager.undo();
+        }
+        if (idTab === 'redo'){
+            commandManager.redo();
+        }
     }
 
     const bottomTabs = [
         {id: 'done', text: 'готово', Icon: Icon24Check,},
         {id: 'create', text: 'Создать', Icon: Icon24CircleAdd,},
+        {id: 'undo', text: 'Откатить', Icon: Icon24CircleAdd,},
+        {id: 'redo', text: 'Вернуть', Icon: Icon24CircleAdd,}
     ];
 
     return (

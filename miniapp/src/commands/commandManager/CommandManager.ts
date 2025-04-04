@@ -1,10 +1,10 @@
-import {Command} from "./Command";
-import {AppDispatch} from "../store/store";
+import {Command} from "../Command";
+import {AppDispatch} from "../../store/store";
 
 export class CommandManager {
-    private history: Command[] = [];
+    private redoStack: Command[] = [];
     private undoStack: Command[] = [];
-    private dispatch: AppDispatch;
+    private readonly dispatch: AppDispatch;
 
     constructor(dispatch: AppDispatch) {
         this.dispatch = dispatch;
@@ -12,20 +12,20 @@ export class CommandManager {
 
     execute(command: Command) {
         command.execute(this.dispatch);
-        this.history.push(command);
-        this.undoStack = [];
+        this.undoStack.push(command);
+        this.redoStack = [];
     }
 
     undo() {
-        const command = this.history.pop();
+        const command = this.undoStack.pop();
         if (command) {
             command.undo(this.dispatch);
-            this.undoStack.push(command);
+            this.redoStack.push(command);
         }
     }
 
     redo() {
-        const command = this.undoStack.pop();
+        const command = this.redoStack.pop();
         if (command) {
             command.execute(this.dispatch);
             this.undoStack.push(command);

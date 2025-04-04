@@ -8,9 +8,13 @@ import {addImageSection, editImageSection} from "../../store/slices/myCardsSlice
 import {setImageData} from "../../store/slices/imageSlice";
 import {imageUpload} from "../../services/image.service";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
+import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
+import {TImageSection, TypeSectionEnum} from "../../types/types";
 
 const useImageSection = () => {
     const dispatch = useAppDispatch();
+    const commandManager = useCommandManager();
 
     const {imageData, aspectRatio, imageError} = useAppSelector(state => state.image);
 
@@ -24,11 +28,12 @@ const useImageSection = () => {
         dispatch(setImageData(''));
     };
 
-    const handleChooseImageSection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChooseImageSectionCommand = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setIsModalChooseSectionOpen(false));
         imageUpload(event).then(imgInfo => {
-            dispatch(addImageSection({data: {src: imgInfo.imageData, aspectRatio: imgInfo.aspectRatio}}));
-            dispatch(updateBusinessCards({}));
+            const command = new AddSectionCommand(TypeSectionEnum.image,
+                {src: imgInfo.imageData, aspectRatio: imgInfo.aspectRatio} as TImageSection);
+            commandManager.execute(command);
         });
     };
 
@@ -39,7 +44,7 @@ const useImageSection = () => {
     return {
         handleEditImage,
         closeModalEditImage,
-        handleChooseImageSection,
+        handleChooseImageSectionCommand,
         isBlockImageValid
     }
 };

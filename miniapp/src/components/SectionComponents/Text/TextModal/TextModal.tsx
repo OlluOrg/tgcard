@@ -1,29 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {setIsModalEditTextOpen} from "../../../../store/slices/modalsCardPageSlice";
-import {
-    BoldItalicUnderlineToggles,
-    MDXEditor, MDXEditorMethods,
-    toolbarPlugin,
-} from "@mdxeditor/editor";
+import {BoldItalicUnderlineToggles, MDXEditor, MDXEditorMethods, toolbarPlugin,} from "@mdxeditor/editor";
 import styles from "../../../../pages/CardPage/CardPage.module.scss";
 import {Button, Modal} from "@telegram-apps/telegram-ui";
 import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
 import useTextSection from "../../../../hooks/CardPage/useTextSection";
 import {setMarkdown} from "../../../../store/slices/textSlice";
-import {Command} from "../../../../commands/Command";
-import {AddSectionCommand} from "../../../../commands/sections/AddSectionCommand";
-import useCardSections from "../../../../hooks/CardPage/useCardSections";
-import {CommandManager} from "../../../../commands/CommandManager";
+import {CommandManager} from "../../../../commands/commandManager/CommandManager";
 
 const TextModal = () => {
     const dispatch = useAppDispatch();
     const {isModalEditTextOpen, isEditBlock} = useAppSelector(state => state.modalsCardPage);
     const {markdown, markdownError} = useAppSelector(state => state.text);
 
-    const {closeModalEditText, isTextValid, handleAddText, handleEditText} = useTextSection();
-    const {handleDelete} = useCardSections()
-
-    const commandManager: CommandManager = new CommandManager();
+    const {closeModalEditText, isTextValid, handleEditText, handleAddTextCommand} = useTextSection();
     
     const [isFocused, setIsFocused] = useState(false);
 
@@ -34,11 +24,6 @@ const TextModal = () => {
             setIsFocused(true); // Устанавливаем фокус при открытии
         }
     }, [isModalEditTextOpen]);
-
-    const textAddHandler = () => {
-        const command: Command = new AddSectionCommand(handleAddText, handleDelete)
-        commandManager.execute(command);
-    }
 
     return (
         <Modal
@@ -78,7 +63,7 @@ const TextModal = () => {
                 <Button
                     mode="filled"
                     size="m"
-                    onClick={() => isEditBlock ? handleEditText() : textAddHandler()
+                    onClick={() => isEditBlock ? handleEditText() : handleAddTextCommand()
                 }
                     disabled={!isTextValid()}
                 >

@@ -1,4 +1,4 @@
-import {TCard, TCardHistory, TCardWithUserId, TSection, TypeSectionEnum} from "../../types/types";
+import {TCard, TCardHistory, TSection, TypeSectionEnum} from "../../types/types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {
     createBusinessCard,
@@ -58,6 +58,10 @@ const myCardsSlice = createSlice({
         },
         selectSection: (state, action: PayloadAction<{selectedSectionId: string | null }>) => {
             state.selectedSectionId = action.payload.selectedSectionId;
+        },
+        addSection: (state, action: PayloadAction<{section: TSection }>) => {
+            const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
+            cardToUpdate.sections.push({...action.payload.section, order: cardToUpdate.sections.length + 1});
         },
         editTextSection: (state, action: PayloadAction<{text: string}>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
@@ -144,6 +148,11 @@ const myCardsSlice = createSlice({
         deleteSection: (state) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
             cardToUpdate.sections = cardToUpdate.sections.filter(section => section.id !== state.selectedSectionId);
+            state.selectedSectionId = null;
+        },
+        deleteSectionById: (state, action: PayloadAction<{sectionId: string}>) => {
+            const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
+            cardToUpdate.sections = cardToUpdate.sections.filter(section => section.id !== action.payload.sectionId);
             state.selectedSectionId = null;
         },
         updateCards: (state, action: PayloadAction<{newCards: TCard[]}>) => {
@@ -234,6 +243,8 @@ export const {
     deleteSection,
     selectSection,
     addToViewHistory,
-    updateCardSections
+    updateCardSections,
+    deleteSectionById,
+    addSection
 } = myCardsSlice.actions;
 export const myCardsReducer = myCardsSlice.reducer;

@@ -2,20 +2,23 @@ import {useAppDispatch} from "../hooks";
 import {setIsModalChooseSectionOpen} from "../../store/slices/modalsCardPageSlice";
 import {addDividerSection} from "../../store/slices/myCardsSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
+import {TDivider, TypeSectionEnum} from "../../types/types";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
 
 const useDividerSection = () => {
     const dispatch = useAppDispatch();
+    const commandManager = useCommandManager();
 
+    const handleChooseDividerSectionCommand = () => {
+        const command = new AddSectionCommand(TypeSectionEnum.divider, {} as TDivider);
+        commandManager.execute(command);
 
-    const handleChooseDividerSection = () => {
         dispatch(setIsModalChooseSectionOpen(false));
-        dispatch(addDividerSection());
-
-        dispatch(updateBusinessCards({}))
     };
 
     return {
-        handleChooseDividerSection,
+        handleChooseDividerSectionCommand
     };
 }
 

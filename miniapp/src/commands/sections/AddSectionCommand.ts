@@ -1,28 +1,39 @@
 import {Command} from "../Command";
-import {TSection, TypeSectionEnum} from "../../types/types";
+import {
+    TDivider,
+    TImageSection,
+    TSection,
+    TSectionBlockLink,
+    TSectionText,
+    TVideoSection,
+    TypeSectionEnum
+} from "../../types/types";
 import {AppDispatch} from "../../store/store";
-import {addTextSection, deleteSection} from "../../store/slices/myCardsSlice";
+import {addSection, deleteSectionById} from "../../store/slices/myCardsSlice";
+import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 
 export class AddSectionCommand implements Command {
-    private sectionType: TypeSectionEnum;
-    private value: any;
+    private section: TSection;
 
     constructor(
         sectionType: TypeSectionEnum,
-        value: any,
+        value: TSectionText | TDivider | TImageSection | TVideoSection | TSectionBlockLink,
         ) {
-        this.sectionType = sectionType;
-        this.value = value;
-    }
-
-    execute(dispatch: AppDispatch) {
-        switch (this.sectionType) {
-            case TypeSectionEnum.image:
-                break;
+        this.section = {
+            id: crypto.randomUUID(),
+            typeSectionEnum: sectionType,
+            order: -1,
+            value: value,
         }
     }
 
+    execute(dispatch: AppDispatch) {
+        dispatch(addSection({section: this.section}));
+        dispatch(updateBusinessCards({}));
+    }
+
     undo(dispatch: AppDispatch) {
-        dispatch(deleteSection());
+        dispatch(deleteSectionById({sectionId: this.section.id}));
+        dispatch(updateBusinessCards({}));
     }
 }
