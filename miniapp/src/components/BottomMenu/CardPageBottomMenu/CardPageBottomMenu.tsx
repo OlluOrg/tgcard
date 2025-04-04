@@ -9,6 +9,8 @@ import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 import useCardSections from "../../../hooks/CardPage/useCardSections";
 import {TypeSectionEnum} from "../../../types/types";
 import {useCommandManager} from "../../../commands/commandManager/CommandManagerContext";
+import IconArrowLeft from "../../../icons/IconArrowLeft/IconArrowLeft";
+import IconArrowRight from "../../../icons/IconArrowRight/IconArrowRight";
 
 
 const CardPageBottomMenu = () => {
@@ -44,8 +46,8 @@ const CardPageBottomMenu = () => {
     const bottomTabs = [
         {id: 'done', text: 'готово', Icon: Icon24Check,},
         {id: 'create', text: 'Создать', Icon: Icon24CircleAdd,},
-        {id: 'undo', text: 'Откатить', Icon: Icon24CircleAdd,},
-        {id: 'redo', text: 'Вернуть', Icon: Icon24CircleAdd,}
+        {id: 'undo', text: 'Откатить', Icon: IconArrowLeft,},
+        {id: 'redo', text: 'Вернуть', Icon: IconArrowRight,}
     ];
 
     return (
