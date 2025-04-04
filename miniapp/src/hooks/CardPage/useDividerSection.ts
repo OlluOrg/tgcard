@@ -1,7 +1,5 @@
 import {useAppDispatch} from "../hooks";
 import {setIsModalChooseSectionOpen} from "../../store/slices/modalsCardPageSlice";
-import {addDividerSection} from "../../store/slices/myCardsSlice";
-import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
 import {TDivider, TypeSectionEnum} from "../../types/types";
 import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";

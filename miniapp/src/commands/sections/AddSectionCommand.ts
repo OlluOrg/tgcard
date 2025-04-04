@@ -13,7 +13,7 @@ import {addSection, deleteSectionById} from "../../store/slices/myCardsSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 
 export class AddSectionCommand implements Command {
-    private section: TSection;
+    private readonly section: TSection;
 
     constructor(
         sectionType: TypeSectionEnum,
