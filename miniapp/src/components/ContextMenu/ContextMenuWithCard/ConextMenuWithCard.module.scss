@@ -1,0 +1,14 @@
+.content {
+  background-color: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+  padding: 10px 0;
+  border-radius: 6px;
+}
+.item {
+  cursor: pointer;
+  padding: 8px 14px;
+}
+
+.item:hover {
+  background-color: var(--tg-theme-bg-color);
+}
