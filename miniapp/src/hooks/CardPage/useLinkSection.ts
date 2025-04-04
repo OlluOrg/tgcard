@@ -1,13 +1,23 @@
 import {useEffect} from "react";
-import {setIsEditBlock, setIsModalChooseSectionOpen, setIsModalEditBlockLinkOpen} from "../../store/slices/modalsCardPageSlice";
+import {
+    setIsEditBlock,
+    setIsModalChooseSectionOpen,
+    setIsModalEditBlockLinkOpen
+} from "../../store/slices/modalsCardPageSlice";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {addLinkSection, editLinkSection} from "../../store/slices/myCardsSlice";
 import {setLinkBlockLinkInput, setLinkError, setNameBlockLinkInput, setNameError} from "../../store/slices/linkSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
+import {TSection, TSectionBlockLink, TSectionText, TypeSectionEnum} from "../../types/types";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
+import {EditSectionCommand} from "../../commands/sections/EditSectionCommand";
 
 const useLinkSection = () => {
     const dispatch = useAppDispatch();
     const {nameBlockLinkInput, linkBlockLinkInput, nameError, linkError} = useAppSelector(state => state.link);
+    const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards)
+    const commandManager = useCommandManager();
 
     useEffect(() => {
         if (nameBlockLinkInput.length === 0) {
@@ -44,18 +54,26 @@ const useLinkSection = () => {
             linkBlockLinkInput.length > 0;
     };
 
-    const handleAddBlockLink = () => {
-        dispatch(setIsModalEditBlockLinkOpen(false));
-        dispatch(addLinkSection({link: linkBlockLinkInput, title: nameBlockLinkInput}));
+    const handleAddBlockLinkCommand = () => {
+        const command = new AddSectionCommand(TypeSectionEnum.blockLink,
+            {link: linkBlockLinkInput, name: nameBlockLinkInput} as TSectionBlockLink);
+        commandManager.execute(command);
 
-        dispatch(updateBusinessCards({}))
+        dispatch(setIsModalEditBlockLinkOpen(false));
     };
 
-    const handleEditBlockLink = () => {
-        dispatch(editLinkSection({link: linkBlockLinkInput, title: nameBlockLinkInput}));
-        dispatch(setIsModalEditBlockLinkOpen(false));
+    const handleEditBlockLinkCommand = () => {
+        const card = cards.find(card => card.businessCardId === selectedCardId)!;
+        const oldSection = card.sections.find(section => section.id === selectedSectionId)!;
+        const newSection: TSection = {
+            ...oldSection,
+            value: {link: linkBlockLinkInput, name: nameBlockLinkInput} as TSectionBlockLink
+        }
 
-        dispatch(updateBusinessCards({}))
+        const command = new EditSectionCommand(oldSection, newSection);
+        commandManager.execute(command);
+
+        dispatch(setIsModalEditBlockLinkOpen(false));
     };
 
     const closeModalEditBlockLink = () => {
@@ -72,10 +90,10 @@ const useLinkSection = () => {
 
     return {
         isBlockLinkValid,
-        handleAddBlockLink,
-        handleEditBlockLink,
+        handleEditBlockLinkCommand,
         closeModalEditBlockLink,
-        handleChooseBlockLinkSection
+        handleChooseBlockLinkSection,
+        handleAddBlockLinkCommand
     }
 }
 

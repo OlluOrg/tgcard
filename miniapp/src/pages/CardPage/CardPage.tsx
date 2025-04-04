@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import '@mdxeditor/editor/style.css'
 import './mdxstyle.scss';
@@ -22,9 +22,12 @@ import {selectSection} from "../../store/slices/myCardsSlice";
 import {CARD_MODE} from "../../constants/cardMode";
 import CardTitle from "../../components/SectionComponents/Title/CardTitle/CardTitle";
 import TitleModal from "../../components/SectionComponents/Title/TitleModal/TitleModal";
+import {CommandManagerProvider} from "../../commands/commandManager/CommandManagerContext";
+import {CommandManager} from "../../commands/commandManager/CommandManager";
 
 const CardPage = () => {
     const dispatch = useAppDispatch();
+    const commandManagerRef = useRef(new CommandManager(dispatch));
 
     const {cardId, mode} = useParams();
     const {cards, isLoading} = useAppSelector(state => state.myCards);
@@ -67,26 +70,28 @@ const CardPage = () => {
     }
 
     return (
-        <div>
-            <CardTitle isViewMode={isViewMode} title={currentCard?.title}/>
+        <CommandManagerProvider manager={commandManagerRef.current}>
+            <div>
+                <CardTitle isViewMode={isViewMode} title={currentCard?.title}/>
 
-            <SectionList isViewMode={isViewMode} />
+                <SectionList isViewMode={isViewMode}/>
 
-            {isViewMode
-                ? <CardPageBottomMenuForGuest />
-                : <CardPageBottomMenu />
-            }
+                {isViewMode
+                    ? <CardPageBottomMenuForGuest/>
+                    : <CardPageBottomMenu/>
+                }
 
-            <LinkModal />
+                <LinkModal/>
 
-            <TitleModal />
+                <TitleModal/>
 
-            <ChooseSectionModal />
+                <ChooseSectionModal/>
 
-            <TextModal />
+                <TextModal/>
 
-            <VideoModal />
-        </div>
+                <VideoModal/>
+            </div>
+        </CommandManagerProvider>
     );
 };
 

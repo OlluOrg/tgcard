@@ -20,9 +20,9 @@ const LinkModal = () => {
 
     const {
         closeModalEditBlockLink,
-        handleEditBlockLink,
+        handleEditBlockLinkCommand,
         isBlockLinkValid,
-        handleAddBlockLink
+        handleAddBlockLinkCommand,
     } = useLinkSection();
 
     return (
@@ -69,7 +69,7 @@ const LinkModal = () => {
                 <Button
                     mode="filled"
                     size="m"
-                    onClick={() => isEditBlock? handleEditBlockLink() : handleAddBlockLink()}
+                    onClick={() => isEditBlock? handleEditBlockLinkCommand() : handleAddBlockLinkCommand()}
                     disabled={!isBlockLinkValid()}
                 >
                     {isEditBlock ? 'Сохранить' : 'Добавить'}

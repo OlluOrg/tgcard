@@ -1,7 +1,4 @@
 import React, {useRef} from 'react';
-import {
-    ModalHeader
-} from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import {setIsModalChooseSectionOpen} from "../../../store/slices/modalsCardPageSlice";
 import {Cell, Modal} from "@telegram-apps/telegram-ui";
 import IconTextSection from "../../../icons/IconTextSection/IconTextSection";
@@ -11,7 +8,6 @@ import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 import useTextSection from "../../../hooks/CardPage/useTextSection";
 import useLinkSection from "../../../hooks/CardPage/useLinkSection";
 import useDividerSection from "../../../hooks/CardPage/useDividerSection";
-import useVideoSection from "../../../hooks/CardPage/useVideoSection";
 import useImageSection from "../../../hooks/CardPage/useImageSection";
 import IconUpload from "../../../icons/IconUpload/IconUpload";
 import styles from "./ChooseSectionModal.module.scss";
@@ -24,9 +20,8 @@ const ChooseSectionModal = () => {
 
     const {handleChooseTextSection} = useTextSection();
     const {handleChooseBlockLinkSection} = useLinkSection();
-    const {handleChooseDividerSection} = useDividerSection();
-    const {handleChooseVideoSection} = useVideoSection();
-    const {handleChooseImageSection} = useImageSection();
+    const {handleChooseDividerSectionCommand} = useDividerSection();
+    const {handleChooseImageSectionCommand} = useImageSection();
 
     const clickOnImageSection = () => clickOnInputFile();
     const clickOnInputFile = () => fileInputRef.current?.click();
@@ -52,7 +47,7 @@ const ChooseSectionModal = () => {
                     Ссылка
                 </Cell>
                 <Cell
-                    onClick={handleChooseDividerSection}
+                    onClick={handleChooseDividerSectionCommand}
                     before={<IconDivider/>}
                 >
                     Горизонтальная линия
@@ -73,7 +68,7 @@ const ChooseSectionModal = () => {
                 type="file"
                 ref={fileInputRef}
                 accept="image/*"
-                onChange={handleChooseImageSection}
+                onChange={handleChooseImageSectionCommand}
                 className={styles.inputImage}
             />
         </>

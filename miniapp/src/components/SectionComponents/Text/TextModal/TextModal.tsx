@@ -1,22 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {setIsModalEditTextOpen} from "../../../../store/slices/modalsCardPageSlice";
-import {
-    BoldItalicUnderlineToggles,
-    MDXEditor, MDXEditorMethods,
-    toolbarPlugin,
-} from "@mdxeditor/editor";
+import {BoldItalicUnderlineToggles, MDXEditor, MDXEditorMethods, toolbarPlugin,} from "@mdxeditor/editor";
 import styles from "../../../../pages/CardPage/CardPage.module.scss";
 import {Button, Modal} from "@telegram-apps/telegram-ui";
 import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
 import useTextSection from "../../../../hooks/CardPage/useTextSection";
 import {setMarkdown} from "../../../../store/slices/textSlice";
+import {CommandManager} from "../../../../commands/commandManager/CommandManager";
 
 const TextModal = () => {
     const dispatch = useAppDispatch();
     const {isModalEditTextOpen, isEditBlock} = useAppSelector(state => state.modalsCardPage);
     const {markdown, markdownError} = useAppSelector(state => state.text);
 
-    const {closeModalEditText, isTextValid, handleAddText, handleEditText} = useTextSection();
+    const {closeModalEditText, isTextValid, handleAddTextCommand, handleEditTextCommand} = useTextSection();
     
     const [isFocused, setIsFocused] = useState(false);
 
@@ -66,7 +63,8 @@ const TextModal = () => {
                 <Button
                     mode="filled"
                     size="m"
-                    onClick={() => isEditBlock ? handleEditText() : handleAddText()}
+                    onClick={() => isEditBlock ? handleEditTextCommand() : handleAddTextCommand()
+                }
                     disabled={!isTextValid()}
                 >
                     {isEditBlock ? 'Сохранить' : 'Добавить'}

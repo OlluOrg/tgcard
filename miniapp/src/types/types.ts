@@ -14,11 +14,6 @@ type TCard = {
     sections: TSection[],
 }
 
-type TCardWithUserId = {
-    card: TCard,
-    userId: string,
-}
-
 type TCardHistory  = TCard & {
     lastViewedAt: Date;
 };
@@ -62,5 +57,4 @@ export {
     type TDivider,
     type TImageSection,
     type TCardHistory,
-    type TCardWithUserId
 }
