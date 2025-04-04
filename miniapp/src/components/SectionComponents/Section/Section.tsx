@@ -13,6 +13,9 @@ import BlockLinkSection from "../BlockLink/BlockLinkSection/BlockLinkSection";
 import DividerSection from "../Divider/DividerSection/DividerSection";
 import VideoSection from "../Video/VideoSection/VideoSection";
 import ImageSection from "../Image/ImageSection/ImageSection";
+import useCardSections from "../../../hooks/CardPage/useCardSections";
+import {useAppDispatch} from "../../../hooks/hooks";
+import {selectSection} from "../../../store/slices/myCardsSlice";
 
 type SectionProps = {
     section: TSection,
@@ -33,10 +36,17 @@ const sectionFactory = {
 };
 
 const Section = (props: SectionProps) => {
+    const {handleDeleteCommand} = useCardSections();
     const SectionComponent = sectionFactory[props.section.typeSectionEnum];
     
     return (
         <div
+            onContextMenu={(e) => {
+                if (!props.isViewMode) {
+                    e.preventDefault();
+                    handleDeleteCommand(props.section.id);
+                }
+            }}
             className={`${styles.section}`}
         >
             <SectionComponent {...props} />

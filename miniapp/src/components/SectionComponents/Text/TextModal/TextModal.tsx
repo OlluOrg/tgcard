@@ -13,7 +13,7 @@ const TextModal = () => {
     const {isModalEditTextOpen, isEditBlock} = useAppSelector(state => state.modalsCardPage);
     const {markdown, markdownError} = useAppSelector(state => state.text);
 
-    const {closeModalEditText, isTextValid, handleEditText, handleAddTextCommand} = useTextSection();
+    const {closeModalEditText, isTextValid, handleAddTextCommand, handleEditTextCommand} = useTextSection();
     
     const [isFocused, setIsFocused] = useState(false);
 
@@ -63,7 +63,7 @@ const TextModal = () => {
                 <Button
                     mode="filled"
                     size="m"
-                    onClick={() => isEditBlock ? handleEditText() : handleAddTextCommand()
+                    onClick={() => isEditBlock ? handleEditTextCommand() : handleAddTextCommand()
                 }
                     disabled={!isTextValid()}
                 >

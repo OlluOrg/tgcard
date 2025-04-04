@@ -8,13 +8,16 @@ import {
 import {addTextSection, editTextSection} from "../../store/slices/myCardsSlice";
 import {setMarkdown, setMarkdownError} from "../../store/slices/textSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
-import {TSectionText, TypeSectionEnum} from "../../types/types";
+import {TSection, TSectionText, TypeSectionEnum} from "../../types/types";
 import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
 import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
+import {EditSectionCommand} from "../../commands/sections/EditSectionCommand";
 
 const useTextSection = () => {
     const dispatch = useAppDispatch();
     const commandManager = useCommandManager();
+
+    const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards);
 
     const {markdown} = useAppSelector(state => state.text);
 
@@ -38,12 +41,19 @@ const useTextSection = () => {
         dispatch(setMarkdown(''));
     };
 
-    const handleEditText = () => {
+    const handleEditTextCommand = () => {
         dispatch(setIsModalEditTextOpen(false));
-        dispatch(editTextSection({text: markdown}));
-        dispatch(setMarkdown(''));
+        const card = cards.find(card => card.businessCardId === selectedCardId)!;
+        const oldSection = card.sections.find(section => section.id === selectedSectionId)!;
+        const newSection: TSection = {
+            ...oldSection,
+            value: {value: markdown} as TSectionText
+        }
 
-        dispatch(updateBusinessCards({}))
+        const command = new EditSectionCommand(oldSection, newSection);
+        commandManager.execute(command);
+
+        dispatch(setMarkdown(''));
     };
 
     const handleAddTextCommand = () => {
@@ -62,10 +72,10 @@ const useTextSection = () => {
 
     return {
         closeModalEditText,
-        handleEditText,
         isTextValid,
         handleChooseTextSection,
-        handleAddTextCommand
+        handleAddTextCommand,
+        handleEditTextCommand
     };
 }
 

@@ -7,6 +7,7 @@ import {
     updateBusinessCards
 } from "../apiThunks/businessCardThunks";
 import {addHistory, getHistory} from "../apiThunks/historyThunks";
+import section from "../../components/SectionComponents/Section/Section";
 
 interface MyCardsState {
     cards: TCard[],
@@ -61,7 +62,16 @@ const myCardsSlice = createSlice({
         },
         addSection: (state, action: PayloadAction<{section: TSection }>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
-            cardToUpdate.sections.push({...action.payload.section, order: cardToUpdate.sections.length + 1});
+            cardToUpdate.sections.push({...action.payload.section,
+                order: action.payload.section.order === -1
+                    ? cardToUpdate.sections.length + 1
+                    : action.payload.section.order});
+        },
+        editSection: (state, action: PayloadAction<{section: TSection}>) => {
+            const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
+            const sectionToUpdate = cardToUpdate.sections.find(section => section.id === action.payload.section.id)!;
+            sectionToUpdate.value = action.payload.section.value;
+            sectionToUpdate.order = action.payload.section.order;
         },
         editTextSection: (state, action: PayloadAction<{text: string}>) => {
             const cardToUpdate = state.cards.find(card => card.businessCardId === state.selectedCardId)!;
@@ -245,6 +255,7 @@ export const {
     addToViewHistory,
     updateCardSections,
     deleteSectionById,
-    addSection
+    addSection,
+    editSection
 } = myCardsSlice.actions;
 export const myCardsReducer = myCardsSlice.reducer;

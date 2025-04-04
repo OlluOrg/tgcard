@@ -8,24 +8,37 @@ import {
 import {addVideoSection, editVideoSection} from "../../store/slices/myCardsSlice";
 import {setLinkVideoInput, setVideoError} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
+import {TSection, TSectionText, TVideoSection, TypeSectionEnum} from "../../types/types";
+import {EditSectionCommand} from "../../commands/sections/EditSectionCommand";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
+import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
 
 const useVideoSection = () => {
     const dispatch = useAppDispatch();
+    const commandManager = useCommandManager();
 
     const {linkVideoInput, videoError} = useAppSelector(state => state.video);
+    const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards);
 
-    const handleEditVideo = () => {
-        dispatch(editVideoSection({link: linkVideoInput}));
+    const handleEditVideoCommand = () => {
+        const card = cards.find(card => card.businessCardId === selectedCardId)!;
+        const oldSection = card.sections.find(section => section.id === selectedSectionId)!;
+        const newSection: TSection = {
+            ...oldSection,
+            value: {src: linkVideoInput} as TVideoSection
+        }
+
+        const command = new EditSectionCommand(oldSection, newSection);
+        commandManager.execute(command);
+
         dispatch(setIsModalEditVideoSectionOpen(false));
-
-        dispatch(updateBusinessCards({}))
     };
 
-    const handleAddVideo = () => {
-        dispatch(addVideoSection({link: linkVideoInput}));
-        dispatch(setIsModalEditVideoSectionOpen(false));
+    const handleAddVideoCommand = () => {
+        const command = new AddSectionCommand(TypeSectionEnum.video, {src: linkVideoInput} as TVideoSection);
+        commandManager.execute(command);
 
-        dispatch(updateBusinessCards({}))
+        dispatch(setIsModalEditVideoSectionOpen(false));
     };
 
     const closeModalEditVideo = () => {
@@ -65,10 +78,10 @@ const useVideoSection = () => {
     };
 
     return {
-        handleEditVideo,
-        handleAddVideo,
+        handleAddVideoCommand,
         closeModalEditVideo,
         handleChooseVideoSection,
+        handleEditVideoCommand,
         isBlockVideoValid
     }
 };

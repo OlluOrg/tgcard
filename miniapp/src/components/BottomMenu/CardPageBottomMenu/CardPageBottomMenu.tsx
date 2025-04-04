@@ -16,7 +16,7 @@ const CardPageBottomMenu = () => {
     const {selectedCardId, cards} = useAppSelector(state => state.myCards);
     const commandManager = useCommandManager()
 
-    const {handleDone, handleDelete} = useCardSections();
+    const {handleDone} = useCardSections();
     const [currentBottomTab, setCurrentBottomTab] = useState<string>('');
 
     const selectBottomTab = (idTab: string) => {
@@ -24,9 +24,9 @@ const CardPageBottomMenu = () => {
         if (idTab === 'done'){
             handleDone();
         }
-        if (idTab === 'delete'){
-            handleDelete();
-        }
+        // if (idTab === 'delete'){
+        //     handleDelete();
+        // }
         if (idTab === 'create'){
             dispatch(setIsModalChooseSectionOpen(true));
         }

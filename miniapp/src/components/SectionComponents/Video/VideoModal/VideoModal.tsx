@@ -15,7 +15,7 @@ const VideoModal = () => {
     const {linkVideoInput, videoError} = useAppSelector(state => state.video);
     const {isModalEditVideoSectionOpen, isEditBlock} = useAppSelector(state => state.modalsCardPage);
 
-    const {closeModalEditVideo, isBlockVideoValid, handleEditVideo, handleAddVideo} = useVideoSection();
+    const {closeModalEditVideo, isBlockVideoValid, handleAddVideoCommand, handleEditVideoCommand} = useVideoSection();
 
     return (
         <Modal
@@ -43,7 +43,7 @@ const VideoModal = () => {
                 <Button
                     mode="filled"
                     size="m"
-                    onClick={isEditBlock ? handleEditVideo : handleAddVideo}
+                    onClick={isEditBlock ? handleEditVideoCommand : handleAddVideoCommand}
                     disabled={!isBlockVideoValid()}
                 >
                     {isEditBlock ? 'Сохранить' : 'Добавить'}

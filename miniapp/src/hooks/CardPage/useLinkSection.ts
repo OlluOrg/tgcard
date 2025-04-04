@@ -9,12 +9,14 @@ import {addLinkSection, editLinkSection} from "../../store/slices/myCardsSlice";
 import {setLinkBlockLinkInput, setLinkError, setNameBlockLinkInput, setNameError} from "../../store/slices/linkSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {AddSectionCommand} from "../../commands/sections/AddSectionCommand";
-import {TSectionBlockLink, TypeSectionEnum} from "../../types/types";
+import {TSection, TSectionBlockLink, TSectionText, TypeSectionEnum} from "../../types/types";
 import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
+import {EditSectionCommand} from "../../commands/sections/EditSectionCommand";
 
 const useLinkSection = () => {
     const dispatch = useAppDispatch();
     const {nameBlockLinkInput, linkBlockLinkInput, nameError, linkError} = useAppSelector(state => state.link);
+    const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards)
     const commandManager = useCommandManager();
 
     useEffect(() => {
@@ -60,11 +62,18 @@ const useLinkSection = () => {
         dispatch(setIsModalEditBlockLinkOpen(false));
     };
 
-    const handleEditBlockLink = () => {
-        dispatch(editLinkSection({link: linkBlockLinkInput, title: nameBlockLinkInput}));
-        dispatch(setIsModalEditBlockLinkOpen(false));
+    const handleEditBlockLinkCommand = () => {
+        const card = cards.find(card => card.businessCardId === selectedCardId)!;
+        const oldSection = card.sections.find(section => section.id === selectedSectionId)!;
+        const newSection: TSection = {
+            ...oldSection,
+            value: {link: linkBlockLinkInput, name: nameBlockLinkInput} as TSectionBlockLink
+        }
 
-        dispatch(updateBusinessCards({}))
+        const command = new EditSectionCommand(oldSection, newSection);
+        commandManager.execute(command);
+
+        dispatch(setIsModalEditBlockLinkOpen(false));
     };
 
     const closeModalEditBlockLink = () => {
@@ -81,7 +90,7 @@ const useLinkSection = () => {
 
     return {
         isBlockLinkValid,
-        handleEditBlockLink,
+        handleEditBlockLinkCommand,
         closeModalEditBlockLink,
         handleChooseBlockLinkSection,
         handleAddBlockLinkCommand

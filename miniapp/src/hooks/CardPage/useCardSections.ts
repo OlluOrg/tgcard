@@ -19,11 +19,14 @@ import {setLinkVideoInput} from "../../store/slices/videoSlice";
 import {updateBusinessCards} from "../../store/apiThunks/businessCardThunks";
 import {setNameNewCard} from "../../store/slices/cardSlice";
 import {text} from "node:stream/consumers";
+import {useCommandManager} from "../../commands/commandManager/CommandManagerContext";
+import {DeleteSectionCommand} from "../../commands/sections/DeleteSectionCommand";
 
 
 export const useCardSections = () => {
     const dispatch = useAppDispatch();
     const {cards, selectedCardId, selectedSectionId} = useAppSelector(state => state.myCards)
+    const commandManager = useCommandManager();
 
     const navigate = useNavigate();
 
@@ -78,9 +81,15 @@ export const useCardSections = () => {
         dispatch(updateBusinessCards({}))
     }
 
-    const handleDelete = () => {
-        dispatch(deleteSection());
-        dispatch(updateBusinessCards({}))
+    // const handleDelete = () => {
+    //     dispatch(deleteSection());
+    //     dispatch(updateBusinessCards({}))
+    // };
+
+    const handleDeleteCommand = (sectionId: string) => {
+        const section = card.sections.find(section => section.id === sectionId)!;
+        const command = new DeleteSectionCommand(section);
+        commandManager.execute(command);
     };
 
     const handleDone = () => {
@@ -93,7 +102,8 @@ export const useCardSections = () => {
 
     return {
         handleEdit,
-        handleDelete,
+        // handleDelete,
+        handleDeleteCommand,
         handleDone,
         addSection
     };
